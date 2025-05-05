@@ -63,6 +63,44 @@
     h2, h3 {
       color: #0056b3;
     }
+
+    .table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    .table th, .table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .table th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    .table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .table tr:hover {
+      background-color: #ddd;
+    }
+
+    .form-message {
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .form-message.error {
+      background-color: #dc3545;
+    }
   </style>
 </head>
 <body class="font-sans">
@@ -116,7 +154,7 @@
         <button type="submit" class="button">Submit Registration</button>
       </form>
 
-      <div id="registrationConfirmation" class="mt-4 hidden text-green-500 text-center">
+      <div id="registrationConfirmation" class="form-message hidden">
         <p>Registration successful! A confirmation email has been sent.</p>
       </div>
 
@@ -129,7 +167,7 @@
         <button type="submit" class="button">Book Appointment</button>
       </form>
 
-      <div id="appointmentConfirmation" class="mt-4 hidden text-blue-500 text-center">
+      <div id="appointmentConfirmation" class="form-message hidden">
         <p>Appointment booked successfully! A confirmation email has been sent.</p>
       </div>
     </div>
@@ -267,7 +305,9 @@
       const name = document.getElementById('patientAdmissionName').value;
       const details = document.getElementById('patientAdmissionDetails').value;
 
-      alert(`Patient ${name} admitted with details: ${details}`);
+      // Simulate admission success
+      const message = `<div class="form-message">Patient ${name} admitted with details: ${details}</div>`;
+      document.getElementById('patientAdmissionForm').insertAdjacentHTML('afterend', message);
       document.getElementById('patientAdmissionForm').reset();
     });
 
@@ -278,7 +318,9 @@
       const date = document.getElementById('appointmentScheduleDate').value;
       const time = document.getElementById('appointmentScheduleTime').value;
 
-      alert(`Appointment for ${name} scheduled on ${date} at ${time}`);
+      // Simulate appointment scheduling success
+      const message = `<div class="form-message">Appointment for ${name} scheduled on ${date} at ${time}</div>`;
+      document.getElementById('appointmentScheduleForm').insertAdjacentHTML('afterend', message);
       document.getElementById('appointmentScheduleForm').reset();
     });
   </script>
