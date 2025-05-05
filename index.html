@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
@@ -133,47 +134,67 @@
       <div id="navigationButtons" class="text-center mt-4"></div>
 
       <div id="formSections" class="mt-6">
-        <div id="adminForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Patients</h3>
-          <div id="patientsList">
-            <ul id="patientList">
-              <!-- List of realistic patient names -->
-              <li>John Doe - <button class="button" onclick="viewPatientDetails('John Doe')">View Details</button></li>
-              <li>Jane Smith - <button class="button" onclick="viewPatientDetails('Jane Smith')">View Details</button></li>
-              <li>Mike Johnson - <button class="button" onclick="viewPatientDetails('Mike Johnson')">View Details</button></li>
-              <li>Emily Brown - <button class="button" onclick="viewPatientDetails('Emily Brown')">View Details</button></li>
-              <li>David Wilson - <button class="button" onclick="viewPatientDetails('David Wilson')">View Details</button></li>
-              <li>Sarah Davis - <button class="button" onclick="viewPatientDetails('Sarah Davis')">View Details</button></li>
-            </ul>
-          </div>
-        </div>
-
-        <div id="viewReportsForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Reports</h3>
-          <div id="reportsList">
-            <ul id="reportList">
-              <!-- List of realistic sample reports -->
-              <li>Patient Status Report - <button class="button" onclick="viewReportDetails('Patient Status Report')">View</button></li>
-              <li>Doctor Schedule - <button class="button" onclick="viewReportDetails('Doctor Schedule')">View</button></li>
-              <li>Appointment Summary - <button class="button" onclick="viewReportDetails('Appointment Summary')">View</button></li>
-              <li>Monthly Financial Report - <button class="button" onclick="viewReportDetails('Monthly Financial Report')">View</button></li>
-              <li>Emergency Cases Summary - <button class="button" onclick="viewReportDetails('Emergency Cases Summary')">View</button></li>
-              <li>Patient Feedback Report - <button class="button" onclick="viewReportDetails('Patient Feedback Report')">View</button></li>
-            </ul>
-          </div>
-        </div>
-
-        <div id="addDoctorForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add Doctor</h3>
-          <form id="doctorForm" class="space-y-4">
-            <input type="text" id="doctorName" placeholder="Doctor Name" class="form-input" required>
-            <input type="email" id="doctorEmail" placeholder="Doctor Email" class="form-input" required>
-            <input type="text" id="doctorSpecialty" placeholder="Specialty" class="form-input" required>
-            <input type="tel" id="doctorPhone" placeholder="Phone Number" class="form-input" required>
-            <button type="submit" class="button">Add Doctor</button>
+        <div id="doctorPrescriptionForm" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
+          <form id="prescriptionForm" class="space-y-4">
+            <input type="text" id="patientName" placeholder="Patient Name" class="form-input" required>
+            <input type="text" id="medication" placeholder="Medication" class="form-input" required>
+            <input type="text" id="dosage" placeholder="Dosage" class="form-input" required>
+            <textarea id="notes" placeholder="Additional Notes" class="form-input" rows="4"></textarea>
+            <button type="submit" class="button">Submit Prescription</button>
           </form>
-          <div id="doctorSuccessMessage" class="success-message hidden">Doctor added successfully!</div>
+          <div id="prescriptionSuccess" class="success-message hidden">Prescription added successfully!</div>
         </div>
+
+        <div id="doctorAppointments" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Appointments</h3>
+          <table class="table-auto w-full border-collapse border border-gray-300">
+            <thead>
+              <tr>
+                <th class="border px-4 py-2">Patient Name</th>
+                <th class="border px-4 py-2">Appointment Date</th>
+                <th class="border px-4 py-2">Time</th>
+                <th class="border px-4 py-2">View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border px-4 py-2">John Doe</td>
+                <td class="border px-4 py-2">2025-05-10</td>
+                <td class="border px-4 py-2">10:00 AM</td>
+                <td class="border px-4 py-2"><button class="button" onclick="viewAppointmentDetails('John Doe')">View</button></td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">Jane Smith</td>
+                <td class="border px-4 py-2">2025-05-11</td>
+                <td class="border px-4 py-2">11:00 AM</td>
+                <td class="border px-4 py-2"><button class="button" onclick="viewAppointmentDetails('Jane Smith')">View</button></td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">Mike Johnson</td>
+                <td class="border px-4 py-2">2025-05-12</td>
+                <td class="border px-4 py-2">2:00 PM</td>
+                <td class="border px-4 py-2"><button class="button" onclick="viewAppointmentDetails('Mike Johnson')">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="patientConsultationForm" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Consultation</h3>
+          <form id="consultationForm" class="space-y-4">
+            <input type="text" id="consultationPatientName" placeholder="Patient Name" class="form-input" required>
+            <textarea id="consultationNotes" placeholder="Consultation Notes" class="form-input" rows="4"></textarea>
+            <button type="submit" class="button">Submit Consultation</button>
+          </form>
+          <div id="consultationSuccess" class="success-message hidden">Consultation notes saved successfully!</div>
+        </div>
+
+        <div id="doctorDashboardChart" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Appointments by Day</h3>
+          <canvas id="appointmentsChart"></canvas>
+        </div>
+
       </div>
 
     </div>
@@ -194,9 +215,9 @@
       doctor: {
         title: "Doctor Dashboard",
         tasks: [
-          "View Patients",
-          "Update Medical Records",
-          "Write Prescriptions",
+          "Write Prescription",
+          "View Appointments",
+          "Patient Consultation"
         ],
         actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
       },
@@ -225,7 +246,6 @@
       const dashboard = document.getElementById('dashboard');
       const title = document.getElementById('roleTitle');
       const navigationButtons = document.getElementById('navigationButtons');
-      const formSections = document.getElementById('formSections');
 
       if (!role) {
         alert("Please select a role.");
@@ -234,46 +254,72 @@
 
       title.textContent = dashboards[role].title;
 
-      navigationButtons.innerHTML = dashboards[role].actions.map(action => {
-        return `<button class="nav-button" onclick="showForm('${action}')">${action}</button>`;
+      let navigationHTML = dashboards[role].actions.map(action => {
+        return `<button class="nav-button" onclick="showSection('${action}')">${action}</button>`;
       }).join("");
+
+      navigationButtons.innerHTML = navigationHTML;
 
       dashboard.classList.remove('hidden');
     }
 
-    function showForm(action) {
-      const formSections = document.getElementById('formSections');
-      formSections.querySelectorAll('.form-container').forEach(form => form.classList.remove('visible'));
+    function showSection(section) {
+      const allSections = document.querySelectorAll('.form-container');
+      allSections.forEach(section => section.classList.remove('visible'));
 
-      if (action === 'Manage Patients') {
-        document.getElementById('adminForm').classList.add('visible');
-      } else if (action === 'View Reports') {
-        document.getElementById('viewReportsForm').classList.add('visible');
-      } else if (action === 'Add Doctor') {
-        document.getElementById('addDoctorForm').classList.add('visible');
+      switch (section) {
+        case 'Write Prescription':
+          document.getElementById('doctorPrescriptionForm').classList.add('visible');
+          break;
+        case 'View Appointments':
+          document.getElementById('doctorAppointments').classList.add('visible');
+          break;
+        case 'Patient Consultation':
+          document.getElementById('patientConsultationForm').classList.add('visible');
+          break;
       }
     }
 
-    function viewPatientDetails(patientName) {
-      alert(`Viewing details for ${patientName}`);
-    }
-
-    function viewReportDetails(reportName) {
-      alert(`Viewing details for ${reportName}`);
-    }
-
-    document.getElementById('doctorForm').addEventListener('submit', function (event) {
+    document.getElementById('prescriptionForm').addEventListener('submit', function (event) {
       event.preventDefault();
-
-      const name = document.getElementById('doctorName').value;
-      const email = document.getElementById('doctorEmail').value;
-      const specialty = document.getElementById('doctorSpecialty').value;
-      const phone = document.getElementById('doctorPhone').value;
-
-      // Simulate doctor being added
-      document.getElementById('doctorSuccessMessage').classList.add('visible');
-      document.getElementById('doctorForm').reset();
+      document.getElementById('prescriptionSuccess').classList.add('visible');
+      document.getElementById('prescriptionForm').reset();
     });
+
+    document.getElementById('consultationForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('consultationSuccess').classList.add('visible');
+      document.getElementById('consultationForm').reset();
+    });
+
+    function viewAppointmentDetails(patientName) {
+      alert(`Viewing appointment details for ${patientName}`);
+    }
+
+    // Sample chart
+    var ctx = document.getElementById('appointmentsChart').getContext('2d');
+    var appointmentsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2025-05-10', '2025-05-11', '2025-05-12'],
+        datasets: [{
+          label: 'Appointments per Day',
+          data: [3, 2, 5],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
   </script>
+
 </body>
 </html>
