@@ -147,7 +147,78 @@
       <div id="navigationButtons" class="text-center mt-4"></div>
 
       <div id="formSections" class="mt-6">
-        <!-- Doctor Write Prescription Section -->
+        <!-- Admin: Manage Patients Section -->
+        <div id="adminManagePatients" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Patients</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Condition</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>45</td>
+                <td>Flu</td>
+                <td><button class="button">Edit</button></td>
+              </tr>
+              <tr>
+                <td>Mary Johnson</td>
+                <td>60</td>
+                <td>Asthma</td>
+                <td><button class="button">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Admin: View Reports Section -->
+        <div id="adminViewReports" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Reports</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Patient Name</th>
+                <th>Date</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>101</td>
+                <td>John Doe</td>
+                <td>2025-05-10</td>
+                <td><button class="button">View</button></td>
+              </tr>
+              <tr>
+                <td>102</td>
+                <td>Mary Johnson</td>
+                <td>2025-05-11</td>
+                <td><button class="button">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Admin: Add Doctor Section -->
+        <div id="adminAddDoctor" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add New Doctor</h3>
+          <form id="addDoctorForm" class="space-y-4">
+            <input type="text" id="doctorName" placeholder="Doctor's Name" class="form-input" required>
+            <input type="text" id="doctorSpecialization" placeholder="Specialization" class="form-input" required>
+            <input type="email" id="doctorEmail" placeholder="Email Address" class="form-input" required>
+            <input type="tel" id="doctorPhone" placeholder="Phone Number" class="form-input" required>
+            <button type="submit" class="button">Add Doctor</button>
+          </form>
+          <div id="doctorSuccess" class="success-message hidden">Doctor added successfully!</div>
+        </div>
+
+        <!-- Doctor: Write Prescription Section -->
         <div id="doctorPrescriptionForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
           <form id="prescriptionForm" class="space-y-4">
@@ -160,7 +231,7 @@
           <div id="prescriptionSuccess" class="success-message hidden">Prescription added successfully!</div>
         </div>
 
-        <!-- Doctor View Appointments Section -->
+        <!-- Doctor: View Appointments Section -->
         <div id="doctorAppointments" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Appointments</h3>
           <table>
@@ -177,43 +248,30 @@
                 <td>John Doe</td>
                 <td>2025-05-10</td>
                 <td>10:00 AM</td>
-                <td><button class="button" onclick="viewAppointmentDetails('John Doe')">View</button></td>
+                <td><button class="button">View</button></td>
               </tr>
               <tr>
                 <td>Jane Smith</td>
                 <td>2025-05-11</td>
                 <td>11:00 AM</td>
-                <td><button class="button" onclick="viewAppointmentDetails('Jane Smith')">View</button></td>
-              </tr>
-              <tr>
-                <td>Mike Johnson</td>
-                <td>2025-05-12</td>
-                <td>2:00 PM</td>
-                <td><button class="button" onclick="viewAppointmentDetails('Mike Johnson')">View</button></td>
+                <td><button class="button">View</button></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Patient Consultation Section -->
+        <!-- Doctor: Patient Consultation Section -->
         <div id="patientConsultationForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Consultation</h3>
           <form id="consultationForm" class="space-y-4">
-            <input type="text" id="consultationPatientName" placeholder="Patient Name" class="form-input" required>
+            <input type="text" id="consultationPatient" placeholder="Patient Name" class="form-input" required>
             <textarea id="consultationNotes" placeholder="Consultation Notes" class="form-input" rows="4"></textarea>
             <button type="submit" class="button">Submit Consultation</button>
           </form>
-          <div id="consultationSuccess" class="success-message hidden">Consultation notes saved successfully!</div>
-        </div>
-
-        <!-- Appointments Chart Section -->
-        <div id="doctorDashboardChart" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Appointments by Day</h3>
-          <canvas id="appointmentsChart"></canvas>
+          <div id="consultationSuccess" class="success-message hidden">Consultation submitted successfully!</div>
         </div>
 
       </div>
-
     </div>
 
   </div>
@@ -222,39 +280,11 @@
     const dashboards = {
       admin: {
         title: "Admin Dashboard",
-        tasks: [
-          "Manage Patients",
-          "View Reports",
-          "Add Doctor"
-        ],
-        actions: ["Manage Patients", "View Reports", "Add Doctor"]
+        actions: ["Manage Patients", "View Reports", "Add Doctor"],
       },
       doctor: {
         title: "Doctor Dashboard",
-        tasks: [
-          "Write Prescription",
-          "View Appointments",
-          "Patient Consultation"
-        ],
-        actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
-      },
-      receptionist: {
-        title: "Receptionist Dashboard",
-        tasks: [
-          "Register New Patients",
-          "Schedule Appointments",
-          "Manage Billing",
-        ],
-        actions: ["Register Patient", "Schedule Appointment", "Manage Billing"]
-      },
-      patient: {
-        title: "Patient Dashboard",
-        tasks: [
-          "Book Appointment",
-          "View Medical History",
-          "Request Consultation",
-        ],
-        actions: ["Book Appointment", "View Medical History", "Request Consultation"]
+        actions: ["Write Prescription", "View Appointments", "Patient Consultation"],
       }
     };
 
@@ -285,6 +315,15 @@
       allSections.forEach(section => section.classList.remove('visible'));
 
       switch (section) {
+        case 'Manage Patients':
+          document.getElementById('adminManagePatients').classList.add('visible');
+          break;
+        case 'View Reports':
+          document.getElementById('adminViewReports').classList.add('visible');
+          break;
+        case 'Add Doctor':
+          document.getElementById('adminAddDoctor').classList.add('visible');
+          break;
         case 'Write Prescription':
           document.getElementById('doctorPrescriptionForm').classList.add('visible');
           break;
@@ -297,6 +336,12 @@
       }
     }
 
+    document.getElementById('addDoctorForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('doctorSuccess').classList.add('visible');
+      document.getElementById('addDoctorForm').reset();
+    });
+
     document.getElementById('prescriptionForm').addEventListener('submit', function (event) {
       event.preventDefault();
       document.getElementById('prescriptionSuccess').classList.add('visible');
@@ -308,34 +353,6 @@
       document.getElementById('consultationSuccess').classList.add('visible');
       document.getElementById('consultationForm').reset();
     });
-
-    function viewAppointmentDetails(patientName) {
-      alert(`Viewing appointment details for ${patientName}`);
-    }
-
-    // Sample chart for appointments
-    var ctx = document.getElementById('appointmentsChart').getContext('2d');
-    var appointmentsChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['2025-05-10', '2025-05-11', '2025-05-12'],
-        datasets: [{
-          label: 'Appointments per Day',
-          data: [3, 2, 5],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
   </script>
 
 </body>
