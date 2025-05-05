@@ -144,119 +144,131 @@
   </div>
 
   <script>
-    const dashboards = {
-      admin: {
-        title: "Admin Dashboard",
-        tasks: [
-          "Manage Doctors",
-          "Manage Patients",
-          "Assign Roles",
-          "View Reports",
-          "Approve Requests"
-        ],
-        actions: ["Manage Doctors", "Manage Patients", "View Reports"]
-      },
-      doctor: {
-        title: "Doctor Dashboard",
-        tasks: [
-          "View Patients",
-          "Update Medical Records",
-          "Write Prescriptions",
-          "Schedule Appointments"
-        ],
-        actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
-      },
-      patient: {
-        title: "Patient Dashboard",
-        tasks: [
-          "Book Appointment",
-          "View Medical History",
-          "Download Prescriptions",
-          "Request Consultation"
-        ],
-        actions: ["Book Appointment", "View Medical History", "Request Consultation"]
-      },
-      receptionist: {
-        title: "Receptionist Dashboard",
-        tasks: [
-          "Register New Patients",
-          "Schedule Appointments",
-          "Manage Billing",
-          "Assist Patients"
-        ],
-        actions: ["Register Patient", "Schedule Appointment", "Manage Billing"]
-      }
-    };
+  const dashboards = {
+    admin: {
+      title: "Admin Dashboard",
+      tasks: ["Manage Doctors", "Manage Patients", "Assign Roles", "View Reports", "Approve Requests"],
+      actions: ["Manage Doctors", "Manage Patients", "View Reports"]
+    },
+    doctor: {
+      title: "Doctor Dashboard",
+      tasks: ["View Patients", "Update Medical Records", "Write Prescriptions", "Schedule Appointments"],
+      actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
+    },
+    patient: {
+      title: "Patient Dashboard",
+      tasks: ["Book Appointment", "View Medical History", "Download Prescriptions", "Request Consultation"],
+      actions: ["Book Appointment", "View Medical History", "Request Consultation"]
+    },
+    receptionist: {
+      title: "Receptionist Dashboard",
+      tasks: ["Register New Patients", "Schedule Appointments", "Manage Billing", "Assist Patients"],
+      actions: ["Register Patient", "Schedule Appointment", "Manage Billing"]
+    }
+  };
 
-    function showDashboard() {
-      const role = document.getElementById('role').value;
-      const dashboard = document.getElementById('dashboard');
-      const title = document.getElementById('roleTitle');
-      const tasks = document.getElementById('roleTasks');
-      const actionButtons = document.getElementById('actionButtons');
-      const formsSection = document.getElementById('formsSection');
-      const loginButton = document.getElementById('loginButton');
+  function showDashboard() {
+    const role = document.getElementById('role').value;
+    const dashboard = document.getElementById('dashboard');
+    const title = document.getElementById('roleTitle');
+    const tasks = document.getElementById('roleTasks');
+    const actionButtons = document.getElementById('actionButtons');
+    const formsSection = document.getElementById('formsSection');
+    const loginButton = document.getElementById('loginButton');
 
-      if (!role) {
-        alert("Please select a role.");
-        return;
-      }
-
-      loginButton.textContent = "Logging in...";
-      setTimeout(() => {
-        loginButton.textContent = "Login";
-
-        const selected = dashboards[role];
-        title.textContent = selected.title;
-
-        // Populate task list and buttons
-        updateList(tasks, selected.tasks);
-        updateButtons(actionButtons, selected.actions);
-
-        dashboard.classList.remove('hidden');
-        formsSection.classList.toggle('hidden', role !== 'patient');
-      }, 500);
+    if (!role) {
+      alert("Please select a role.");
+      return;
     }
 
-    function updateList(container, items) {
-      container.innerHTML = items.map(item => `<li class="text-lg">${item}</li>`).join("");
+    loginButton.textContent = "Logging in...";
+    setTimeout(() => {
+      loginButton.textContent = "Login";
+
+      const selected = dashboards[role];
+      title.textContent = selected.title;
+
+      updateList(tasks, selected.tasks);
+      updateButtons(actionButtons, selected.actions);
+
+      dashboard.classList.remove('hidden');
+      formsSection.classList.toggle('hidden', role !== 'patient');
+    }, 500);
+  }
+
+  function updateList(container, items) {
+    container.innerHTML = items.map(item => `<li class="text-lg">${item}</li>`).join("");
+  }
+
+  function updateButtons(container, buttons) {
+    container.innerHTML = buttons.map(btn => `<button class="button">${btn}</button>`).join("");
+  }
+
+  function isValidInput(value) {
+    return value && value.trim().length > 0;
+  }
+
+  function isValidEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
+
+  function isValidPhone(phone) {
+    const phonePattern = /^[0-9]{10,}$/;
+    return phonePattern.test(phone.replace(/\D/g, '')); // Strip non-digits
+  }
+
+  // Patient Registration Form
+  document.getElementById('registrationForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('patientName').value;
+    const email = document.getElementById('patientEmail').value;
+    const phone = document.getElementById('patientPhone').value;
+
+    if (!isValidInput(name) || !isValidInput(email) || !isValidInput(phone)) {
+      alert("All registration fields must be filled.");
+      return;
     }
 
-    function updateButtons(container, buttons) {
-      container.innerHTML = buttons.map(btn => `<button class="button">${btn}</button>`).join("");
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
     }
 
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientName').value.trim();
-      const email = document.getElementById('patientEmail').value.trim();
-      const phone = document.getElementById('patientPhone').value.trim();
+    if (!isValidPhone(phone)) {
+      alert("Phone number must contain at least 10 digits.");
+      return;
+    }
 
-      if (!name || !email || !phone) {
-        alert("All registration fields must be filled.");
-        return;
-      }
+    document.getElementById('registrationConfirmation').classList.remove('hidden');
+    this.reset();
+  });
 
-      document.getElementById('registrationConfirmation').classList.remove('hidden');
-      this.reset();
-    });
+  // Appointment Form
+  document.getElementById('appointmentForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientNameApp').value.trim();
-      const email = document.getElementById('patientEmailApp').value.trim();
-      const date = document.getElementById('appointmentDate').value;
-      const time = document.getElementById('appointmentTime').value;
+    const name = document.getElementById('patientNameApp').value;
+    const email = document.getElementById('patientEmailApp').value;
+    const date = document.getElementById('appointmentDate').value;
+    const time = document.getElementById('appointmentTime').value;
 
-      if (!name || !email || !date || !time) {
-        alert("Please fill in all appointment details.");
-        return;
-      }
+    if (!isValidInput(name) || !isValidInput(email) || !isValidInput(date) || !isValidInput(time)) {
+      alert("All appointment fields must be filled.");
+      return;
+    }
 
-      document.getElementById('appointmentConfirmation').classList.remove('hidden');
-      this.reset();
-    });
-  </script>
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    document.getElementById('appointmentConfirmation').classList.remove('hidden');
+    this.reset();
+  });
+</script>
+
 
 </body>
 </html>
