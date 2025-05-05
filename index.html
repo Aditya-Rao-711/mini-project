@@ -127,6 +127,7 @@
       const title = document.getElementById('roleTitle');
       const tasks = document.getElementById('roleTasks');
       const actionButtons = document.getElementById('actionButtons');
+      const formsSection = document.getElementById('formsSection');
 
       if (!role) {
         alert("Please select a role.");
@@ -140,14 +141,13 @@
       }).join("");
 
       dashboard.classList.remove('hidden');
-      if (role === 'patient') {
-        showForms();
-      }
-    }
 
-    // Show registration and appointment forms for patient role
-    function showForms() {
-      document.getElementById('formsSection').classList.remove('hidden');
+      // Show forms section for "patient" role
+      if (role === 'patient') {
+        formsSection.classList.remove('hidden');
+      } else {
+        formsSection.classList.add('hidden');
+      }
     }
 
     // Registration form submission
