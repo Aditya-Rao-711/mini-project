@@ -168,16 +168,27 @@
 
         <!-- Admin Forms -->
         <div id="adminForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add New Doctor</h3>
-          <form id="adminDoctorForm" class="space-y-4">
-            <input type="text" id="doctorName" placeholder="Doctor Name" class="form-input" required>
-            <input type="email" id="doctorEmail" placeholder="Email" class="form-input" required>
-            <input type="text" id="specialization" placeholder="Specialization" class="form-input" required>
-            <button type="submit" class="button">Add Doctor</button>
-          </form>
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Patients</h3>
+          <div id="patientsList">
+            <p>List of patients will appear here...</p>
+            <!-- Simulate Patients List -->
+            <ul>
+              <li>John Doe - <button class="button" onclick="viewPatientDetails()">View Details</button></li>
+              <li>Jane Smith - <button class="button" onclick="viewPatientDetails()">View Details</button></li>
+            </ul>
+          </div>
+        </div>
 
-          <div id="doctorAddedConfirmation" class="mt-4 hidden text-green-500 text-center">
-            <p>Doctor added successfully!</p>
+        <!-- View Reports Section -->
+        <div id="viewReportsForm" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Reports</h3>
+          <div id="reportsList">
+            <p>Reports will appear here...</p>
+            <!-- Simulate Report List -->
+            <ul>
+              <li>Patient Status Report - <button class="button" onclick="viewReportDetails()">View</button></li>
+              <li>Doctor Schedule - <button class="button" onclick="viewReportDetails()">View</button></li>
+            </ul>
           </div>
         </div>
 
@@ -199,33 +210,33 @@
         <div id="receptionForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Register New Patient</h3>
           <form id="receptionPatientForm" class="space-y-4">
-            <input type="text" placeholder="Full Name" class="form-input" required>
-            <input type="email" placeholder="Email" class="form-input" required>
-            <input type="tel" placeholder="Phone Number" class="form-input" required>
-            <button type="submit" class="button">Register</button>
+            <input type="text" id="patientNameReception" placeholder="Full Name" class="form-input" required>
+            <input type="email" id="patientEmailReception" placeholder="Email Address" class="form-input" required>
+            <input type="tel" id="patientPhoneReception" placeholder="Phone Number" class="form-input" required>
+            <button type="submit" class="button">Submit Registration</button>
           </form>
 
           <div id="receptionConfirmation" class="mt-4 hidden text-green-500 text-center">
             <p>Patient registered successfully!</p>
           </div>
         </div>
+
       </div>
+
     </div>
 
   </div>
 
   <script>
+    // Define the dashboard content for each role
     const dashboards = {
       admin: {
         title: "Admin Dashboard",
         tasks: [
-          "Manage Doctors",
           "Manage Patients",
-          "Assign Roles",
           "View Reports",
-          "Approve Requests"
         ],
-        actions: ["Manage Doctors", "Manage Patients", "View Reports"]
+        actions: ["Manage Patients", "View Reports"]
       },
       doctor: {
         title: "Doctor Dashboard",
@@ -233,19 +244,8 @@
           "View Patients",
           "Update Medical Records",
           "Write Prescriptions",
-          "Schedule Appointments"
         ],
         actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
-      },
-      patient: {
-        title: "Patient Dashboard",
-        tasks: [
-          "Book Appointment",
-          "View Medical History",
-          "Download Prescriptions",
-          "Request Consultation"
-        ],
-        actions: ["Book Appointment", "View Medical History", "Request Consultation"]
       },
       receptionist: {
         title: "Receptionist Dashboard",
@@ -253,9 +253,17 @@
           "Register New Patients",
           "Schedule Appointments",
           "Manage Billing",
-          "Assist Patients"
         ],
         actions: ["Register Patient", "Schedule Appointment", "Manage Billing"]
+      },
+      patient: {
+        title: "Patient Dashboard",
+        tasks: [
+          "Book Appointment",
+          "View Medical History",
+          "Request Consultation",
+        ],
+        actions: ["Book Appointment", "View Medical History", "Request Consultation"]
       }
     };
 
@@ -263,8 +271,8 @@
       const role = document.getElementById('role').value;
       const dashboard = document.getElementById('dashboard');
       const title = document.getElementById('roleTitle');
-      const formSections = document.getElementById('formSections');
       const navigationButtons = document.getElementById('navigationButtons');
+      const formSections = document.getElementById('formSections');
 
       if (!role) {
         alert("Please select a role.");
@@ -282,23 +290,22 @@
 
     function showForm(action) {
       const formSections = document.getElementById('formSections');
-
       formSections.querySelectorAll('.form-container').forEach(form => form.classList.remove('visible'));
 
-      if (action === 'Book Appointment') {
-        document.getElementById('appointmentFormSection').classList.add('visible');
-      } else if (action === 'View Medical History') {
-        alert("Medical History - Feature not implemented yet.");
-      } else if (action === 'Register Patient') {
-        document.getElementById('receptionForm').classList.add('visible');
-      } else if (action === 'Manage Doctors') {
+      if (action === 'Manage Patients') {
         document.getElementById('adminForm').classList.add('visible');
+      } else if (action === 'View Reports') {
+        document.getElementById('viewReportsForm').classList.add('visible');
       } else if (action === 'Write Prescription') {
         document.getElementById('doctorForm').classList.add('visible');
+      } else if (action === 'Register Patient') {
+        document.getElementById('receptionForm').classList.add('visible');
+      } else if (action === 'Book Appointment') {
+        document.getElementById('appointmentFormSection').classList.add('visible');
       }
     }
 
-    // Form submissions
+    // Handle form submissions and show confirmations
     document.getElementById('registrationForm').addEventListener('submit', function (event) {
       event.preventDefault();
       document.getElementById('registrationConfirmation').classList.add('visible');
@@ -311,9 +318,9 @@
       this.reset();
     });
 
-    document.getElementById('adminDoctorForm').addEventListener('submit', function (event) {
+    document.getElementById('receptionPatientForm').addEventListener('submit', function (event) {
       event.preventDefault();
-      document.getElementById('doctorAddedConfirmation').classList.add('visible');
+      document.getElementById('receptionConfirmation').classList.add('visible');
       this.reset();
     });
 
@@ -323,11 +330,13 @@
       this.reset();
     });
 
-    document.getElementById('receptionPatientForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      document.getElementById('receptionConfirmation').classList.add('visible');
-      this.reset();
-    });
+    function viewPatientDetails() {
+      alert("Viewing patient details...");
+    }
+
+    function viewReportDetails() {
+      alert("Viewing report details...");
+    }
   </script>
 
 </body>
