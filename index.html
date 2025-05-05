@@ -58,11 +58,11 @@
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: none; /* Hidden by default */
+      display: none;
     }
 
     .visible {
-      display: block; /* Visible when active */
+      display: block;
     }
 
     h2, h3 {
@@ -94,22 +94,25 @@
       gap: 15px;
       margin-top: 30px;
     }
+
+    .success-message {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body class="font-sans">
 
   <div class="container max-w-lg mx-auto mt-10 rounded-lg">
 
-    <!-- Header -->
     <div class="header">
       <h1 class="text-4xl font-bold">Hospital Management System</h1>
     </div>
 
-    <!-- Login Section -->
     <div id="loginSection" class="mt-8">
       <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
 
-      <!-- Role Selection -->
       <div class="space-y-4 mt-6">
         <label for="role" class="block text-lg">Select Role</label>
         <select id="role" class="form-input">
@@ -124,45 +127,53 @@
       </div>
     </div>
 
-    <!-- Dashboard Section -->
     <div id="dashboard" class="mt-6 hidden">
       <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-4"></h2>
 
-      <!-- Navigation Buttons for Forms -->
-      <div id="navigationButtons" class="text-center mt-4">
-        <!-- Buttons will be dynamically generated based on role -->
-      </div>
+      <div id="navigationButtons" class="text-center mt-4"></div>
 
-      <!-- Form Sections (Page-like structure) -->
       <div id="formSections" class="mt-6">
-        <!-- Admin Forms -->
         <div id="adminForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Patients</h3>
           <div id="patientsList">
-            <p>List of patients will appear here...</p>
-            <!-- Simulate Patients List with Buttons to View -->
-            <ul>
+            <ul id="patientList">
+              <!-- List of realistic patient names -->
               <li>John Doe - <button class="button" onclick="viewPatientDetails('John Doe')">View Details</button></li>
               <li>Jane Smith - <button class="button" onclick="viewPatientDetails('Jane Smith')">View Details</button></li>
               <li>Mike Johnson - <button class="button" onclick="viewPatientDetails('Mike Johnson')">View Details</button></li>
+              <li>Emily Brown - <button class="button" onclick="viewPatientDetails('Emily Brown')">View Details</button></li>
+              <li>David Wilson - <button class="button" onclick="viewPatientDetails('David Wilson')">View Details</button></li>
+              <li>Sarah Davis - <button class="button" onclick="viewPatientDetails('Sarah Davis')">View Details</button></li>
             </ul>
           </div>
         </div>
 
-        <!-- View Reports Section -->
         <div id="viewReportsForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Reports</h3>
           <div id="reportsList">
-            <p>Reports will appear here...</p>
-            <!-- Simulate Report List -->
-            <ul>
+            <ul id="reportList">
+              <!-- List of realistic sample reports -->
               <li>Patient Status Report - <button class="button" onclick="viewReportDetails('Patient Status Report')">View</button></li>
               <li>Doctor Schedule - <button class="button" onclick="viewReportDetails('Doctor Schedule')">View</button></li>
               <li>Appointment Summary - <button class="button" onclick="viewReportDetails('Appointment Summary')">View</button></li>
+              <li>Monthly Financial Report - <button class="button" onclick="viewReportDetails('Monthly Financial Report')">View</button></li>
+              <li>Emergency Cases Summary - <button class="button" onclick="viewReportDetails('Emergency Cases Summary')">View</button></li>
+              <li>Patient Feedback Report - <button class="button" onclick="viewReportDetails('Patient Feedback Report')">View</button></li>
             </ul>
           </div>
         </div>
 
+        <div id="addDoctorForm" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add Doctor</h3>
+          <form id="doctorForm" class="space-y-4">
+            <input type="text" id="doctorName" placeholder="Doctor Name" class="form-input" required>
+            <input type="email" id="doctorEmail" placeholder="Doctor Email" class="form-input" required>
+            <input type="text" id="doctorSpecialty" placeholder="Specialty" class="form-input" required>
+            <input type="tel" id="doctorPhone" placeholder="Phone Number" class="form-input" required>
+            <button type="submit" class="button">Add Doctor</button>
+          </form>
+          <div id="doctorSuccessMessage" class="success-message hidden">Doctor added successfully!</div>
+        </div>
       </div>
 
     </div>
@@ -170,15 +181,15 @@
   </div>
 
   <script>
-    // Define the dashboard content for each role
     const dashboards = {
       admin: {
         title: "Admin Dashboard",
         tasks: [
           "Manage Patients",
           "View Reports",
+          "Add Doctor"
         ],
-        actions: ["Manage Patients", "View Reports"]
+        actions: ["Manage Patients", "View Reports", "Add Doctor"]
       },
       doctor: {
         title: "Doctor Dashboard",
@@ -238,10 +249,11 @@
         document.getElementById('adminForm').classList.add('visible');
       } else if (action === 'View Reports') {
         document.getElementById('viewReportsForm').classList.add('visible');
+      } else if (action === 'Add Doctor') {
+        document.getElementById('addDoctorForm').classList.add('visible');
       }
     }
 
-    // Handle patient details and report viewing
     function viewPatientDetails(patientName) {
       alert(`Viewing details for ${patientName}`);
     }
@@ -249,6 +261,18 @@
     function viewReportDetails(reportName) {
       alert(`Viewing details for ${reportName}`);
     }
+
+    document.getElementById('doctorForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById('doctorName').value;
+      const email = document.getElementById('doctorEmail').value;
+      const specialty = document.getElementById('doctorSpecialty').value;
+      const phone = document.getElementById('doctorPhone').value;
+
+      document.getElementById('doctorSuccessMessage').classList.remove('hidden');
+      document.getElementById('doctorForm').reset();
+    });
   </script>
 
 </body>
