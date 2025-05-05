@@ -135,46 +135,16 @@
 
       <!-- Form Sections (Page-like structure) -->
       <div id="formSections" class="mt-6">
-        <!-- Patient Registration Form -->
-        <div id="patientRegistrationForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
-          <form id="registrationForm" class="space-y-4">
-            <input type="text" id="patientName" placeholder="Full Name" class="form-input" required>
-            <input type="email" id="patientEmail" placeholder="Email Address" class="form-input" required>
-            <input type="tel" id="patientPhone" placeholder="Phone Number" class="form-input" required>
-            <button type="submit" class="button">Submit Registration</button>
-          </form>
-
-          <div id="registrationConfirmation" class="mt-4 hidden text-green-500 text-center">
-            <p>Registration successful! A confirmation email has been sent.</p>
-          </div>
-        </div>
-
-        <!-- Appointment Booking Form -->
-        <div id="appointmentFormSection" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Appointment Booking Form</h3>
-          <form id="appointmentForm" class="space-y-4">
-            <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input" required>
-            <input type="email" id="patientEmailApp" placeholder="Email Address" class="form-input" required>
-            <input type="date" id="appointmentDate" class="form-input" required>
-            <input type="time" id="appointmentTime" class="form-input" required>
-            <button type="submit" class="button">Book Appointment</button>
-          </form>
-
-          <div id="appointmentConfirmation" class="mt-4 hidden text-blue-500 text-center">
-            <p>Appointment booked successfully! A confirmation email has been sent.</p>
-          </div>
-        </div>
-
         <!-- Admin Forms -->
         <div id="adminForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Patients</h3>
           <div id="patientsList">
             <p>List of patients will appear here...</p>
-            <!-- Simulate Patients List -->
+            <!-- Simulate Patients List with Buttons to View -->
             <ul>
-              <li>John Doe - <button class="button" onclick="viewPatientDetails()">View Details</button></li>
-              <li>Jane Smith - <button class="button" onclick="viewPatientDetails()">View Details</button></li>
+              <li>John Doe - <button class="button" onclick="viewPatientDetails('John Doe')">View Details</button></li>
+              <li>Jane Smith - <button class="button" onclick="viewPatientDetails('Jane Smith')">View Details</button></li>
+              <li>Mike Johnson - <button class="button" onclick="viewPatientDetails('Mike Johnson')">View Details</button></li>
             </ul>
           </div>
         </div>
@@ -186,38 +156,10 @@
             <p>Reports will appear here...</p>
             <!-- Simulate Report List -->
             <ul>
-              <li>Patient Status Report - <button class="button" onclick="viewReportDetails()">View</button></li>
-              <li>Doctor Schedule - <button class="button" onclick="viewReportDetails()">View</button></li>
+              <li>Patient Status Report - <button class="button" onclick="viewReportDetails('Patient Status Report')">View</button></li>
+              <li>Doctor Schedule - <button class="button" onclick="viewReportDetails('Doctor Schedule')">View</button></li>
+              <li>Appointment Summary - <button class="button" onclick="viewReportDetails('Appointment Summary')">View</button></li>
             </ul>
-          </div>
-        </div>
-
-        <!-- Doctor Forms -->
-        <div id="doctorForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
-          <form id="prescriptionForm" class="space-y-4">
-            <input type="text" id="patientId" placeholder="Patient ID" class="form-input" required>
-            <textarea id="prescriptionDetails" placeholder="Prescription Details" class="form-input" rows="4" required></textarea>
-            <button type="submit" class="button">Send Prescription</button>
-          </form>
-
-          <div id="prescriptionConfirmation" class="mt-4 hidden text-green-500 text-center">
-            <p>Prescription sent successfully!</p>
-          </div>
-        </div>
-
-        <!-- Receptionist Forms -->
-        <div id="receptionForm" class="form-container page-break">
-          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Register New Patient</h3>
-          <form id="receptionPatientForm" class="space-y-4">
-            <input type="text" id="patientNameReception" placeholder="Full Name" class="form-input" required>
-            <input type="email" id="patientEmailReception" placeholder="Email Address" class="form-input" required>
-            <input type="tel" id="patientPhoneReception" placeholder="Phone Number" class="form-input" required>
-            <button type="submit" class="button">Submit Registration</button>
-          </form>
-
-          <div id="receptionConfirmation" class="mt-4 hidden text-green-500 text-center">
-            <p>Patient registered successfully!</p>
           </div>
         </div>
 
@@ -296,46 +238,16 @@
         document.getElementById('adminForm').classList.add('visible');
       } else if (action === 'View Reports') {
         document.getElementById('viewReportsForm').classList.add('visible');
-      } else if (action === 'Write Prescription') {
-        document.getElementById('doctorForm').classList.add('visible');
-      } else if (action === 'Register Patient') {
-        document.getElementById('receptionForm').classList.add('visible');
-      } else if (action === 'Book Appointment') {
-        document.getElementById('appointmentFormSection').classList.add('visible');
       }
     }
 
-    // Handle form submissions and show confirmations
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      document.getElementById('registrationConfirmation').classList.add('visible');
-      this.reset();
-    });
-
-    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      document.getElementById('appointmentConfirmation').classList.add('visible');
-      this.reset();
-    });
-
-    document.getElementById('receptionPatientForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      document.getElementById('receptionConfirmation').classList.add('visible');
-      this.reset();
-    });
-
-    document.getElementById('prescriptionForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      document.getElementById('prescriptionConfirmation').classList.add('visible');
-      this.reset();
-    });
-
-    function viewPatientDetails() {
-      alert("Viewing patient details...");
+    // Handle patient details and report viewing
+    function viewPatientDetails(patientName) {
+      alert(`Viewing details for ${patientName}`);
     }
 
-    function viewReportDetails() {
-      alert("Viewing report details...");
+    function viewReportDetails(reportName) {
+      alert(`Viewing details for ${reportName}`);
     }
   </script>
 
