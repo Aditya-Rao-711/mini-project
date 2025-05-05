@@ -41,10 +41,34 @@
       </div>
 
       <!-- Example Action Buttons -->
-      <div id="actionButtons" class="space-y-4 mt-8">
-        <button id="action1" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300">Take Action 1</button>
-        <button id="action2" class="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition duration-300">Take Action 2</button>
-        <button id="action3" class="w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition duration-300">Take Action 3</button>
+      <div id="actionButtons" class="space-y-4 mt-8"></div>
+    </div>
+
+    <!-- Forms Section -->
+    <div id="formsSection" class="mt-6 hidden">
+      <h3 class="text-xl font-semibold text-blue-600 mb-4">Patient Registration Form</h3>
+      <form id="registrationForm" class="space-y-4">
+        <input type="text" id="patientName" placeholder="Full Name" class="w-full p-3 border rounded-lg">
+        <input type="email" id="patientEmail" placeholder="Email Address" class="w-full p-3 border rounded-lg">
+        <input type="tel" id="patientPhone" placeholder="Phone Number" class="w-full p-3 border rounded-lg">
+        <button type="submit" class="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition duration-300">Submit Registration</button>
+      </form>
+
+      <div id="registrationConfirmation" class="mt-4 hidden text-green-500">
+        <p>Registration successful! A confirmation email has been sent.</p>
+      </div>
+
+      <h3 class="text-xl font-semibold text-blue-600 mt-8 mb-4">Appointment Booking Form</h3>
+      <form id="appointmentForm" class="space-y-4">
+        <input type="text" id="patientNameApp" placeholder="Full Name" class="w-full p-3 border rounded-lg">
+        <input type="email" id="patientEmailApp" placeholder="Email Address" class="w-full p-3 border rounded-lg">
+        <input type="date" id="appointmentDate" class="w-full p-3 border rounded-lg">
+        <input type="time" id="appointmentTime" class="w-full p-3 border rounded-lg">
+        <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300">Book Appointment</button>
+      </form>
+
+      <div id="appointmentConfirmation" class="mt-4 hidden text-blue-500">
+        <p>Appointment booked successfully! A confirmation email has been sent.</p>
       </div>
     </div>
 
@@ -96,13 +120,12 @@
       }
     };
 
-    // Function to show dashboard based on role
+    // Show Dashboard based on selected role
     function showDashboard() {
       const role = document.getElementById('role').value;
       const dashboard = document.getElementById('dashboard');
       const title = document.getElementById('roleTitle');
       const tasks = document.getElementById('roleTasks');
-      const content = document.getElementById('roleContent');
       const actionButtons = document.getElementById('actionButtons');
 
       if (!role) {
@@ -110,21 +133,47 @@
         return;
       }
 
-      // Set title and tasks based on selected role
       title.textContent = dashboards[role].title;
       tasks.innerHTML = dashboards[role].tasks.map(task => `<li class="text-lg">${task}</li>`).join("");
-
-      // Dynamically create action buttons for role
       actionButtons.innerHTML = dashboards[role].actions.map(action => {
-        return `
-          <button class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300">
-            ${action}
-          </button>
-        `;
+        return `<button class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300">${action}</button>`;
       }).join("");
 
       dashboard.classList.remove('hidden');
+      if (role === 'patient') {
+        showForms();
+      }
     }
+
+    // Show registration and appointment forms for patient role
+    function showForms() {
+      document.getElementById('formsSection').classList.remove('hidden');
+    }
+
+    // Registration form submission
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const name = document.getElementById('patientName').value;
+      const email = document.getElementById('patientEmail').value;
+      const phone = document.getElementById('patientPhone').value;
+
+      // Simulate email confirmation
+      document.getElementById('registrationConfirmation').classList.remove('hidden');
+      document.getElementById('registrationForm').reset();
+    });
+
+    // Appointment booking form submission
+    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const name = document.getElementById('patientNameApp').value;
+      const email = document.getElementById('patientEmailApp').value;
+      const date = document.getElementById('appointmentDate').value;
+      const time = document.getElementById('appointmentTime').value;
+
+      // Simulate email confirmation
+      document.getElementById('appointmentConfirmation').classList.remove('hidden');
+      document.getElementById('appointmentForm').reset();
+    });
   </script>
 
 </body>
