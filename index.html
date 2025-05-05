@@ -82,14 +82,12 @@
       background-color: #0056b3;
     }
 
-    /* Page Break Styling */
     .page-break {
       margin-top: 30px;
       border-top: 3px solid #ccc;
       padding-top: 30px;
     }
 
-    /* Button container to navigate between forms */
     #navigationButtons {
       display: flex;
       justify-content: center;
@@ -100,7 +98,6 @@
 </head>
 <body class="font-sans">
 
-  <!-- Main Container -->
   <div class="container max-w-lg mx-auto mt-10 rounded-lg">
 
     <!-- Header -->
@@ -138,7 +135,6 @@
 
       <!-- Form Sections (Page-like structure) -->
       <div id="formSections" class="mt-6">
-        
         <!-- Patient Registration Form -->
         <div id="patientRegistrationForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
@@ -179,6 +175,10 @@
             <input type="text" id="specialization" placeholder="Specialization" class="form-input" required>
             <button type="submit" class="button">Add Doctor</button>
           </form>
+
+          <div id="doctorAddedConfirmation" class="mt-4 hidden text-green-500 text-center">
+            <p>Doctor added successfully!</p>
+          </div>
         </div>
 
         <!-- Doctor Forms -->
@@ -189,6 +189,10 @@
             <textarea id="prescriptionDetails" placeholder="Prescription Details" class="form-input" rows="4" required></textarea>
             <button type="submit" class="button">Send Prescription</button>
           </form>
+
+          <div id="prescriptionConfirmation" class="mt-4 hidden text-green-500 text-center">
+            <p>Prescription sent successfully!</p>
+          </div>
         </div>
 
         <!-- Receptionist Forms -->
@@ -200,10 +204,12 @@
             <input type="tel" placeholder="Phone Number" class="form-input" required>
             <button type="submit" class="button">Register</button>
           </form>
+
+          <div id="receptionConfirmation" class="mt-4 hidden text-green-500 text-center">
+            <p>Patient registered successfully!</p>
+          </div>
         </div>
-
       </div>
-
     </div>
 
   </div>
@@ -253,14 +259,13 @@
       }
     };
 
-    // Show Dashboard and role-specific forms
     function showDashboard() {
       const role = document.getElementById('role').value;
       const dashboard = document.getElementById('dashboard');
       const title = document.getElementById('roleTitle');
-      const navigationButtons = document.getElementById('navigationButtons');
       const formSections = document.getElementById('formSections');
-      
+      const navigationButtons = document.getElementById('navigationButtons');
+
       if (!role) {
         alert("Please select a role.");
         return;
@@ -268,46 +273,61 @@
 
       title.textContent = dashboards[role].title;
 
-      // Display navigation buttons
       navigationButtons.innerHTML = dashboards[role].actions.map(action => {
         return `<button class="nav-button" onclick="showForm('${action}')">${action}</button>`;
       }).join("");
 
       dashboard.classList.remove('hidden');
-      
-      // Hide all form sections initially
-      formSections.querySelectorAll('.form-container').forEach(form => form.classList.remove('visible'));
     }
 
-    // Show specific form section based on the selected action
     function showForm(action) {
-      const role = document.getElementById('role').value;
       const formSections = document.getElementById('formSections');
-      
+
       formSections.querySelectorAll('.form-container').forEach(form => form.classList.remove('visible'));
 
-      if (role === 'patient') {
-        if (action === 'Book Appointment') {
-          document.getElementById('appointmentFormSection').classList.add('visible');
-        } else if (action === 'View Medical History') {
-          alert("Medical History - Feature not implemented yet.");
-        } else {
-          alert("Unknown action.");
-        }
-      } else if (role === 'admin') {
-        if (action === 'Manage Doctors') {
-          document.getElementById('adminForm').classList.add('visible');
-        }
-      } else if (role === 'doctor') {
-        if (action === 'Write Prescription') {
-          document.getElementById('doctorForm').classList.add('visible');
-        }
-      } else if (role === 'receptionist') {
-        if (action === 'Register Patient') {
-          document.getElementById('receptionForm').classList.add('visible');
-        }
+      if (action === 'Book Appointment') {
+        document.getElementById('appointmentFormSection').classList.add('visible');
+      } else if (action === 'View Medical History') {
+        alert("Medical History - Feature not implemented yet.");
+      } else if (action === 'Register Patient') {
+        document.getElementById('receptionForm').classList.add('visible');
+      } else if (action === 'Manage Doctors') {
+        document.getElementById('adminForm').classList.add('visible');
+      } else if (action === 'Write Prescription') {
+        document.getElementById('doctorForm').classList.add('visible');
       }
     }
+
+    // Form submissions
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('registrationConfirmation').classList.add('visible');
+      this.reset();
+    });
+
+    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('appointmentConfirmation').classList.add('visible');
+      this.reset();
+    });
+
+    document.getElementById('adminDoctorForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('doctorAddedConfirmation').classList.add('visible');
+      this.reset();
+    });
+
+    document.getElementById('prescriptionForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('prescriptionConfirmation').classList.add('visible');
+      this.reset();
+    });
+
+    document.getElementById('receptionPatientForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('receptionConfirmation').classList.add('visible');
+      this.reset();
+    });
   </script>
 
 </body>
