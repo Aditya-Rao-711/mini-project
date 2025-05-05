@@ -101,6 +101,19 @@
       text-align: center;
       margin-top: 10px;
     }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
   </style>
 </head>
 <body class="font-sans">
@@ -134,6 +147,7 @@
       <div id="navigationButtons" class="text-center mt-4"></div>
 
       <div id="formSections" class="mt-6">
+        <!-- Doctor Write Prescription Section -->
         <div id="doctorPrescriptionForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
           <form id="prescriptionForm" class="space-y-4">
@@ -146,40 +160,42 @@
           <div id="prescriptionSuccess" class="success-message hidden">Prescription added successfully!</div>
         </div>
 
+        <!-- Doctor View Appointments Section -->
         <div id="doctorAppointments" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">View Appointments</h3>
-          <table class="table-auto w-full border-collapse border border-gray-300">
+          <table>
             <thead>
               <tr>
-                <th class="border px-4 py-2">Patient Name</th>
-                <th class="border px-4 py-2">Appointment Date</th>
-                <th class="border px-4 py-2">Time</th>
-                <th class="border px-4 py-2">View</th>
+                <th>Patient Name</th>
+                <th>Appointment Date</th>
+                <th>Time</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="border px-4 py-2">John Doe</td>
-                <td class="border px-4 py-2">2025-05-10</td>
-                <td class="border px-4 py-2">10:00 AM</td>
-                <td class="border px-4 py-2"><button class="button" onclick="viewAppointmentDetails('John Doe')">View</button></td>
+                <td>John Doe</td>
+                <td>2025-05-10</td>
+                <td>10:00 AM</td>
+                <td><button class="button" onclick="viewAppointmentDetails('John Doe')">View</button></td>
               </tr>
               <tr>
-                <td class="border px-4 py-2">Jane Smith</td>
-                <td class="border px-4 py-2">2025-05-11</td>
-                <td class="border px-4 py-2">11:00 AM</td>
-                <td class="border px-4 py-2"><button class="button" onclick="viewAppointmentDetails('Jane Smith')">View</button></td>
+                <td>Jane Smith</td>
+                <td>2025-05-11</td>
+                <td>11:00 AM</td>
+                <td><button class="button" onclick="viewAppointmentDetails('Jane Smith')">View</button></td>
               </tr>
               <tr>
-                <td class="border px-4 py-2">Mike Johnson</td>
-                <td class="border px-4 py-2">2025-05-12</td>
-                <td class="border px-4 py-2">2:00 PM</td>
-                <td class="border px-4 py-2"><button class="button" onclick="viewAppointmentDetails('Mike Johnson')">View</button></td>
+                <td>Mike Johnson</td>
+                <td>2025-05-12</td>
+                <td>2:00 PM</td>
+                <td><button class="button" onclick="viewAppointmentDetails('Mike Johnson')">View</button></td>
               </tr>
             </tbody>
           </table>
         </div>
 
+        <!-- Patient Consultation Section -->
         <div id="patientConsultationForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Consultation</h3>
           <form id="consultationForm" class="space-y-4">
@@ -190,6 +206,7 @@
           <div id="consultationSuccess" class="success-message hidden">Consultation notes saved successfully!</div>
         </div>
 
+        <!-- Appointments Chart Section -->
         <div id="doctorDashboardChart" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Appointments by Day</h3>
           <canvas id="appointmentsChart"></canvas>
@@ -296,7 +313,7 @@
       alert(`Viewing appointment details for ${patientName}`);
     }
 
-    // Sample chart
+    // Sample chart for appointments
     var ctx = document.getElementById('appointmentsChart').getContext('2d');
     var appointmentsChart = new Chart(ctx, {
       type: 'line',
