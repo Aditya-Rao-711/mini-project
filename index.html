@@ -271,6 +271,76 @@
           <div id="consultationSuccess" class="success-message hidden">Consultation submitted successfully!</div>
         </div>
 
+        <!-- Patient: View Profile Section -->
+        <div id="patientProfile" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Profile</h3>
+          <form id="patientProfileForm" class="space-y-4">
+            <input type="text" id="patientNameField" placeholder="Full Name" class="form-input" required>
+            <input type="email" id="patientEmail" placeholder="Email" class="form-input" required>
+            <input type="text" id="patientAge" placeholder="Age" class="form-input" required>
+            <input type="tel" id="patientPhone" placeholder="Phone" class="form-input" required>
+            <button type="submit" class="button">Save Profile</button>
+          </form>
+        </div>
+
+        <!-- Receptionist: Manage Appointments Section -->
+        <div id="receptionistManageAppointments" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Appointments</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Appointment Date</th>
+                <th>Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>2025-05-10</td>
+                <td>10:00 AM</td>
+                <td><button class="button">Edit</button></td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>2025-05-11</td>
+                <td>11:00 AM</td>
+                <td><button class="button">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Receptionist: Manage Patient Admissions Section -->
+        <div id="receptionistManagePatients" class="form-container page-break">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Manage Patient Admissions</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Condition</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>45</td>
+                <td>Flu</td>
+                <td><button class="button">Admit</button></td>
+              </tr>
+              <tr>
+                <td>Mary Johnson</td>
+                <td>60</td>
+                <td>Asthma</td>
+                <td><button class="button">Admit</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
 
@@ -285,7 +355,15 @@
       doctor: {
         title: "Doctor Dashboard",
         actions: ["Write Prescription", "View Appointments", "Patient Consultation"],
-      }
+      },
+      patient: {
+        title: "Patient Dashboard",
+        actions: ["View Profile", "View Appointments", "View Prescriptions"],
+      },
+      receptionist: {
+        title: "Receptionist Dashboard",
+        actions: ["Manage Appointments", "Manage Patient Admissions"],
+      },
     };
 
     function showDashboard() {
@@ -329,9 +407,20 @@
           break;
         case 'View Appointments':
           document.getElementById('doctorAppointments').classList.add('visible');
+          document.getElementById('patientProfile').classList.add('visible');
+          document.getElementById('receptionistManageAppointments').classList.add('visible');
           break;
         case 'Patient Consultation':
           document.getElementById('patientConsultationForm').classList.add('visible');
+          break;
+        case 'View Profile':
+          document.getElementById('patientProfile').classList.add('visible');
+          break;
+        case 'Manage Appointments':
+          document.getElementById('receptionistManageAppointments').classList.add('visible');
+          break;
+        case 'Manage Patient Admissions':
+          document.getElementById('receptionistManagePatients').classList.add('visible');
           break;
       }
     }
@@ -353,7 +442,12 @@
       document.getElementById('consultationSuccess').classList.add('visible');
       document.getElementById('consultationForm').reset();
     });
-  </script>
 
+    document.getElementById('patientProfileForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      alert('Profile updated!');
+    });
+
+  </script>
 </body>
 </html>
