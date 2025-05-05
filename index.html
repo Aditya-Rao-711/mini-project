@@ -58,14 +58,15 @@
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none; /* Hidden by default */
+    }
+
+    .visible {
+      display: block; /* Visible when active */
     }
 
     h2, h3 {
       color: #0056b3;
-    }
-
-    .hidden {
-      display: none;
     }
 
     .nav-button {
@@ -81,6 +82,20 @@
       background-color: #0056b3;
     }
 
+    /* Page Break Styling */
+    .page-break {
+      margin-top: 30px;
+      border-top: 3px solid #ccc;
+      padding-top: 30px;
+    }
+
+    /* Button container to navigate between forms */
+    #navigationButtons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body class="font-sans">
@@ -121,11 +136,11 @@
         <!-- Buttons will be dynamically generated based on role -->
       </div>
 
-      <!-- Form Sections -->
+      <!-- Form Sections (Page-like structure) -->
       <div id="formSections" class="mt-6">
-
-        <!-- Patient Forms -->
-        <div id="patientRegistrationForm" class="form-container hidden">
+        
+        <!-- Patient Registration Form -->
+        <div id="patientRegistrationForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
           <form id="registrationForm" class="space-y-4">
             <input type="text" id="patientName" placeholder="Full Name" class="form-input" required>
@@ -140,7 +155,7 @@
         </div>
 
         <!-- Appointment Booking Form -->
-        <div id="appointmentFormSection" class="form-container hidden">
+        <div id="appointmentFormSection" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Appointment Booking Form</h3>
           <form id="appointmentForm" class="space-y-4">
             <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input" required>
@@ -156,7 +171,7 @@
         </div>
 
         <!-- Admin Forms -->
-        <div id="adminForm" class="form-container hidden">
+        <div id="adminForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add New Doctor</h3>
           <form id="adminDoctorForm" class="space-y-4">
             <input type="text" id="doctorName" placeholder="Doctor Name" class="form-input" required>
@@ -167,7 +182,7 @@
         </div>
 
         <!-- Doctor Forms -->
-        <div id="doctorForm" class="form-container hidden">
+        <div id="doctorForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
           <form id="prescriptionForm" class="space-y-4">
             <input type="text" id="patientId" placeholder="Patient ID" class="form-input" required>
@@ -177,7 +192,7 @@
         </div>
 
         <!-- Receptionist Forms -->
-        <div id="receptionForm" class="form-container hidden">
+        <div id="receptionForm" class="form-container page-break">
           <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Register New Patient</h3>
           <form id="receptionPatientForm" class="space-y-4">
             <input type="text" placeholder="Full Name" class="form-input" required>
@@ -188,6 +203,7 @@
         </div>
 
       </div>
+
     </div>
 
   </div>
@@ -258,9 +274,9 @@
       }).join("");
 
       dashboard.classList.remove('hidden');
-
+      
       // Hide all form sections initially
-      formSections.querySelectorAll('.form-container').forEach(form => form.classList.add('hidden'));
+      formSections.querySelectorAll('.form-container').forEach(form => form.classList.remove('visible'));
     }
 
     // Show specific form section based on the selected action
@@ -268,11 +284,11 @@
       const role = document.getElementById('role').value;
       const formSections = document.getElementById('formSections');
       
-      formSections.querySelectorAll('.form-container').forEach(form => form.classList.add('hidden'));
+      formSections.querySelectorAll('.form-container').forEach(form => form.classList.remove('visible'));
 
       if (role === 'patient') {
         if (action === 'Book Appointment') {
-          document.getElementById('appointmentFormSection').classList.remove('hidden');
+          document.getElementById('appointmentFormSection').classList.add('visible');
         } else if (action === 'View Medical History') {
           alert("Medical History - Feature not implemented yet.");
         } else {
@@ -280,15 +296,15 @@
         }
       } else if (role === 'admin') {
         if (action === 'Manage Doctors') {
-          document.getElementById('adminForm').classList.remove('hidden');
+          document.getElementById('adminForm').classList.add('visible');
         }
       } else if (role === 'doctor') {
         if (action === 'Write Prescription') {
-          document.getElementById('doctorForm').classList.remove('hidden');
+          document.getElementById('doctorForm').classList.add('visible');
         }
       } else if (role === 'receptionist') {
         if (action === 'Register Patient') {
-          document.getElementById('receptionForm').classList.remove('hidden');
+          document.getElementById('receptionForm').classList.add('visible');
         }
       }
     }
