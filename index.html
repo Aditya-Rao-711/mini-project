@@ -148,9 +148,9 @@
     <div id="formsSection" class="mt-6 hidden form-container">
       <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
       <form id="registrationForm" class="space-y-4">
-        <input type="text" id="patientName" placeholder="Full Name" class="form-input">
-        <input type="email" id="patientEmail" placeholder="Email Address" class="form-input">
-        <input type="tel" id="patientPhone" placeholder="Phone Number" class="form-input">
+        <input type="text" id="patientName" placeholder="Full Name" class="form-input" required>
+        <input type="email" id="patientEmail" placeholder="Email Address" class="form-input" required>
+        <input type="tel" id="patientPhone" placeholder="Phone Number" class="form-input" required>
         <button type="submit" class="button">Submit Registration</button>
       </form>
 
@@ -160,10 +160,10 @@
 
       <h3 class="text-xl font-semibold text-center text-blue-600 mt-8 mb-4">Appointment Booking Form</h3>
       <form id="appointmentForm" class="space-y-4">
-        <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input">
-        <input type="email" id="patientEmailApp" placeholder="Email Address" class="form-input">
-        <input type="date" id="appointmentDate" class="form-input">
-        <input type="time" id="appointmentTime" class="form-input">
+        <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input" required>
+        <input type="email" id="patientEmailApp" placeholder="Email Address" class="form-input" required>
+        <input type="date" id="appointmentDate" class="form-input" required>
+        <input type="time" id="appointmentTime" class="form-input" required>
         <button type="submit" class="button">Book Appointment</button>
       </form>
 
@@ -176,16 +176,16 @@
     <div id="receptionistSection" class="mt-6 hidden form-container">
       <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Receptionist Actions</h3>
       <form id="patientAdmissionForm" class="space-y-4">
-        <input type="text" id="patientAdmissionName" placeholder="Patient Full Name" class="form-input">
-        <input type="text" id="patientAdmissionDetails" placeholder="Admission Details" class="form-input">
+        <input type="text" id="patientAdmissionName" placeholder="Patient Full Name" class="form-input" required>
+        <input type="text" id="patientAdmissionDetails" placeholder="Admission Details" class="form-input" required>
         <button type="submit" class="button">Admit Patient</button>
       </form>
 
       <h3 class="text-xl font-semibold text-center text-blue-600 mt-8 mb-4">Schedule Appointment Form</h3>
       <form id="appointmentScheduleForm" class="space-y-4">
-        <input type="text" id="patientScheduleName" placeholder="Patient Full Name" class="form-input">
-        <input type="date" id="appointmentScheduleDate" class="form-input">
-        <input type="time" id="appointmentScheduleTime" class="form-input">
+        <input type="text" id="patientScheduleName" placeholder="Patient Full Name" class="form-input" required>
+        <input type="date" id="appointmentScheduleDate" class="form-input" required>
+        <input type="time" id="appointmentScheduleTime" class="form-input" required>
         <button type="submit" class="button">Schedule Appointment</button>
       </form>
     </div>
@@ -296,6 +296,9 @@
 
       // Simulate email confirmation
       document.getElementById('appointmentConfirmation').classList.remove('hidden');
+      document.getElementById('appointmentConfirmation').innerHTML = `
+        <p>Appointment booked for ${name} on ${date} at ${time}. A confirmation email has been sent to ${email}.</p>
+      `;
       document.getElementById('appointmentForm').reset();
     });
 
@@ -319,7 +322,7 @@
       const time = document.getElementById('appointmentScheduleTime').value;
 
       // Simulate appointment scheduling success
-      const message = `<div class="form-message">Appointment for ${name} scheduled on ${date} at ${time}</div>`;
+      const message = `<div class="form-message">Appointment scheduled for ${name} on ${date} at ${time}</div>`;
       document.getElementById('appointmentScheduleForm').insertAdjacentHTML('afterend', message);
       document.getElementById('appointmentScheduleForm').reset();
     });
