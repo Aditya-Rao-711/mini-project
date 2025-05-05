@@ -151,7 +151,7 @@
       <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
       <form id="prescriptionForm" class="space-y-4">
         <input type="text" id="patientId" placeholder="Patient ID" class="form-input" required>
-        <textarea id="prescriptionDetails" placeholder="Prescription Details" class="form-input" rows="4"></textarea>
+        <textarea id="prescriptionDetails" placeholder="Prescription Details" class="form-input" rows="4" required></textarea>
         <button type="submit" class="button">Send Prescription</button>
       </form>
     </div>
@@ -263,6 +263,12 @@
       const name = document.getElementById('patientName').value;
       const email = document.getElementById('patientEmail').value;
       const phone = document.getElementById('patientPhone').value;
+      
+      if (!name || !email || !phone) {
+        alert("Please fill all fields");
+        return;
+      }
+
       document.getElementById('registrationConfirmation').classList.remove('hidden');
       this.reset();
     });
@@ -273,6 +279,12 @@
       const email = document.getElementById('patientEmailApp').value;
       const date = document.getElementById('appointmentDate').value;
       const time = document.getElementById('appointmentTime').value;
+
+      if (!name || !email || !date || !time) {
+        alert("Please fill all fields");
+        return;
+      }
+
       document.getElementById('appointmentConfirmation').classList.remove('hidden');
       this.reset();
     });
