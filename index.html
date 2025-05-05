@@ -63,6 +63,24 @@
     h2, h3 {
       color: #0056b3;
     }
+
+    .hidden {
+      display: none;
+    }
+
+    .nav-button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .nav-button:hover {
+      background-color: #0056b3;
+    }
+
   </style>
 </head>
 <body class="font-sans">
@@ -98,79 +116,83 @@
     <div id="dashboard" class="mt-6 hidden">
       <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-4"></h2>
 
-      <!-- Dashboard Content -->
-      <div id="roleTasksContainer" class="space-y-4">
-        <ul id="roleTasks" class="list-disc pl-6 text-lg text-gray-700"></ul>
+      <!-- Navigation Buttons for Forms -->
+      <div id="navigationButtons" class="text-center mt-4">
+        <!-- Buttons will be dynamically generated based on role -->
       </div>
 
-      <!-- Example Action Buttons -->
-      <div id="actionButtons" class="space-y-4 mt-8"></div>
-    </div>
+      <!-- Form Sections -->
+      <div id="formSections" class="mt-6">
 
-    <!-- Forms Section for Patient -->
-    <div id="formsSection" class="mt-6 hidden form-container">
-      <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
-      <form id="registrationForm" class="space-y-4">
-        <input type="text" id="patientName" placeholder="Full Name" class="form-input" required>
-        <input type="email" id="patientEmail" placeholder="Email Address" class="form-input" required>
-        <input type="tel" id="patientPhone" placeholder="Phone Number" class="form-input" required>
-        <button type="submit" class="button">Submit Registration</button>
-      </form>
+        <!-- Patient Forms -->
+        <div id="patientRegistrationForm" class="form-container hidden">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
+          <form id="registrationForm" class="space-y-4">
+            <input type="text" id="patientName" placeholder="Full Name" class="form-input" required>
+            <input type="email" id="patientEmail" placeholder="Email Address" class="form-input" required>
+            <input type="tel" id="patientPhone" placeholder="Phone Number" class="form-input" required>
+            <button type="submit" class="button">Submit Registration</button>
+          </form>
 
-      <div id="registrationConfirmation" class="mt-4 hidden text-green-500 text-center">
-        <p>Registration successful! A confirmation email has been sent.</p>
+          <div id="registrationConfirmation" class="mt-4 hidden text-green-500 text-center">
+            <p>Registration successful! A confirmation email has been sent.</p>
+          </div>
+        </div>
+
+        <!-- Appointment Booking Form -->
+        <div id="appointmentFormSection" class="form-container hidden">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Appointment Booking Form</h3>
+          <form id="appointmentForm" class="space-y-4">
+            <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input" required>
+            <input type="email" id="patientEmailApp" placeholder="Email Address" class="form-input" required>
+            <input type="date" id="appointmentDate" class="form-input" required>
+            <input type="time" id="appointmentTime" class="form-input" required>
+            <button type="submit" class="button">Book Appointment</button>
+          </form>
+
+          <div id="appointmentConfirmation" class="mt-4 hidden text-blue-500 text-center">
+            <p>Appointment booked successfully! A confirmation email has been sent.</p>
+          </div>
+        </div>
+
+        <!-- Admin Forms -->
+        <div id="adminForm" class="form-container hidden">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add New Doctor</h3>
+          <form id="adminDoctorForm" class="space-y-4">
+            <input type="text" id="doctorName" placeholder="Doctor Name" class="form-input" required>
+            <input type="email" id="doctorEmail" placeholder="Email" class="form-input" required>
+            <input type="text" id="specialization" placeholder="Specialization" class="form-input" required>
+            <button type="submit" class="button">Add Doctor</button>
+          </form>
+        </div>
+
+        <!-- Doctor Forms -->
+        <div id="doctorForm" class="form-container hidden">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
+          <form id="prescriptionForm" class="space-y-4">
+            <input type="text" id="patientId" placeholder="Patient ID" class="form-input" required>
+            <textarea id="prescriptionDetails" placeholder="Prescription Details" class="form-input" rows="4" required></textarea>
+            <button type="submit" class="button">Send Prescription</button>
+          </form>
+        </div>
+
+        <!-- Receptionist Forms -->
+        <div id="receptionForm" class="form-container hidden">
+          <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Register New Patient</h3>
+          <form id="receptionPatientForm" class="space-y-4">
+            <input type="text" placeholder="Full Name" class="form-input" required>
+            <input type="email" placeholder="Email" class="form-input" required>
+            <input type="tel" placeholder="Phone Number" class="form-input" required>
+            <button type="submit" class="button">Register</button>
+          </form>
+        </div>
+
       </div>
-
-      <h3 class="text-xl font-semibold text-center text-blue-600 mt-8 mb-4">Appointment Booking Form</h3>
-      <form id="appointmentForm" class="space-y-4">
-        <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input" required>
-        <input type="email" id="patientEmailApp" placeholder="Email Address" class="form-input" required>
-        <input type="date" id="appointmentDate" class="form-input" required>
-        <input type="time" id="appointmentTime" class="form-input" required>
-        <button type="submit" class="button">Book Appointment</button>
-      </form>
-
-      <div id="appointmentConfirmation" class="mt-4 hidden text-blue-500 text-center">
-        <p>Appointment booked successfully! A confirmation email has been sent.</p>
-      </div>
-    </div>
-
-    <!-- Admin Section -->
-    <div id="adminSection" class="mt-6 hidden form-container">
-      <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Add New Doctor</h3>
-      <form id="adminDoctorForm" class="space-y-4">
-        <input type="text" id="doctorName" placeholder="Doctor Name" class="form-input" required>
-        <input type="email" id="doctorEmail" placeholder="Email" class="form-input" required>
-        <input type="text" id="specialization" placeholder="Specialization" class="form-input" required>
-        <button type="submit" class="button">Add Doctor</button>
-      </form>
-    </div>
-
-    <!-- Doctor Section -->
-    <div id="doctorSection" class="mt-6 hidden form-container">
-      <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Write Prescription</h3>
-      <form id="prescriptionForm" class="space-y-4">
-        <input type="text" id="patientId" placeholder="Patient ID" class="form-input" required>
-        <textarea id="prescriptionDetails" placeholder="Prescription Details" class="form-input" rows="4" required></textarea>
-        <button type="submit" class="button">Send Prescription</button>
-      </form>
-    </div>
-
-    <!-- Receptionist Section -->
-    <div id="receptionSection" class="mt-6 hidden form-container">
-      <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Register New Patient</h3>
-      <form id="receptionPatientForm" class="space-y-4">
-        <input type="text" placeholder="Full Name" class="form-input" required>
-        <input type="email" placeholder="Email" class="form-input" required>
-        <input type="tel" placeholder="Phone Number" class="form-input" required>
-        <button type="submit" class="button">Register</button>
-      </form>
     </div>
 
   </div>
 
   <script>
-    // Define the dashboard content for each role
     const dashboards = {
       admin: {
         title: "Admin Dashboard",
@@ -215,97 +237,61 @@
       }
     };
 
-    // Show Dashboard based on selected role
+    // Show Dashboard and role-specific forms
     function showDashboard() {
       const role = document.getElementById('role').value;
       const dashboard = document.getElementById('dashboard');
       const title = document.getElementById('roleTitle');
-      const tasks = document.getElementById('roleTasks');
-      const actionButtons = document.getElementById('actionButtons');
-      const formsSection = document.getElementById('formsSection');
-      const adminSection = document.getElementById('adminSection');
-      const doctorSection = document.getElementById('doctorSection');
-      const receptionSection = document.getElementById('receptionSection');
-
-      // Hide all sections
-      formsSection.classList.add('hidden');
-      adminSection.classList.add('hidden');
-      doctorSection.classList.add('hidden');
-      receptionSection.classList.add('hidden');
-      dashboard.classList.add('hidden');
-
+      const navigationButtons = document.getElementById('navigationButtons');
+      const formSections = document.getElementById('formSections');
+      
       if (!role) {
         alert("Please select a role.");
         return;
       }
 
       title.textContent = dashboards[role].title;
-      tasks.innerHTML = dashboards[role].tasks.map(task => `<li class="text-lg">${task}</li>`).join("");
-      actionButtons.innerHTML = dashboards[role].actions.map(action => `<button class="button">${action}</button>`).join("");
+
+      // Display navigation buttons
+      navigationButtons.innerHTML = dashboards[role].actions.map(action => {
+        return `<button class="nav-button" onclick="showForm('${action}')">${action}</button>`;
+      }).join("");
 
       dashboard.classList.remove('hidden');
 
-      // Show role-specific forms
-      if (role === 'patient') {
-        formsSection.classList.remove('hidden');
-      } else if (role === 'admin') {
-        adminSection.classList.remove('hidden');
-      } else if (role === 'doctor') {
-        doctorSection.classList.remove('hidden');
-      } else if (role === 'receptionist') {
-        receptionSection.classList.remove('hidden');
-      }
+      // Hide all form sections initially
+      formSections.querySelectorAll('.form-container').forEach(form => form.classList.add('hidden'));
     }
 
-    // Handle form submissions for each role
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientName').value;
-      const email = document.getElementById('patientEmail').value;
-      const phone = document.getElementById('patientPhone').value;
+    // Show specific form section based on the selected action
+    function showForm(action) {
+      const role = document.getElementById('role').value;
+      const formSections = document.getElementById('formSections');
       
-      if (!name || !email || !phone) {
-        alert("Please fill all fields");
-        return;
+      formSections.querySelectorAll('.form-container').forEach(form => form.classList.add('hidden'));
+
+      if (role === 'patient') {
+        if (action === 'Book Appointment') {
+          document.getElementById('appointmentFormSection').classList.remove('hidden');
+        } else if (action === 'View Medical History') {
+          alert("Medical History - Feature not implemented yet.");
+        } else {
+          alert("Unknown action.");
+        }
+      } else if (role === 'admin') {
+        if (action === 'Manage Doctors') {
+          document.getElementById('adminForm').classList.remove('hidden');
+        }
+      } else if (role === 'doctor') {
+        if (action === 'Write Prescription') {
+          document.getElementById('doctorForm').classList.remove('hidden');
+        }
+      } else if (role === 'receptionist') {
+        if (action === 'Register Patient') {
+          document.getElementById('receptionForm').classList.remove('hidden');
+        }
       }
-
-      document.getElementById('registrationConfirmation').classList.remove('hidden');
-      this.reset();
-    });
-
-    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientNameApp').value;
-      const email = document.getElementById('patientEmailApp').value;
-      const date = document.getElementById('appointmentDate').value;
-      const time = document.getElementById('appointmentTime').value;
-
-      if (!name || !email || !date || !time) {
-        alert("Please fill all fields");
-        return;
-      }
-
-      document.getElementById('appointmentConfirmation').classList.remove('hidden');
-      this.reset();
-    });
-
-    document.getElementById('adminDoctorForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      alert("Doctor added successfully.");
-      this.reset();
-    });
-
-    document.getElementById('prescriptionForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      alert("Prescription sent.");
-      this.reset();
-    });
-
-    document.getElementById('receptionPatientForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      alert("Patient registered.");
-      this.reset();
-    });
+    }
   </script>
 
 </body>
