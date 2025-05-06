@@ -151,12 +151,12 @@
         }
       }
 
-      // Doctor actions (✅ Fixed here)
+      // Doctor actions
       else if (role === "doctor") {
         if (actionKey === "writePrescription") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
               <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
@@ -165,13 +165,13 @@
           content = `
             <h3 class="text-xl font-semibold text-blue-600">View Appointments</h3>
             <table class="w-full border mt-4">
-              <thead><tr class="bg-blue-100"><th class="p-2">Date</th><th class="p-2">Patient</th></tr></thead>
-              <tbody><tr><td class="p-2">2025-05-07</td><td class="p-2">John Doe</td></tr></tbody>
+              <thead><tr class="bg-blue-100"><th class="p-2">Patient</th><th class="p-2">Date</th></tr></thead>
+              <tbody><tr><td class="p-2">John Doe</td><td class="p-2">2025-05-10</td></tr></tbody>
             </table>`;
         } else if (actionKey === "patientConsultation") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Patient Consultation</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
               <textarea placeholder="Consultation Notes" class="form-input w-full p-3 border rounded-lg" required></textarea>
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
@@ -179,11 +179,11 @@
         }
       }
 
-      // Patient, Receptionist — already working (unchanged)
+      // Patient actions
       else if (role === "patient") {
         if (actionKey === "bookAppointment") {
           content = `<h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="date" class="form-input w-full p-3 border rounded-lg" required />
               <textarea placeholder="Reason for Visit" class="form-input w-full p-3 border rounded-lg" required></textarea>
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book</button>
@@ -194,16 +194,19 @@
         } else if (actionKey === "requestConsultation") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Request Consultation</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="text" placeholder="Consultation Reason" class="form-input w-full p-3 border rounded-lg" required />
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Request</button>
             </form>`;
         }
-      } else if (role === "receptionist") {
+      }
+
+      // Receptionist actions
+      else if (role === "receptionist") {
         if (actionKey === "registerPatient") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Register Patient</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
               <input type="text" placeholder="Admission Details" class="form-input w-full p-3 border rounded-lg" required />
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Register</button>
@@ -211,7 +214,7 @@
         } else if (actionKey === "scheduleAppointment") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Schedule Appointment</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="date" class="form-input w-full p-3 border rounded-lg" required />
               <textarea placeholder="Reason for Visit" class="form-input w-full p-3 border rounded-lg" required></textarea>
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Schedule</button>
@@ -224,8 +227,6 @@
               <tbody><tr><td class="p-2">John Doe</td><td class="p-2">$200</td><td class="p-2">Paid</td></tr></tbody>
             </table>`;
         }
-      } else {
-        content = `<p class="text-red-500">Unknown action selected.</p>`;
       }
 
       modalContent.innerHTML = content;
@@ -236,6 +237,51 @@
       const modal = document.getElementById("modalContainer");
       modal.classList.add("hidden");
       document.getElementById("modalContent").innerHTML = '';
+    }
+
+    function validateForm(form) {
+      const inputs = form.querySelectorAll("input, textarea");
+      for (let input of inputs) {
+        const value = input.value.trim();
+        const type = input.getAttribute("type");
+
+        if (input.hasAttribute("required") && !value) {
+          alert(`${input.placeholder || 'This field'} is required.`);
+          input.focus();
+          return false;
+        }
+
+        if (type === "email") {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            alert("Please enter a valid email address.");
+            input.focus();
+            return false;
+          }
+        }
+
+        if (type === "tel") {
+          const phoneRegex = /^\d{10}$/;
+          if (!phoneRegex.test(value)) {
+            alert("Please enter a valid 10-digit phone number.");
+            input.focus();
+            return false;
+          }
+        }
+
+        if (type === "date") {
+          const inputDate = new Date(value);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          if (inputDate < today) {
+            alert("Please select a valid date.");
+            input.focus();
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
   </script>
 
