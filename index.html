@@ -139,14 +139,41 @@
   </div>
 
   <!-- Hero Section -->
-  <div class="hero">
-    <h2>Welcome to the Hospital Management System</h2>
-    <p>Your healthcare, simplified with technology.</p>
-  </div>
+<body class="font-sans">
 
-  <!-- Login Form -->
-  <div class="container">
-    <h2 class="text-2xl font-semibold text-center">Login to Your Account</h2>
+  <!-- Header Section -->
+ <header class="bg-teal-800 text-white p-4 flex justify-between items-center">
+  <div class="logo flex items-center">
+    <!-- Replace with your logo path -->
+    <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" alt="Hospital Logo" class="h-20 w-auto"> <!-- Adjust height and width -->
+  </div>
+  <button class="logout-btn bg-red-600 text-white px-4 py-2 rounded-md" onclick="logout()">Logout</button>
+</header>
+
+
+
+
+  <!-- Main Container -->
+  <div class="container max-w-lg mx-auto mt-28 rounded-lg bg-white/80 p-8 shadow-xl">
+    <div class="bg-blue-700 text-white text-center p-6 rounded-lg">
+      <h1 class="text-4xl font-bold">Hospital Management System</h1>
+    </div>
+
+    <!-- Welcome Hero Section -->
+    <div id="loginSection" class="mt-8">
+      <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
+      <p class="text-center mt-4 text-gray-700">Welcome to the hospital management system. Please log in to access the system.</p>
+
+      <div class="space-y-4 mt-6">
+        <label for="role" class="block text-lg">Select Role</label>
+        <select id="role" class="form-input w-full p-3 border rounded-lg">
+          <option value="">-- Choose Role --</option>
+          <option value="admin">Admin</option>
+          <option value="doctor">Doctor</option>
+          <option value="patient">Patient</option>
+          <option value="receptionist">Receptionist</option>
+        </select>
+
 
     <div class="mt-6">
       <label for="role" class="block text-lg">Select Role</label>
