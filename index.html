@@ -19,6 +19,7 @@
       background-color: rgba(255, 255, 255, 0.8);
       padding: 40px;
       border-radius: 15px;
+      margin-top: 30px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
@@ -30,38 +31,36 @@
       border-radius: 10px;
     }
 
-    .button {
-      background-color: #007BFF;
-      color: white;
-      padding: 15px;
-      border-radius: 8px;
-      width: 100%;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-    }
-
     .form-input {
-      padding: 15px;
+      padding: 12px;
       width: 100%;
       margin-bottom: 15px;
       border-radius: 8px;
       border: 1px solid #ccc;
     }
 
-    .form-container {
-      margin-top: 30px;
-      background-color: rgba(255, 255, 255, 0.85);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      width: 100%;
+      margin-bottom: 20px;
     }
 
-    h2, h3 {
-      color: #0056b3;
+    .form-message {
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      margin-top: 30px;
+      border-radius: 10px;
     }
 
     .table {
@@ -71,262 +70,150 @@
     }
 
     .table th, .table td {
-      padding: 12px;
+      padding: 10px;
       text-align: left;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
     }
 
     .table th {
       background-color: #007BFF;
       color: white;
     }
-
-    .table tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .table tr:hover {
-      background-color: #ddd;
-    }
-
-    .form-message {
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #28a745;
-      color: white;
-      border-radius: 5px;
-      text-align: center;
-    }
-
-    .form-message.error {
-      background-color: #dc3545;
-    }
   </style>
 </head>
-<body class="font-sans">
-
-  <!-- Main Container -->
-  <div class="container max-w-lg mx-auto mt-10 rounded-lg">
-    <!-- Header -->
+<body>
+  <div class="container max-w-3xl mx-auto">
     <div class="header">
-      <h1 class="text-4xl font-bold">Hospital Management System</h1>
+      <h1 class="text-3xl font-bold">Hospital Management System</h1>
     </div>
 
-    <!-- Login Section -->
-    <div id="loginSection" class="mt-8">
-      <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
-
-      <!-- Role Selection -->
-      <div class="space-y-4 mt-6">
-        <label for="role" class="block text-lg">Select Role</label>
-        <select id="role" class="form-input">
-          <option value="">-- Choose Role --</option>
-          <option value="admin">Admin</option>
-          <option value="doctor">Doctor</option>
-          <option value="patient">Patient</option>
-          <option value="receptionist">Receptionist</option>
-        </select>
-
-        <button onclick="showDashboard()" class="button">Login</button>
-      </div>
-    </div>
-
-    <!-- Dashboard Section -->
-    <div id="dashboard" class="mt-6 hidden">
-      <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-4"></h2>
-
-      <!-- Dashboard Content -->
-      <div id="roleTasksContainer" class="space-y-4">
-        <ul id="roleTasks" class="list-disc pl-6 text-lg text-gray-700"></ul>
-      </div>
-
-      <!-- Example Action Buttons -->
-      <div id="actionButtons" class="space-y-4 mt-8"></div>
-    </div>
-
-    <!-- Forms Section for Patient -->
-    <div id="formsSection" class="mt-6 hidden form-container">
-      <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Patient Registration Form</h3>
-      <form id="registrationForm" class="space-y-4">
-        <input type="text" id="patientName" placeholder="Full Name" class="form-input" required>
-        <input type="email" id="patientEmail" placeholder="Email Address" class="form-input" required>
-        <input type="tel" id="patientPhone" placeholder="Phone Number" class="form-input" required>
-        <button type="submit" class="button">Submit Registration</button>
+    <!-- Patient Forms -->
+    <div class="form-container">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Patient Registration</h2>
+      <form>
+        <input class="form-input" type="text" placeholder="Full Name" required />
+        <input class="form-input" type="email" placeholder="Email" required />
+        <input class="form-input" type="tel" placeholder="Phone Number" required />
+        <button class="button">Register</button>
       </form>
 
-      <div id="registrationConfirmation" class="form-message hidden">
-        <p>Registration successful! A confirmation email has been sent.</p>
-      </div>
-
-      <h3 class="text-xl font-semibold text-center text-blue-600 mt-8 mb-4">Appointment Booking Form</h3>
-      <form id="appointmentForm" class="space-y-4">
-        <input type="text" id="patientNameApp" placeholder="Full Name" class="form-input" required>
-        <input type="email" id="patientEmailApp" placeholder="Email Address" class="form-input" required>
-        <input type="date" id="appointmentDate" class="form-input" required>
-        <input type="time" id="appointmentTime" class="form-input" required>
-        <button type="submit" class="button">Book Appointment</button>
+      <h2 class="text-xl font-semibold text-blue-600 mt-8 mb-4">Appointment Booking</h2>
+      <form>
+        <input class="form-input" type="text" placeholder="Full Name" required />
+        <input class="form-input" type="email" placeholder="Email" required />
+        <input class="form-input" type="date" required />
+        <input class="form-input" type="time" required />
+        <button class="button">Book Appointment</button>
       </form>
 
-      <div id="appointmentConfirmation" class="form-message hidden">
-        <p>Appointment booked successfully! A confirmation email has been sent.</p>
-      </div>
+      <h3 class="mt-6 text-lg font-semibold">Patient Appointments Table</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jane Doe</td>
+            <td>jane@example.com</td>
+            <td>2025-05-10</td>
+            <td>10:00 AM</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Receptionist Forms -->
-    <div id="receptionistSection" class="mt-6 hidden form-container">
-      <h3 class="text-xl font-semibold text-center text-blue-600 mb-4">Receptionist Actions</h3>
-      <form id="patientAdmissionForm" class="space-y-4">
-        <input type="text" id="patientAdmissionName" placeholder="Patient Full Name" class="form-input" required>
-        <input type="text" id="patientAdmissionDetails" placeholder="Admission Details" class="form-input" required>
-        <button type="submit" class="button">Admit Patient</button>
+    <div class="form-container">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Receptionist - Admit Patient</h2>
+      <form>
+        <input class="form-input" type="text" placeholder="Patient Name" required />
+        <input class="form-input" type="text" placeholder="Admission Details" required />
+        <button class="button">Admit</button>
       </form>
 
-      <h3 class="text-xl font-semibold text-center text-blue-600 mt-8 mb-4">Schedule Appointment Form</h3>
-      <form id="appointmentScheduleForm" class="space-y-4">
-        <input type="text" id="patientScheduleName" placeholder="Patient Full Name" class="form-input" required>
-        <input type="date" id="appointmentScheduleDate" class="form-input" required>
-        <input type="time" id="appointmentScheduleTime" class="form-input" required>
-        <button type="submit" class="button">Schedule Appointment</button>
+      <h2 class="text-xl font-semibold text-blue-600 mt-8 mb-4">Schedule Appointment</h2>
+      <form>
+        <input class="form-input" type="text" placeholder="Patient Name" required />
+        <input class="form-input" type="date" required />
+        <input class="form-input" type="time" required />
+        <button class="button">Schedule</button>
       </form>
+
+      <h3 class="mt-6 text-lg font-semibold">Scheduled Appointments</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Smith</td>
+            <td>2025-05-12</td>
+            <td>2:00 PM</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
+    <!-- Admin Forms -->
+    <div class="form-container">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Admin - Manage Doctors</h2>
+      <form>
+        <input class="form-input" type="text" placeholder="Doctor Name" required />
+        <input class="form-input" type="email" placeholder="Doctor Email" required />
+        <button class="button">Add Doctor</button>
+      </form>
+
+      <h3 class="mt-6 text-lg font-semibold">Doctors List</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dr. Alex</td>
+            <td>alex@hospital.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Doctor Forms -->
+    <div class="form-container">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Doctor - Write Prescription</h2>
+      <form>
+        <input class="form-input" type="text" placeholder="Patient Name" required />
+        <textarea class="form-input" placeholder="Prescription Details" required></textarea>
+        <button class="button">Submit Prescription</button>
+      </form>
+
+      <h3 class="mt-6 text-lg font-semibold">Patient Prescriptions</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Prescription</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Emily Clark</td>
+            <td>Take 1 tablet of Paracetamol every 6 hours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-  <script>
-    // Define the dashboard content for each role
-    const dashboards = {
-      admin: {
-        title: "Admin Dashboard",
-        tasks: [
-          "Manage Doctors",
-          "Manage Patients",
-          "Assign Roles",
-          "View Reports",
-          "Approve Requests"
-        ],
-        actions: ["Manage Doctors", "Manage Patients", "View Reports"]
-      },
-      doctor: {
-        title: "Doctor Dashboard",
-        tasks: [
-          "View Patients",
-          "Update Medical Records",
-          "Write Prescriptions",
-          "Schedule Appointments"
-        ],
-        actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
-      },
-      patient: {
-        title: "Patient Dashboard",
-        tasks: [
-          "Book Appointment",
-          "View Medical History",
-          "Download Prescriptions",
-          "Request Consultation"
-        ],
-        actions: ["Book Appointment", "View Medical History", "Request Consultation"]
-      },
-      receptionist: {
-        title: "Receptionist Dashboard",
-        tasks: [
-          "Register New Patients",
-          "Schedule Appointments",
-          "Manage Billing",
-          "Assist Patients"
-        ],
-        actions: ["Register Patient", "Schedule Appointment", "Manage Billing"]
-      }
-    };
-
-    // Show Dashboard based on selected role
-    function showDashboard() {
-      const role = document.getElementById('role').value;
-      const dashboard = document.getElementById('dashboard');
-      const title = document.getElementById('roleTitle');
-      const tasks = document.getElementById('roleTasks');
-      const actionButtons = document.getElementById('actionButtons');
-      const formsSection = document.getElementById('formsSection');
-      const receptionistSection = document.getElementById('receptionistSection');
-
-      if (!role) {
-        alert("Please select a role.");
-        return;
-      }
-
-      title.textContent = dashboards[role].title;
-      tasks.innerHTML = dashboards[role].tasks.map(task => `<li class="text-lg">${task}</li>`).join("");
-      actionButtons.innerHTML = dashboards[role].actions.map(action => {
-        return `<button class="button">${action}</button>`;
-      }).join("");
-
-      dashboard.classList.remove('hidden');
-
-      // Show forms section for "patient" role
-      if (role === 'patient') {
-        formsSection.classList.remove('hidden');
-        receptionistSection.classList.add('hidden');
-      } else if (role === 'receptionist') {
-        receptionistSection.classList.remove('hidden');
-        formsSection.classList.add('hidden');
-      } else {
-        formsSection.classList.add('hidden');
-        receptionistSection.classList.add('hidden');
-      }
-    }
-
-    // Registration form submission
-    document.getElementById('registrationForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientName').value;
-      const email = document.getElementById('patientEmail').value;
-      const phone = document.getElementById('patientPhone').value;
-
-      // Simulate email confirmation
-      document.getElementById('registrationConfirmation').classList.remove('hidden');
-      document.getElementById('registrationForm').reset();
-    });
-
-    // Appointment booking form submission
-    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientNameApp').value;
-      const email = document.getElementById('patientEmailApp').value;
-      const date = document.getElementById('appointmentDate').value;
-      const time = document.getElementById('appointmentTime').value;
-
-      // Simulate email confirmation
-      document.getElementById('appointmentConfirmation').classList.remove('hidden');
-      document.getElementById('appointmentConfirmation').innerHTML = `
-        <p>Appointment booked for ${name} on ${date} at ${time}. A confirmation email has been sent to ${email}.</p>
-      `;
-      document.getElementById('appointmentForm').reset();
-    });
-
-    // Receptionist patient admission form
-    document.getElementById('patientAdmissionForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientAdmissionName').value;
-      const details = document.getElementById('patientAdmissionDetails').value;
-
-      // Simulate admission success
-      const message = `<div class="form-message">Patient ${name} admitted with details: ${details}</div>`;
-      document.getElementById('patientAdmissionForm').insertAdjacentHTML('afterend', message);
-      document.getElementById('patientAdmissionForm').reset();
-    });
-
-    // Receptionist appointment schedule form
-    document.getElementById('appointmentScheduleForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const name = document.getElementById('patientScheduleName').value;
-      const date = document.getElementById('appointmentScheduleDate').value;
-      const time = document.getElementById('appointmentScheduleTime').value;
-
-      // Simulate appointment scheduling success
-      const message = `<div class="form-message">Appointment scheduled for ${name} on ${date} at ${time}</div>`;
-      document.getElementById('appointmentScheduleForm').insertAdjacentHTML('afterend', message);
-      document.getElementById('appointmentScheduleForm').reset();
-    });
-  </script>
-
 </body>
 </html>
