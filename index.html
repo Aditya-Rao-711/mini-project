@@ -7,15 +7,53 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body {
-      background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-  </style>
+  body {
+    background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Modal Centering */
+  #modalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 50;
+  }
+
+  /* Modal Content */
+  #modalContent {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  /* Close button styles */
+  #modalContainer button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+  }
+
+  #modalContainer button:hover {
+    color: red;
+  }
+</style>
+
 </head>
 <body class="font-sans">
 
