@@ -82,71 +82,48 @@
       cursor: pointer;
       color: gray;
     }
+
+    /* Hero Section */
+    .hero {
+      padding: 3rem 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      margin-bottom: 2rem;
+      border-radius: 10px;
+    }
+
+    .role-select {
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      border: 1px solid #ddd;
+      width: 50%;
+    }
+
   </style>
 </head>
 
 <body>
 
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1 class="text-4xl font-semibold text-blue-600 mb-4">Hospital Management System</h1>
+    <p class="text-lg mb-4">Please select your role:</p>
+    <select id="roleSelect" class="role-select" onchange="updateDashboard()">
+      <option value="admin">Admin</option>
+      <option value="doctor">Doctor</option>
+      <option value="patient">Patient</option>
+      <option value="receptionist">Receptionist</option>
+    </select>
+  </div>
+
   <!-- Main Container -->
-  <div class="container max-w-lg mx-auto rounded-lg bg-white/80 p-8 shadow-xl">
+  <div id="dashboardContainer" class="container max-w-lg mx-auto rounded-lg bg-white/80 p-8 shadow-xl">
     <h2 class="text-4xl font-bold text-center mb-8">Dashboard</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <!-- Admin Dashboard Cards -->
-      <div class="card cursor-pointer" onclick="openModal('admin', 'manageDoctors')">
-        <h3 class="text-lg font-semibold text-blue-600">Manage Doctors</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('admin', 'managePatients')">
-        <h3 class="text-lg font-semibold text-blue-600">Manage Patients</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('admin', 'viewReports')">
-        <h3 class="text-lg font-semibold text-blue-600">View Reports</h3>
-        <div class="badge">Active</div>
-      </div>
-
-      <!-- Doctor Dashboard Cards -->
-      <div class="card cursor-pointer" onclick="openModal('doctor', 'writePrescription')">
-        <h3 class="text-lg font-semibold text-blue-600">Write Prescription</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('doctor', 'viewAppointments')">
-        <h3 class="text-lg font-semibold text-blue-600">View Appointments</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('doctor', 'patientConsultation')">
-        <h3 class="text-lg font-semibold text-blue-600">Patient Consultation</h3>
-        <div class="badge">Active</div>
-      </div>
-
-      <!-- Patient Dashboard Cards -->
-      <div class="card cursor-pointer" onclick="openModal('patient', 'bookAppointment')">
-        <h3 class="text-lg font-semibold text-blue-600">Book Appointment</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('patient', 'viewMedicalHistory')">
-        <h3 class="text-lg font-semibold text-blue-600">View Medical History</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('patient', 'requestConsultation')">
-        <h3 class="text-lg font-semibold text-blue-600">Request Consultation</h3>
-        <div class="badge">Active</div>
-      </div>
-
-      <!-- Receptionist Dashboard Cards -->
-      <div class="card cursor-pointer" onclick="openModal('receptionist', 'registerPatient')">
-        <h3 class="text-lg font-semibold text-blue-600">Register Patient</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('receptionist', 'scheduleAppointment')">
-        <h3 class="text-lg font-semibold text-blue-600">Schedule Appointment</h3>
-        <div class="badge">Active</div>
-      </div>
-      <div class="card cursor-pointer" onclick="openModal('receptionist', 'manageBilling')">
-        <h3 class="text-lg font-semibold text-blue-600">Manage Billing</h3>
-        <div class="badge">Active</div>
-      </div>
+    <!-- Cards will be inserted dynamically based on the selected role -->
+    <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Role-based Cards will appear here -->
     </div>
   </div>
 
@@ -159,6 +136,7 @@
   </div>
 
   <script>
+    // Dashboard data for different roles
     const dashboards = {
       admin: {
         title: "Admin Dashboard",
@@ -194,27 +172,64 @@
       }
     };
 
+    // Function to update the dashboard based on the selected role
+    function updateDashboard() {
+      const role = document.getElementById('roleSelect').value;
+      const cardsContainer = document.getElementById('cardsContainer');
+      const selectedDashboard = dashboards[role];
+      
+      // Clear the current cards
+      cardsContainer.innerHTML = '';
+
+      // Create and display the cards for the selected role
+      selectedDashboard.actions.forEach(action => {
+        const card = document.createElement('div');
+        card.classList.add('card', 'cursor-pointer');
+        card.onclick = () => openModal(role, action.actionKey);
+        card.innerHTML = `
+          <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
+          <div class="badge">Active</div>
+        `;
+        cardsContainer.appendChild(card);
+      });
+    }
+
+    // Function to open the modal with relevant content
     function openModal(role, actionKey) {
       const modal = document.getElementById('modalContainer');
       const modalContent = document.getElementById('modalContent');
       let content = "";
 
-      if (role === "doctor") {
-        if (actionKey === "writePrescription") {
+      // Dynamically load content based on role and action
+      if (role === "admin") {
+        if (actionKey === "manageDoctors") {
           content = `
-            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
             <form class="space-y-4">
-              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" />
-              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg"></textarea>
+              <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" />
+              <input type="text" placeholder="Specialization" class="form-input w-full p-3 border rounded-lg" />
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
             </form>`;
-        } else if (actionKey === "viewAppointments") {
+        } else if (actionKey === "viewReports") {
           content = `
-            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
-            <ul>
-              <li>John Doe - 2025-05-10</li>
-              <li>Jane Smith - 2025-05-11</li>
-            </ul>`;
+            <h3 class="text-xl font-semibold text-blue-600">Reports</h3>
+            <table class="min-w-full table-auto">
+              <thead>
+                <tr>
+                  <th class="py-2 px-4 border-b">Report ID</th>
+                  <th class="py-2 px-4 border-b">Title</th>
+                  <th class="py-2 px-4 border-b">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="py-2 px-4 border-b">1</td>
+                  <td class="py-2 px-4 border-b">Annual Health Report</td>
+                  <td class="py-2 px-4 border-b">2025-04-20</td>
+                </tr>
+                <!-- More rows as needed -->
+              </tbody>
+            </table>`;
         }
       }
 
@@ -222,11 +237,15 @@
       modal.classList.add("visible");
     }
 
+    // Function to close the modal
     function closeModal() {
       const modal = document.getElementById("modalContainer");
       modal.classList.remove("visible");
       document.getElementById("modalContent").innerHTML = '';
     }
+
+    // Initialize dashboard for the default role (admin)
+    updateDashboard();
   </script>
 
 </body>
