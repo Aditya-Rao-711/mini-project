@@ -101,8 +101,10 @@
         return;
       }
 
+      // Update the title based on the selected role
       title.textContent = dashboards[role].title;
 
+      // Create action buttons based on the selected role
       actionButtons.innerHTML = dashboards[role].actions.map(action => {
         return `
           <div onclick="openModal('${role}', '${action.name}')" class="cursor-pointer bg-white rounded-xl shadow-md p-6 text-center hover:bg-blue-50 transition-all border border-blue-100 group">
@@ -113,8 +115,10 @@
           </div>`;
       }).join("");
 
-
+      // Show the dashboard by removing the hidden class
       dashboard.classList.remove('hidden');
+
+      // Call lucide.createIcons() to render icons properly
       lucide.createIcons();
     }
 
@@ -123,37 +127,8 @@
       const modalContent = document.getElementById('modalContent');
       let content = "";
 
-      if (role === "doctor" && actionName === "Write Prescription") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-          <form onsubmit="event.preventDefault();" class="space-y-4">
-            <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-            <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
-          </form>`;
-      } else if (role === "doctor" && actionName === "View Appointments") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Upcoming Appointments</h3>
-          <ul class="divide-y mt-4">
-            <li class="py-2 flex justify-between"><span>John Doe</span><span>10:00 AM, May 10</span></li>
-            <li class="py-2 flex justify-between"><span>Jane Smith</span><span>11:30 AM, May 10</span></li>
-          </ul>`;
-      } else if (role === "patient" && actionName === "Book Appointment") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
-          <form onsubmit="event.preventDefault();" class="space-y-4">
-            <input type="text" placeholder="Preferred Date" class="form-input w-full p-3 border rounded-lg" required />
-            <input type="text" placeholder="Department" class="form-input w-full p-3 border rounded-lg" required />
-            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book</button>
-          </form>`;
-      } else if (role === "patient" && actionName === "View Medical History") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
-          <ul class="mt-4 space-y-2">
-            <li class="p-3 border rounded-lg bg-gray-50"><strong>2024-12-01:</strong> Blood pressure - Dr. Green</li>
-            <li class="p-3 border rounded-lg bg-gray-50"><strong>2025-02-18:</strong> Routine blood test</li>
-          </ul>`;
-      } else if (role === "admin" && actionName === "Manage Doctors") {
+      // Form content for each action (just an example for each)
+      if (role === "admin" && actionName === "Manage Doctors") {
         content = `
           <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
           <table class="w-full border mt-4">
@@ -170,13 +145,6 @@
               <tr><td class="p-2">Bob Lee</td><td class="p-2">Discharged</td></tr>
             </tbody>
           </table>`;
-      } else if (role === "admin" && actionName === "View Reports") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Hospital Reports</h3>
-          <ul class="mt-4 space-y-3">
-            <li class="p-3 bg-gray-50 border rounded-lg">📊 Patient Admissions - Q1 2025</li>
-            <li class="p-3 bg-gray-50 border rounded-lg">📈 Financial Summary - Q1 2025</li>
-          </ul>`;
       } else {
         content = `<p class="text-red-500">Unknown action selected.</p>`;
       }
