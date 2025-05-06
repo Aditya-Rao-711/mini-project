@@ -209,76 +209,68 @@
     };
 
     function showDashboard() {
-      const role = document.getElementById('role').value;
-      const dashboard = document.getElementById('dashboard');
-      const title = document.getElementById('roleTitle');
-      const actionButtons = document.getElementById('actionButtons');
+  const role = document.getElementById('role').value;
+  const dashboard = document.getElementById('dashboard');
+  const title = document.getElementById('roleTitle');
+  const actionButtons = document.getElementById('actionButtons');
 
-      if (!role) {
-        alert("Please select a role.");
-        return;
-      }
+  if (!role) {
+    alert("Please select a role.");
+    return;
+  }
 
-      title.textContent = dashboards[role].title;
+  title.textContent = dashboards[role].title;
 
-      actionButtons.innerHTML = dashboards[role].actions.map(action => {
-        return `
-          <div onclick="openModal('${role}', '${action.actionKey}')" class="card cursor-pointer">
-            <div class="flex justify-center mb-2">
-              <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500"></i>
-            </div>
-            <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
-            <div class="badge">Active</div>
-          </div>`;
-      }).join("");
+  actionButtons.innerHTML = dashboards[role].actions.map(action => {
+    return `
+      <div onclick="openModal('${role}', '${action.actionKey}')" class="card cursor-pointer">
+        <div class="flex justify-center mb-2">
+          <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
+        <div class="badge">Active</div>
+      </div>`;
+  }).join("");
 
-      dashboard.classList.remove('hidden');
-      lucide.createIcons();
+  dashboard.classList.remove('hidden');
+  lucide.createIcons();
+}
+
+function openModal(role, actionKey) {
+  const modal = document.getElementById('modalContainer');
+  const modalContent = document.getElementById('modalContent');
+  let content = "";
+
+  if (role === "doctor") {
+    if (actionKey === "writePrescription") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+          <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+        </form>`;
+    } else if (actionKey === "viewAppointments") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+        <ul>
+          <li>John Doe - 2025-05-10</li>
+          <li>Jane Smith - 2025-05-11</li>
+        </ul>`;
     }
+  }
 
-    function openModal(role, actionKey) {
-      const modal = document.getElementById('modalContainer');
-      const modalContent = document.getElementById('modalContent');
-      let content = "";
-      const validateForm = (form) => {
-        const inputs = form.querySelectorAll("input, textarea");
-        for (let input of inputs) {
-          if (!input.value.trim()) {
-            alert("Please fill all fields.");
-            return false;
-          }
-        }
-        return true;
-      };
+  // Add more roles and actions here if needed
+  
+  modalContent.innerHTML = content;
+  modal.classList.remove("hidden");
+}
 
-      if (role === "doctor") {
-        if (actionKey === "writePrescription") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-            <form class="space-y-4" onsubmit="return validateForm(this)">
-              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
-            </form>`;
-        } else if (actionKey === "viewAppointments") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
-            <ul>
-              <li>John Doe - 2025-05-10</li>
-              <li>Jane Smith - 2025-05-11</li>
-            </ul>`;
-        }
-      }
-
-      modalContent.innerHTML = content;
-      modal.classList.remove("hidden");
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("modalContainer");
-      modal.classList.add("hidden");
-      document.getElementById("modalContent").innerHTML = '';
-    }
+function closeModal() {
+  const modal = document.getElementById('modalContainer');
+  modal.classList.add("hidden");
+  document.getElementById("modalContent").innerHTML = '';
+}
 
     function logout() {
       alert("Logged out");
