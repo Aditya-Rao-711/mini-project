@@ -42,7 +42,6 @@
     </div>
 
     <div id="dashboard" class="mt-8 hidden">
-      <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-6 text-blue-700"></h2>
       <div id="actionButtons" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
     </div>
   </div>
@@ -57,7 +56,6 @@
   <script>
     const dashboards = {
       admin: {
-        title: "Admin Dashboard",
         actions: [
           { name: "Manage Doctors", icon: "UserCog" },
           { name: "Manage Patients", icon: "UserCheck" },
@@ -65,7 +63,6 @@
         ]
       },
       doctor: {
-        title: "Doctor Dashboard",
         actions: [
           { name: "Write Prescription", icon: "ClipboardEdit" },
           { name: "View Appointments", icon: "CalendarClock" },
@@ -73,7 +70,6 @@
         ]
       },
       patient: {
-        title: "Patient Dashboard",
         actions: [
           { name: "Book Appointment", icon: "CalendarPlus" },
           { name: "View Medical History", icon: "BookOpen" },
@@ -81,7 +77,6 @@
         ]
       },
       receptionist: {
-        title: "Receptionist Dashboard",
         actions: [
           { name: "Register Patient", icon: "UserPlus" },
           { name: "Schedule Appointment", icon: "CalendarRange" },
@@ -93,7 +88,6 @@
     function showDashboard() {
       const role = document.getElementById('role').value;
       const dashboard = document.getElementById('dashboard');
-      const title = document.getElementById('roleTitle');
       const actionButtons = document.getElementById('actionButtons');
 
       if (!role) {
@@ -101,11 +95,9 @@
         return;
       }
 
-      title.textContent = dashboards[role].title;
-
       actionButtons.innerHTML = dashboards[role].actions.map(action => {
         return `
-          <div onclick="openModal('${role}')" class="cursor-pointer bg-white rounded-xl shadow-md p-6 text-center hover:bg-blue-50 transition-all border border-blue-100 group">
+          <div onclick="openModal('${role}', '${action.name}')" class="cursor-pointer bg-white rounded-xl shadow-md p-6 text-center hover:bg-blue-50 transition-all border border-blue-100 group">
             <div class="flex justify-center mb-2">
               <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500 group-hover:text-blue-700 group-hover:animate-pulse transition-all duration-300"></i>
             </div>
@@ -117,50 +109,69 @@
       lucide.createIcons();
     }
 
-    function openModal(role) {
+    function openModal(role, actionName) {
       const modal = document.getElementById('modalContainer');
       const modalContent = document.getElementById('modalContent');
       let content = "";
 
-      switch (role) {
-        case "patient":
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Patient Registration</h3>
-            <form class="space-y-4">
-              <input type="text" placeholder="Name" class="form-input w-full p-3 border rounded-lg" required />
-              <input type="email" placeholder="Email" class="form-input w-full p-3 border rounded-lg" required />
-              <input type="tel" placeholder="Phone" class="form-input w-full p-3 border rounded-lg" required />
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Submit</button>
-            </form>`;
-          break;
-        case "doctor":
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-            <form class="space-y-4">
-              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
-            </form>`;
-          break;
-        case "admin":
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
-            <table class="w-full border mt-4">
-              <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Specialty</th></tr></thead>
-              <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
-            </table>`;
-          break;
-        case "receptionist":
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Register Patient</h3>
-            <form class="space-y-4">
-              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-              <input type="text" placeholder="Admission Details" class="form-input w-full p-3 border rounded-lg" required />
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Admit</button>
-            </form>`;
-          break;
-        default:
-          content = `<p class="text-red-500">Unknown role selected.</p>`;
+      // Action-specific modal content
+      if (role === "doctor" && actionName === "Write Prescription") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+          <form onsubmit="event.preventDefault();" class="space-y-4">
+            <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+            <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+          </form>`;
+      } else if (role === "doctor" && actionName === "View Appointments") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Upcoming Appointments</h3>
+          <ul class="divide-y mt-4">
+            <li class="py-2 flex justify-between"><span>John Doe</span><span>10:00 AM, May 10</span></li>
+            <li class="py-2 flex justify-between"><span>Jane Smith</span><span>11:30 AM, May 10</span></li>
+          </ul>`;
+      } else if (role === "patient" && actionName === "Book Appointment") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
+          <form onsubmit="event.preventDefault();" class="space-y-4">
+            <input type="text" placeholder="Preferred Date" class="form-input w-full p-3 border rounded-lg" required />
+            <input type="text" placeholder="Department" class="form-input w-full p-3 border rounded-lg" required />
+            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book</button>
+          </form>`;
+      } else if (role === "patient" && actionName === "View Medical History") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
+          <ul class="mt-4 space-y-2">
+            <li class="p-3 border rounded-lg bg-gray-50"><strong>2024-12-01:</strong> Blood pressure - Dr. Green</li>
+            <li class="p-3 border rounded-lg bg-gray-50"><strong>2025-02-18:</strong> Routine blood test</li>
+          </ul>`;
+      } else if (role === "admin" && actionName === "Manage Doctors") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+          <table class="w-full border mt-4">
+            <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Specialty</th></tr></thead>
+            <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
+          </table>`;
+      } else if (role === "admin" && actionName === "View Reports") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Hospital Reports</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="p-3 bg-gray-50 border rounded-lg">📊 Patient Admissions - Q1 2025</li>
+            <li class="p-3 bg-gray-50 border rounded-lg">📈 Doctor Performance Summary</li>
+            <li class="p-3 bg-gray-50 border rounded-lg">💰 Financial Overview Report</li>
+          </ul>`;
+      } else if (role === "receptionist" && actionName === "Manage Billing") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Billing Overview</h3>
+          <table class="w-full border mt-4">
+            <thead><tr class="bg-blue-100"><th class="p-2">Patient</th><th class="p-2">Amount</th><th class="p-2">Status</th></tr></thead>
+            <tbody>
+              <tr><td class="p-2">Alice Lee</td><td class="p-2">$120</td><td class="p-2 text-green-600">Paid</td></tr>
+              <tr><td class="p-2">Bob Brown</td><td class="p-2">$200</td><td class="p-2 text-red-600">Unpaid</td></tr>
+            </tbody>
+          </table>`;
+      } else {
+        content = `<p class="text-gray-600">This feature is under development.</p>`;
       }
 
       modalContent.innerHTML = content;
