@@ -17,6 +17,17 @@
       margin: 0;
       font-family: Arial, sans-serif;
     }
+    #modalContainer {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Make sure it's above the header */
+  margin-top: 80px; /* Adjust according to your header height */
+}
+
 
     header {
       background-color: #005f73; /* Dark teal color for professionalism */
