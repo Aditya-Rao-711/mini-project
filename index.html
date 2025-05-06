@@ -118,7 +118,7 @@
       padding: 30px;
       border-radius: 10px;
       width: 80%;
-      max-width: 600px;
+      max-width: 900px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
@@ -127,6 +127,24 @@
       display: none;
     }
 
+    /* Cards Styles */
+    .card {
+      background-color: #f3f4f6;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #333;
+    }
   </style>
 </head>
 <body>
@@ -178,19 +196,72 @@
     function showDashboard() {
       const role = document.getElementById('role').value;
       const modalContainer = document.getElementById('modalContainer');
+      const modalContent = document.getElementById('modalContent');
 
       if (!role) {
         alert("Please select a role.");
         return;
       }
 
-      // Displaying content based on role (example)
-      let content = `<h3 class="text-xl font-semibold">Welcome to the ${role.charAt(0).toUpperCase() + role.slice(1)} Dashboard</h3>`;
+      // Define the content for each role
+      let content = '';
+      if (role === 'admin') {
+        content = `
+          <div class="card">
+            <h3>Manage Doctors</h3>
+            <p>Admin can add, edit, and delete doctor profiles.</p>
+          </div>
+          <div class="card">
+            <h3>Manage Patients</h3>
+            <p>Admin can view and manage patient records.</p>
+          </div>
+          <div class="card">
+            <h3>View Reports</h3>
+            <p>Admin can view various reports related to hospital performance.</p>
+          </div>
+        `;
+      } else if (role === 'doctor') {
+        content = `
+          <div class="card">
+            <h3>View Patient Records</h3>
+            <p>Doctor can view patient medical records.</p>
+          </div>
+          <div class="card">
+            <h3>Update Patient Records</h3>
+            <p>Doctor can update patient health status and medical details.</p>
+          </div>
+        `;
+      } else if (role === 'patient') {
+        content = `
+          <div class="card">
+            <h3>View Medical History</h3>
+            <p>Patient can view their medical history.</p>
+          </div>
+          <div class="card">
+            <h3>Schedule Appointments</h3>
+            <p>Patient can schedule and view appointments.</p>
+          </div>
+        `;
+      } else if (role === 'receptionist') {
+        content = `
+          <div class="card">
+            <h3>Manage Appointments</h3>
+            <p>Receptionist can schedule, view, and manage appointments.</p>
+          </div>
+          <div class="card">
+            <h3>Patient Registration</h3>
+            <p>Receptionist can register new patients in the system.</p>
+          </div>
+        `;
+      }
 
-      // Display modal with the role content
-      modalContainer.innerHTML = content;
+      // Set the content in the modal
+      modalContent.innerHTML = content;
+
+      // Show the modal
       modalContainer.classList.remove('hidden');
     }
   </script>
+
 </body>
 </html>
