@@ -20,7 +20,7 @@
 
     header {
       background-color: #005f73; /* Dark teal color for professionalism */
-      padding: 20px 10px;
+      padding: 10px 20px; /* Reduced padding */
       color: white;
       font-weight: bold;
       display: flex;
@@ -30,7 +30,7 @@
       width: 100%;
       top: 0;
       z-index: 1000;
-      max-width: 960px; /* Reduced width for header */
+      max-width: 100%;
       margin: 0 auto;
     }
 
@@ -42,7 +42,7 @@
     header .logout-btn {
       background-color: #d32f2f; /* Red color for logout button */
       color: white;
-      padding: 10px 20px;
+      padding: 8px 16px; /* Reduced padding */
       border-radius: 5px;
       cursor: pointer;
       text-align: center;
@@ -52,11 +52,11 @@
       background-color: #005f73; /* Dark teal color for professionalism */
       color: white;
       text-align: center;
-      padding: 20px;
+      padding: 10px 20px; /* Reduced padding */
       position: fixed;
       bottom: 0;
       width: 100%;
-      max-width: 960px; /* Reduced width for footer */
+      max-width: 100%;
       margin: 0 auto;
     }
 
@@ -275,11 +275,9 @@
     }
 
     function logout() {
-      alert("Logging out...");
-      // Reset everything if needed
+      alert("Logged out");
     }
   </script>
-
 </body>
 
 </html>
