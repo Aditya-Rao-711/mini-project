@@ -36,20 +36,6 @@
       margin: 0 auto;
     }
 
-    header .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    header .logout-btn {
-      background-color: #d32f2f;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      text-align: center;
-    }
-
     footer {
       background-color: rgba(0, 95, 115, 0.7); /* Transparent dark teal */
       color: white;
@@ -61,11 +47,6 @@
       z-index: 1000; /* Ensure it stays above the background */
       max-width: 100%;
       margin: 0 auto;
-    }
-
-    footer a {
-      color: white;
-      text-decoration: underline;
     }
 
     .spinner {
@@ -208,7 +189,8 @@
         actions: [
           { name: "Manage Doctors", icon: "UserCog", actionKey: "manageDoctors" },
           { name: "Manage Patients", icon: "UserCheck", actionKey: "managePatients" },
-          { name: "View Reports", icon: "FileText", actionKey: "viewReports" }
+          { name: "View Reports", icon: "FileText", actionKey: "viewReports" },
+          { name: "Register Patient", icon: "UserPlus", actionKey: "registerPatient" }
         ]
       },
       doctor: {
@@ -281,22 +263,17 @@
         return true;
       };
 
-      if (role === "doctor") {
-        if (actionKey === "writePrescription") {
+      if (role === "admin") {
+        if (actionKey === "registerPatient") {
           content = `
-            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <h3 class="text-xl font-semibold text-blue-600">Register New Patient</h3>
             <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+              <input type="text" placeholder="Age" class="form-input w-full p-3 border rounded-lg" required />
+              <input type="text" placeholder="Gender" class="form-input w-full p-3 border rounded-lg" required />
+              <input type="text" placeholder="Contact Number" class="form-input w-full p-3 border rounded-lg" required />
+              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Register</button>
             </form>`;
-        } else if (actionKey === "viewAppointments") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
-            <ul>
-              <li>John Doe - 2025-05-10</li>
-              <li>Jane Smith - 2025-05-11</li>
-            </ul>`;
         }
       }
 
