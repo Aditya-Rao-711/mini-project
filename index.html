@@ -237,42 +237,57 @@
     }
 
     function openModal(role, actionKey) {
-      const modal = document.getElementById('modalContainer');
-      const modalContent = document.getElementById('modalContent');
-      let content = "";
-      const validateForm = (form) => {
-        const inputs = form.querySelectorAll("input, textarea");
-        for (let input of inputs) {
-          if (!input.value.trim()) {
-            alert("Please fill all fields.");
-            return false;
-          }
-        }
-        return true;
-      };
+  const modal = document.getElementById('modalContainer');
+  const modalContent = document.getElementById('modalContent');
+  let content = "";
 
-      if (role === "doctor") {
-        if (actionKey === "writePrescription") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-            <form class="space-y-4" onsubmit="return validateForm(this)">
-              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
-            </form>`;
-        } else if (actionKey === "viewAppointments") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
-            <ul>
-              <li>John Doe - 2025-05-10</li>
-              <li>Jane Smith - 2025-05-11</li>
-            </ul>`;
-        }
+  // Define form validation
+  const validateForm = (form) => {
+    const inputs = form.querySelectorAll("input, textarea");
+    for (let input of inputs) {
+      if (!input.value.trim()) {
+        alert("Please fill all fields.");
+        return false;
       }
-
-      modalContent.innerHTML = content;
-      modal.classList.remove("hidden");
     }
+    return true;
+  };
+
+  // Check the role and action to provide the correct modal content
+  if (role === "doctor") {
+    if (actionKey === "writePrescription") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+          <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+          <button type="submit" class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+        </form>`;
+    } else if (actionKey === "viewAppointments") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+        <ul>
+          <li>John Doe - 2025-05-10</li>
+          <li>Jane Smith - 2025-05-11</li>
+        </ul>`;
+    }
+  } else if (role === "admin") {
+    // Example for admin role - you can expand with other actions
+    if (actionKey === "manageDoctors") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+        <p>Here you can manage the doctors in the system.</p>`;
+    }
+  }
+
+  // Update modal content and show modal
+  modalContent.innerHTML = content;
+  modal.classList.remove("hidden"); // Make the modal visible
+
+  // Re-initialize Lucide icons after content insertion
+  lucide.createIcons();
+}
+
 
     function closeModal() {
       const modal = document.getElementById("modalContainer");
