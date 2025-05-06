@@ -16,6 +16,8 @@
       background-attachment: fixed;
       margin: 0;
       font-family: Arial, sans-serif;
+      position: relative;
+      min-height: 100vh;
     }
 
     header {
@@ -29,7 +31,7 @@
       position: fixed;
       width: 100%;
       top: 0;
-      z-index: 1000;
+      z-index: 1000; /* Ensure it is above the background */
       max-width: 100%;
       margin: 0 auto;
     }
@@ -56,6 +58,7 @@
       position: fixed;
       bottom: 0;
       width: 100%;
+      z-index: 1000; /* Ensure it stays above the background */
       max-width: 100%;
       margin: 0 auto;
     }
@@ -75,8 +78,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .card {
@@ -126,6 +134,11 @@
     #modalContainer.visible {
       visibility: visible;
       opacity: 1;
+    }
+
+    .container {
+      margin-top: 100px; /* Adjusted to prevent the content from hiding under the header */
+      z-index: 0; /* Ensure the content stays under the header and footer */
     }
   </style>
 </head>
