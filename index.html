@@ -252,6 +252,19 @@ function openModal(role, actionKey) {
   const modalContent = document.getElementById('modalContent');
   let content = "";
 
+  // Ensure the modal displays the correct content based on the role and actionKey
+  const validateForm = (form) => {
+    const inputs = form.querySelectorAll("input, textarea");
+    for (let input of inputs) {
+      if (!input.value.trim()) {
+        alert("Please fill all fields.");
+        return false;
+      }
+    }
+    return true;
+  };
+
+  // Define content for each actionKey based on the role
   if (role === "doctor") {
     if (actionKey === "writePrescription") {
       content = `
@@ -269,12 +282,44 @@ function openModal(role, actionKey) {
           <li>Jane Smith - 2025-05-11</li>
         </ul>`;
     }
+  } else if (role === "patient") {
+    if (actionKey === "bookAppointment") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="date" placeholder="Preferred Date" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book Appointment</button>
+        </form>`;
+    } else if (actionKey === "viewMedicalHistory") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
+        <ul>
+          <li>Flu - 2025-01-15</li>
+          <li>Headache - 2025-03-05</li>
+        </ul>`;
+    }
+  } else if (role === "admin") {
+    // Admin specific content
+    if (actionKey === "manageDoctors") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="text" placeholder="Specialization" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+        </form>`;
+    }
   }
 
-  // Add more roles and actions here if needed
-  
-  modalContent.innerHTML = content;
-  modal.classList.remove("hidden");
+  // If content exists for the actionKey, insert it into the modal
+  if (content) {
+    modalContent.innerHTML = content;
+    modal.classList.remove("hidden");
+  } else {
+    // If no content is found for that actionKey, alert user or handle error
+    alert("No content found for this action.");
+  }
 }
 
 function closeModal() {
