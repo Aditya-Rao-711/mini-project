@@ -17,15 +17,23 @@
       margin: 0;
       font-family: Arial, sans-serif;
     }
-    #modalContainer {
+   #modalContainer {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000; /* Make sure it's above the header */
-  margin-top: 80px; /* Adjust according to your header height */
+  z-index: 2000; /* Ensure the modal is above the header */
+  margin-top: 80px; /* Account for the fixed header height */
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Ensure it is invisible until needed */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+}
+
+#modalContainer.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 
