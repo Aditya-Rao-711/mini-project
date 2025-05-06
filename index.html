@@ -265,14 +265,49 @@ function openModal(role, actionKey) {
   };
 
   // Define content for each actionKey based on the role
-  if (role === "doctor") {
+  if (role === "admin") {
+    if (actionKey === "manageDoctors") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="text" placeholder="Specialization" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save Doctor</button>
+        </form>
+        <h3 class="mt-4 font-semibold text-blue-600">Existing Doctors</h3>
+        <ul>
+          <li>Dr. John Doe - Cardiologist</li>
+          <li>Dr. Jane Smith - Neurologist</li>
+        </ul>`;
+    } else if (actionKey === "managePatients") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Manage Patients</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="text" placeholder="Disease/Condition" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Add Patient</button>
+        </form>
+        <h3 class="mt-4 font-semibold text-blue-600">Existing Patients</h3>
+        <ul>
+          <li>John Doe - Hypertension</li>
+          <li>Jane Smith - Diabetes</li>
+        </ul>`;
+    } else if (actionKey === "viewReports") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">View Reports</h3>
+        <ul>
+          <li>Patient Report 1 - Blood Test Results</li>
+          <li>Patient Report 2 - MRI Scan Results</li>
+        </ul>`;
+    }
+  } else if (role === "doctor") {
     if (actionKey === "writePrescription") {
       content = `
         <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
         <form class="space-y-4" onsubmit="return validateForm(this)">
           <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
           <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save Prescription</button>
         </form>`;
     } else if (actionKey === "viewAppointments") {
       content = `
@@ -281,6 +316,14 @@ function openModal(role, actionKey) {
           <li>John Doe - 2025-05-10</li>
           <li>Jane Smith - 2025-05-11</li>
         </ul>`;
+    } else if (actionKey === "patientConsultation") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Patient Consultation</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+          <textarea placeholder="Consultation Notes" class="form-input w-full p-3 border rounded-lg" required></textarea>
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Submit Consultation</button>
+        </form>`;
     }
   } else if (role === "patient") {
     if (actionKey === "bookAppointment") {
@@ -298,16 +341,39 @@ function openModal(role, actionKey) {
           <li>Flu - 2025-01-15</li>
           <li>Headache - 2025-03-05</li>
         </ul>`;
-    }
-  } else if (role === "admin") {
-    // Admin specific content
-    if (actionKey === "manageDoctors") {
+    } else if (actionKey === "requestConsultation") {
       content = `
-        <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+        <h3 class="text-xl font-semibold text-blue-600">Request Consultation</h3>
         <form class="space-y-4" onsubmit="return validateForm(this)">
           <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" required />
-          <input type="text" placeholder="Specialization" class="form-input w-full p-3 border rounded-lg" required />
-          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+          <textarea placeholder="Reason for Consultation" class="form-input w-full p-3 border rounded-lg" required></textarea>
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Request Consultation</button>
+        </form>`;
+    }
+  } else if (role === "receptionist") {
+    if (actionKey === "registerPatient") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Register Patient</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="text" placeholder="Contact Information" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Register Patient</button>
+        </form>`;
+    } else if (actionKey === "scheduleAppointment") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Schedule Appointment</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="date" placeholder="Appointment Date" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Schedule Appointment</button>
+        </form>`;
+    } else if (actionKey === "manageBilling") {
+      content = `
+        <h3 class="text-xl font-semibold text-blue-600">Manage Billing</h3>
+        <form class="space-y-4" onsubmit="return validateForm(this)">
+          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+          <input type="text" placeholder="Billing Amount" class="form-input w-full p-3 border rounded-lg" required />
+          <button class="w-full p-3 bg-green-600 text-white rounded-lg">Process Billing</button>
         </form>`;
     }
   }
@@ -321,6 +387,7 @@ function openModal(role, actionKey) {
     alert("No content found for this action.");
   }
 }
+
 
 function closeModal() {
   const modal = document.getElementById('modalContainer');
