@@ -49,71 +49,86 @@
   </div>
 
   <script>
-    function login() {
-      const role = document.getElementById("roleSelect").value;
-      if (!role) {
-        alert("Please select a role.");
-        return;
-      }
-      openModal(role);
+  function login() {
+    const roleDropdown = document.getElementById("roleSelect");
+    const role = roleDropdown.value.trim();
+
+    if (!role) {
+      alert("Please select a role.");
+      return;
     }
 
-    function openModal(role) {
-      const content = {
-        patient: `
-          <h2 class="text-2xl font-semibold text-blue-700">Patient Portal</h2>
-          <form class="space-y-4">
-            <input type="text" placeholder="Full Name" class="form-input w-full border p-2 rounded" />
-            <input type="email" placeholder="Email" class="form-input w-full border p-2 rounded" />
-            <input type="tel" placeholder="Phone" class="form-input w-full border p-2 rounded" />
-            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Register</button>
-          </form>
-          <form class="space-y-4 mt-6">
-            <h3 class="text-lg font-semibold">Book Appointment</h3>
-            <input type="date" class="form-input w-full border p-2 rounded" />
-            <input type="time" class="form-input w-full border p-2 rounded" />
-            <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Book</button>
-          </form>
-        `,
-        receptionist: `
-          <h2 class="text-2xl font-semibold text-blue-700">Receptionist Portal</h2>
-          <form class="space-y-4">
-            <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
-            <input type="text" placeholder="Admission Details" class="form-input w-full border p-2 rounded" />
-            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Admit Patient</button>
-          </form>
-          <form class="space-y-4 mt-6">
-            <h3 class="text-lg font-semibold">Schedule Appointment</h3>
-            <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
-            <input type="date" class="form-input w-full border p-2 rounded" />
-            <input type="time" class="form-input w-full border p-2 rounded" />
-            <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Schedule</button>
-          </form>
-        `,
-        admin: `
-          <h2 class="text-2xl font-semibold text-blue-700">Admin Portal</h2>
-          <form class="space-y-4">
-            <input type="text" placeholder="Doctor Name" class="form-input w-full border p-2 rounded" />
-            <input type="email" placeholder="Doctor Email" class="form-input w-full border p-2 rounded" />
-            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Add Doctor</button>
-          </form>
-        `,
-        doctor: `
-          <h2 class="text-2xl font-semibold text-blue-700">Doctor Portal</h2>
-          <form class="space-y-4">
-            <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
-            <textarea placeholder="Prescription" class="form-input w-full border p-2 rounded"></textarea>
-            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Submit Prescription</button>
-          </form>
-        `
-      };
-      document.getElementById('modalContent').innerHTML = content[role];
-      document.getElementById('modalContainer').classList.add('active');
-    }
+    openModal(role);
+  }
 
-    function closeModal() {
-      document.getElementById('modalContainer').classList.remove('active');
+  function openModal(role) {
+    const content = {
+      patient: `
+        <h2 class="text-2xl font-semibold text-blue-700">Patient Portal</h2>
+        <form class="space-y-4">
+          <input type="text" placeholder="Full Name" class="form-input w-full border p-2 rounded" />
+          <input type="email" placeholder="Email" class="form-input w-full border p-2 rounded" />
+          <input type="tel" placeholder="Phone" class="form-input w-full border p-2 rounded" />
+          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Register</button>
+        </form>
+        <form class="space-y-4 mt-6">
+          <h3 class="text-lg font-semibold">Book Appointment</h3>
+          <input type="date" class="form-input w-full border p-2 rounded" />
+          <input type="time" class="form-input w-full border p-2 rounded" />
+          <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Book</button>
+        </form>
+      `,
+      receptionist: `
+        <h2 class="text-2xl font-semibold text-blue-700">Receptionist Portal</h2>
+        <form class="space-y-4">
+          <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
+          <input type="text" placeholder="Admission Details" class="form-input w-full border p-2 rounded" />
+          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Admit Patient</button>
+        </form>
+        <form class="space-y-4 mt-6">
+          <h3 class="text-lg font-semibold">Schedule Appointment</h3>
+          <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
+          <input type="date" class="form-input w-full border p-2 rounded" />
+          <input type="time" class="form-input w-full border p-2 rounded" />
+          <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Schedule</button>
+        </form>
+      `,
+      admin: `
+        <h2 class="text-2xl font-semibold text-blue-700">Admin Portal</h2>
+        <form class="space-y-4">
+          <input type="text" placeholder="Doctor Name" class="form-input w-full border p-2 rounded" />
+          <input type="email" placeholder="Doctor Email" class="form-input w-full border p-2 rounded" />
+          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Add Doctor</button>
+        </form>
+      `,
+      doctor: `
+        <h2 class="text-2xl font-semibold text-blue-700">Doctor Portal</h2>
+        <form class="space-y-4">
+          <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
+          <textarea placeholder="Prescription" class="form-input w-full border p-2 rounded"></textarea>
+          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Submit Prescription</button>
+        </form>
+      `
+    };
+
+    const modal = document.getElementById('modalContainer');
+    const modalContent = document.getElementById('modalContent');
+
+    if (content[role]) {
+      modalContent.innerHTML = content[role];
+      modal.classList.add('active');
+    } else {
+      modalContent.innerHTML = `<p class="text-red-600">Error loading content for selected role.</p>`;
+      modal.classList.add('active');
+      console.error("Invalid role:", role);
     }
-  </script>
+  }
+
+  function closeModal() {
+    document.getElementById('modalContainer').classList.remove('active');
+    document.getElementById('modalContent').innerHTML = '';
+  }
+</script>
+
 </body>
 </html>
