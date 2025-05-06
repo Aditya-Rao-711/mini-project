@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hospital Management System</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -11,209 +11,106 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      margin: 0;
       font-family: Arial, sans-serif;
     }
-
-    .container {
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 40px;
-      border-radius: 15px;
-      margin-top: 30px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .modal {
+      display: none;
     }
-
-    .header {
-      background-color: rgba(0, 82, 255, 0.9);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      border-radius: 10px;
-    }
-
-    .form-input {
-      padding: 12px;
-      width: 100%;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    .button {
-      background-color: #007BFF;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    .form-message {
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #28a745;
-      color: white;
-      border-radius: 5px;
-    }
-
-    .form-container {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 25px;
-      margin-top: 30px;
-      border-radius: 10px;
-    }
-
-    .table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-    }
-
-    .table th, .table td {
-      padding: 10px;
-      text-align: left;
-      border: 1px solid #ccc;
-    }
-
-    .table th {
-      background-color: #007BFF;
-      color: white;
+    .modal.active {
+      display: block;
     }
   </style>
 </head>
-<body>
-  <div class="container max-w-3xl mx-auto">
-    <div class="header">
-      <h1 class="text-3xl font-bold">Hospital Management System</h1>
+<body class="min-h-screen bg-gray-100 bg-opacity-80">
+  <div class="container mx-auto p-6">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold text-white bg-blue-700 py-4 rounded-lg shadow-lg">Hospital Management System</h1>
     </div>
 
-    <!-- Patient Forms -->
-    <div class="form-container">
-      <h2 class="text-xl font-semibold text-blue-600 mb-4">Patient Registration</h2>
-      <form>
-        <input class="form-input" type="text" placeholder="Full Name" required />
-        <input class="form-input" type="email" placeholder="Email" required />
-        <input class="form-input" type="tel" placeholder="Phone Number" required />
-        <button class="button">Register</button>
-      </form>
-
-      <h2 class="text-xl font-semibold text-blue-600 mt-8 mb-4">Appointment Booking</h2>
-      <form>
-        <input class="form-input" type="text" placeholder="Full Name" required />
-        <input class="form-input" type="email" placeholder="Email" required />
-        <input class="form-input" type="date" required />
-        <input class="form-input" type="time" required />
-        <button class="button">Book Appointment</button>
-      </form>
-
-      <h3 class="mt-6 text-lg font-semibold">Patient Appointments Table</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Jane Doe</td>
-            <td>jane@example.com</td>
-            <td>2025-05-10</td>
-            <td>10:00 AM</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Role Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div onclick="openModal('patient')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
+        <h2 class="text-xl font-semibold text-center text-blue-700">Patient</h2>
+      </div>
+      <div onclick="openModal('receptionist')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
+        <h2 class="text-xl font-semibold text-center text-blue-700">Receptionist</h2>
+      </div>
+      <div onclick="openModal('admin')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
+        <h2 class="text-xl font-semibold text-center text-blue-700">Admin</h2>
+      </div>
+      <div onclick="openModal('doctor')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
+        <h2 class="text-xl font-semibold text-center text-blue-700">Doctor</h2>
+      </div>
     </div>
 
-    <!-- Receptionist Forms -->
-    <div class="form-container">
-      <h2 class="text-xl font-semibold text-blue-600 mb-4">Receptionist - Admit Patient</h2>
-      <form>
-        <input class="form-input" type="text" placeholder="Patient Name" required />
-        <input class="form-input" type="text" placeholder="Admission Details" required />
-        <button class="button">Admit</button>
-      </form>
-
-      <h2 class="text-xl font-semibold text-blue-600 mt-8 mb-4">Schedule Appointment</h2>
-      <form>
-        <input class="form-input" type="text" placeholder="Patient Name" required />
-        <input class="form-input" type="date" required />
-        <input class="form-input" type="time" required />
-        <button class="button">Schedule</button>
-      </form>
-
-      <h3 class="mt-6 text-lg font-semibold">Scheduled Appointments</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Date</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John Smith</td>
-            <td>2025-05-12</td>
-            <td>2:00 PM</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Admin Forms -->
-    <div class="form-container">
-      <h2 class="text-xl font-semibold text-blue-600 mb-4">Admin - Manage Doctors</h2>
-      <form>
-        <input class="form-input" type="text" placeholder="Doctor Name" required />
-        <input class="form-input" type="email" placeholder="Doctor Email" required />
-        <button class="button">Add Doctor</button>
-      </form>
-
-      <h3 class="mt-6 text-lg font-semibold">Doctors List</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Dr. Alex</td>
-            <td>alex@hospital.com</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Doctor Forms -->
-    <div class="form-container">
-      <h2 class="text-xl font-semibold text-blue-600 mb-4">Doctor - Write Prescription</h2>
-      <form>
-        <input class="form-input" type="text" placeholder="Patient Name" required />
-        <textarea class="form-input" placeholder="Prescription Details" required></textarea>
-        <button class="button">Submit Prescription</button>
-      </form>
-
-      <h3 class="mt-6 text-lg font-semibold">Patient Prescriptions</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Prescription</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Emily Clark</td>
-            <td>Take 1 tablet of Paracetamol every 6 hours</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Modals -->
+    <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 modal">
+      <div class="bg-white rounded-xl p-6 w-full max-w-2xl overflow-y-auto max-h-[90vh] relative">
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-red-600 font-bold text-lg">&times;</button>
+        <div id="modalContent" class="space-y-6">
+          <!-- Dynamic Content Injected Here -->
+        </div>
+      </div>
     </div>
   </div>
+
+  <script>
+    function openModal(role) {
+      const content = {
+        patient: `
+          <h2 class="text-2xl font-semibold text-blue-700">Patient Portal</h2>
+          <form class="space-y-4">
+            <input type="text" placeholder="Full Name" class="form-input w-full border p-2 rounded" />
+            <input type="email" placeholder="Email" class="form-input w-full border p-2 rounded" />
+            <input type="tel" placeholder="Phone" class="form-input w-full border p-2 rounded" />
+            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Register</button>
+          </form>
+          <form class="space-y-4 mt-6">
+            <h3 class="text-lg font-semibold">Book Appointment</h3>
+            <input type="date" class="form-input w-full border p-2 rounded" />
+            <input type="time" class="form-input w-full border p-2 rounded" />
+            <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Book</button>
+          </form>
+        `,
+        receptionist: `
+          <h2 class="text-2xl font-semibold text-blue-700">Receptionist Portal</h2>
+          <form class="space-y-4">
+            <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
+            <input type="text" placeholder="Admission Details" class="form-input w-full border p-2 rounded" />
+            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Admit Patient</button>
+          </form>
+          <form class="space-y-4 mt-6">
+            <h3 class="text-lg font-semibold">Schedule Appointment</h3>
+            <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
+            <input type="date" class="form-input w-full border p-2 rounded" />
+            <input type="time" class="form-input w-full border p-2 rounded" />
+            <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Schedule</button>
+          </form>
+        `,
+        admin: `
+          <h2 class="text-2xl font-semibold text-blue-700">Admin Portal</h2>
+          <form class="space-y-4">
+            <input type="text" placeholder="Doctor Name" class="form-input w-full border p-2 rounded" />
+            <input type="email" placeholder="Doctor Email" class="form-input w-full border p-2 rounded" />
+            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Add Doctor</button>
+          </form>
+        `,
+        doctor: `
+          <h2 class="text-2xl font-semibold text-blue-700">Doctor Portal</h2>
+          <form class="space-y-4">
+            <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
+            <textarea placeholder="Prescription" class="form-input w-full border p-2 rounded"></textarea>
+            <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Submit Prescription</button>
+          </form>
+        `
+      };
+      document.getElementById('modalContent').innerHTML = content[role];
+      document.getElementById('modalContainer').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalContainer').classList.remove('active');
+    }
+  </script>
 </body>
 </html>
