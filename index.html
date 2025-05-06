@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
+  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" /> 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
-      background-image: url('https://static.vecteezy.com/system/resources/thumbnails/029/284/412/small/healthcare-theme-3d-illustration-of-an-empty-emergency-room-ai-generative-free-photo.jpg');
+      background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -16,63 +18,123 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Header Styles */
-    .header {
-      background-color: rgba(0, 0, 0, 0.5); /* Darken the header background */
-      padding: 20px 0;
-    }
-
-    .header .logo {
-      height: 60px; /* Adjust logo size */
-      width: auto;
-      display: block;
+    header {
+      background-color: #005f73; /* Dark teal color for professionalism */
+      padding: 20px 40px; /* Original padding for header */
+      color: white;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      max-width: 100%;
       margin: 0 auto;
     }
 
-    .header h1 {
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    header .logout-btn {
+      background-color: #d32f2f; /* Red color for logout button */
       color: white;
-      font-size: 2.5rem;
+      padding: 12px 20px; /* Original padding */
+      border-radius: 5px;
+      cursor: pointer;
       text-align: center;
     }
 
-    /* Footer Styles */
     footer {
-      background-color: rgba(0, 0, 0, 0.5); /* Darken the footer background */
-      padding: 15px 0;
-      text-align: center;
+      background-color: #005f73; /* Dark teal color for professionalism */
       color: white;
+      text-align: center;
+      padding: 20px 40px; /* Original padding for footer */
       position: fixed;
       bottom: 0;
       width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
     }
 
-    footer p {
-      margin: 0;
+    footer a {
+      color: white;
+      text-decoration: underline;
     }
 
-    /* Login Container Styles */
-    .container {
-      background-color: rgba(255, 255, 255, 0.8); /* Light background for the login form */
-      max-width: 600px;
-      margin: 10% auto;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #005f73;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .badge {
+      padding: 5px 10px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 10px;
+      font-size: 12px;
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .form-input:focus {
+      border-color: #005f73;
     }
   </style>
 </head>
+
 <body class="font-sans">
 
   <!-- Header Section -->
-  <div class="header">
-    <img src="your-logo-url.png" alt="Hospital Logo" class="logo" />
-    <h1 class="text-white">Hospital Management System</h1>
+ <header class="bg-teal-800 text-white p-4 flex justify-between items-center">
+  <div class="logo flex items-center">
+    <!-- Replace with your logo path -->
+    <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" alt="Hospital Logo" class="h-20 w-auto"> <!-- Adjust height and width -->
   </div>
+  <button class="logout-btn bg-red-600 text-white px-4 py-2 rounded-md" onclick="logout()">Logout</button>
+</header>
 
-  <!-- Main Content -->
-  <div class="container">
+
+
+
+  <!-- Main Container -->
+  <div class="container max-w-lg mx-auto mt-28 rounded-lg bg-white/80 p-8 shadow-xl">
+    <div class="bg-blue-700 text-white text-center p-6 rounded-lg">
+      <h1 class="text-4xl font-bold">Hospital Management System</h1>
+    </div>
+
+    <!-- Welcome Hero Section -->
     <div id="loginSection" class="mt-8">
       <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
+      <p class="text-center mt-4 text-gray-700">Welcome to the hospital management system. Please log in to access the system.</p>
 
       <div class="space-y-4 mt-6">
         <label for="role" class="block text-lg">Select Role</label>
@@ -88,13 +150,14 @@
       </div>
     </div>
 
+    <!-- Dashboard Section -->
     <div id="dashboard" class="mt-8 hidden">
       <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-6 text-blue-700"></h2>
       <div id="actionButtons" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Modal Container -->
   <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
     <div class="bg-white p-6 rounded-xl shadow-lg max-w-xl w-full relative">
       <button onclick="closeModal()" class="absolute top-3 right-3 text-2xl text-gray-500 hover:text-red-600">&times;</button>
@@ -102,8 +165,10 @@
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- Footer Section -->
   <footer>
+    <p>Hospital XYZ | Address: 123 Healthcare St, City, Country</p>
+    <p><a href="tel:+123456789">Emergency Contact: +123 456 789</a></p>
     <p>&copy; 2025 Hospital Management System. All rights reserved.</p>
   </footer>
 
@@ -112,33 +177,33 @@
       admin: {
         title: "Admin Dashboard",
         actions: [
-          { name: "Manage Doctors", icon: "UserCog" },
-          { name: "Manage Patients", icon: "UserCheck" },
-          { name: "View Reports", icon: "FileText" }
+          { name: "Manage Doctors", icon: "UserCog", actionKey: "manageDoctors" },
+          { name: "Manage Patients", icon: "UserCheck", actionKey: "managePatients" },
+          { name: "View Reports", icon: "FileText", actionKey: "viewReports" }
         ]
       },
       doctor: {
         title: "Doctor Dashboard",
         actions: [
-          { name: "Write Prescription", icon: "ClipboardEdit" },
-          { name: "View Appointments", icon: "CalendarClock" },
-          { name: "Patient Consultation", icon: "Stethoscope" }
+          { name: "Write Prescription", icon: "ClipboardEdit", actionKey: "writePrescription" },
+          { name: "View Appointments", icon: "CalendarClock", actionKey: "viewAppointments" },
+          { name: "Patient Consultation", icon: "Stethoscope", actionKey: "patientConsultation" }
         ]
       },
       patient: {
         title: "Patient Dashboard",
         actions: [
-          { name: "Book Appointment", icon: "CalendarPlus" },
-          { name: "View Medical History", icon: "BookOpen" },
-          { name: "Request Consultation", icon: "MessageCircle" }
+          { name: "Book Appointment", icon: "CalendarPlus", actionKey: "bookAppointment" },
+          { name: "View Medical History", icon: "BookOpen", actionKey: "viewMedicalHistory" },
+          { name: "Request Consultation", icon: "MessageCircle", actionKey: "requestConsultation" }
         ]
       },
       receptionist: {
         title: "Receptionist Dashboard",
         actions: [
-          { name: "Register Patient", icon: "UserPlus" },
-          { name: "Schedule Appointment", icon: "CalendarRange" },
-          { name: "Manage Billing", icon: "CreditCard" }
+          { name: "Register Patient", icon: "UserPlus", actionKey: "registerPatient" },
+          { name: "Schedule Appointment", icon: "CalendarRange", actionKey: "scheduleAppointment" },
+          { name: "Manage Billing", icon: "CreditCard", actionKey: "manageBilling" }
         ]
       }
     };
@@ -158,11 +223,12 @@
 
       actionButtons.innerHTML = dashboards[role].actions.map(action => {
         return `
-          <div onclick="openModal('${role}')" class="cursor-pointer bg-white rounded-xl shadow-md p-6 text-center hover:bg-blue-50 transition-all border border-blue-100 group">
+          <div onclick="openModal('${role}', '${action.actionKey}')" class="card cursor-pointer">
             <div class="flex justify-center mb-2">
-              <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500 group-hover:text-blue-700 group-hover:animate-pulse transition-all duration-300"></i>
+              <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500"></i>
             </div>
-            <h3 class="text-lg font-semibold text-blue-600 group-hover:text-blue-800">${action.name}</h3>
+            <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
+            <div class="badge">Active</div>
           </div>`;
       }).join("");
 
@@ -170,50 +236,38 @@
       lucide.createIcons();
     }
 
-    function openModal(role) {
+    function openModal(role, actionKey) {
       const modal = document.getElementById('modalContainer');
       const modalContent = document.getElementById('modalContent');
       let content = "";
+      const validateForm = (form) => {
+        const inputs = form.querySelectorAll("input, textarea");
+        for (let input of inputs) {
+          if (!input.value.trim()) {
+            alert("Please fill all fields.");
+            return false;
+          }
+        }
+        return true;
+      };
 
-      switch (role) {
-        case "patient":
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Patient Registration</h3>
-            <form class="space-y-4">
-              <input type="text" placeholder="Name" class="form-input w-full p-3 border rounded-lg" required />
-              <input type="email" placeholder="Email" class="form-input w-full p-3 border rounded-lg" required />
-              <input type="tel" placeholder="Phone" class="form-input w-full p-3 border rounded-lg" required />
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Submit</button>
-            </form>`;
-          break;
-        case "doctor":
+      if (role === "doctor") {
+        if (actionKey === "writePrescription") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="return validateForm(this)">
               <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
               <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
             </form>`;
-          break;
-        case "admin":
+        } else if (actionKey === "viewAppointments") {
           content = `
-            <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
-            <table class="w-full border mt-4">
-              <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Specialty</th></tr></thead>
-              <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
-            </table>`;
-          break;
-        case "receptionist":
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Register Patient</h3>
-            <form class="space-y-4">
-              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-              <input type="text" placeholder="Admission Details" class="form-input w-full p-3 border rounded-lg" required />
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Admit</button>
-            </form>`;
-          break;
-        default:
-          content = `<p class="text-red-500">Unknown role selected.</p>`;
+            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+            <ul>
+              <li>John Doe - 2025-05-10</li>
+              <li>Jane Smith - 2025-05-11</li>
+            </ul>`;
+        }
       }
 
       modalContent.innerHTML = content;
@@ -225,7 +279,12 @@
       modal.classList.add("hidden");
       document.getElementById("modalContent").innerHTML = '';
     }
+
+    function logout() {
+      alert("Logged out");
+    }
   </script>
 
 </body>
+
 </html>
