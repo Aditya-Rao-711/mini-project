@@ -110,73 +110,83 @@
     }
 
     function openModal(role, actionName) {
-      const modal = document.getElementById('modalContainer');
-      const modalContent = document.getElementById('modalContent');
-      let content = "";
+  const modal = document.getElementById('modalContainer');
+  const modalContent = document.getElementById('modalContent');
+  let content = "";
 
-      // Action-specific modal content
-      if (role === "doctor" && actionName === "Write Prescription") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-          <form onsubmit="event.preventDefault();" class="space-y-4">
-            <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-            <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
-          </form>`;
-      } else if (role === "doctor" && actionName === "View Appointments") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Upcoming Appointments</h3>
-          <ul class="divide-y mt-4">
-            <li class="py-2 flex justify-between"><span>John Doe</span><span>10:00 AM, May 10</span></li>
-            <li class="py-2 flex justify-between"><span>Jane Smith</span><span>11:30 AM, May 10</span></li>
-          </ul>`;
-      } else if (role === "patient" && actionName === "Book Appointment") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
-          <form onsubmit="event.preventDefault();" class="space-y-4">
-            <input type="text" placeholder="Preferred Date" class="form-input w-full p-3 border rounded-lg" required />
-            <input type="text" placeholder="Department" class="form-input w-full p-3 border rounded-lg" required />
-            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book</button>
-          </form>`;
-      } else if (role === "patient" && actionName === "View Medical History") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
-          <ul class="mt-4 space-y-2">
-            <li class="p-3 border rounded-lg bg-gray-50"><strong>2024-12-01:</strong> Blood pressure - Dr. Green</li>
-            <li class="p-3 border rounded-lg bg-gray-50"><strong>2025-02-18:</strong> Routine blood test</li>
-          </ul>`;
-      } else if (role === "admin" && actionName === "Manage Doctors") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
-          <table class="w-full border mt-4">
-            <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Specialty</th></tr></thead>
-            <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
-          </table>`;
-      } else if (role === "admin" && actionName === "View Reports") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Hospital Reports</h3>
-          <ul class="mt-4 space-y-3">
-            <li class="p-3 bg-gray-50 border rounded-lg">📊 Patient Admissions - Q1 2025</li>
-            <li class="p-3 bg-gray-50 border rounded-lg">📈 Doctor Performance Summary</li>
-            <li class="p-3 bg-gray-50 border rounded-lg">💰 Financial Overview Report</li>
-          </ul>`;
-      } else if (role === "receptionist" && actionName === "Manage Billing") {
-        content = `
-          <h3 class="text-xl font-semibold text-blue-600">Billing Overview</h3>
-          <table class="w-full border mt-4">
-            <thead><tr class="bg-blue-100"><th class="p-2">Patient</th><th class="p-2">Amount</th><th class="p-2">Status</th></tr></thead>
-            <tbody>
-              <tr><td class="p-2">Alice Lee</td><td class="p-2">$120</td><td class="p-2 text-green-600">Paid</td></tr>
-              <tr><td class="p-2">Bob Brown</td><td class="p-2">$200</td><td class="p-2 text-red-600">Unpaid</td></tr>
-            </tbody>
-          </table>`;
-      } else {
-        content = `<p class="text-gray-600">This feature is under development.</p>`;
-      }
+  if (role === "doctor" && actionName === "Write Prescription") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+      <form onsubmit="event.preventDefault();" class="space-y-4">
+        <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+        <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+        <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+      </form>`;
+  } else if (role === "doctor" && actionName === "View Appointments") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Upcoming Appointments</h3>
+      <ul class="divide-y mt-4">
+        <li class="py-2 flex justify-between"><span>John Doe</span><span>10:00 AM, May 10</span></li>
+        <li class="py-2 flex justify-between"><span>Jane Smith</span><span>11:30 AM, May 10</span></li>
+      </ul>`;
+  } else if (role === "patient" && actionName === "Book Appointment") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
+      <form onsubmit="event.preventDefault();" class="space-y-4">
+        <input type="text" placeholder="Preferred Date" class="form-input w-full p-3 border rounded-lg" required />
+        <input type="text" placeholder="Department" class="form-input w-full p-3 border rounded-lg" required />
+        <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book</button>
+      </form>`;
+  } else if (role === "patient" && actionName === "View Medical History") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
+      <ul class="mt-4 space-y-2">
+        <li class="p-3 border rounded-lg bg-gray-50"><strong>2024-12-01:</strong> Blood pressure - Dr. Green</li>
+        <li class="p-3 border rounded-lg bg-gray-50"><strong>2025-02-18:</strong> Routine blood test</li>
+      </ul>`;
+  } else if (role === "admin" && actionName === "Manage Doctors") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+      <table class="w-full border mt-4">
+        <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Specialty</th></tr></thead>
+        <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
+      </table>`;
+  } else if (role === "admin" && actionName === "Manage Patients") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Manage Patients</h3>
+      <table class="w-full border mt-4">
+        <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Status</th></tr></thead>
+        <tbody>
+          <tr><td class="p-2">Alice Johnson</td><td class="p-2">Admitted</td></tr>
+          <tr><td class="p-2">Bob Lee</td><td class="p-2">Discharged</td></tr>
+        </tbody>
+      </table>`;
+  } else if (role === "admin" && actionName === "View Reports") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Hospital Reports</h3>
+      <ul class="mt-4 space-y-3">
+        <li class="p-3 bg-gray-50 border rounded-lg">📊 Patient Admissions - Q1 2025</li>
+        <li class="p-3 bg-gray-50 border rounded-lg">📈 Doctor Performance Summary</li>
+        <li class="p-3 bg-gray-50 border rounded-lg">💰 Financial Overview Report</li>
+      </ul>`;
+  } else if (role === "receptionist" && actionName === "Manage Billing") {
+    content = `
+      <h3 class="text-xl font-semibold text-blue-600">Billing Overview</h3>
+      <table class="w-full border mt-4">
+        <thead><tr class="bg-blue-100"><th class="p-2">Patient</th><th class="p-2">Amount</th><th class="p-2">Status</th></tr></thead>
+        <tbody>
+          <tr><td class="p-2">Alice Lee</td><td class="p-2">$120</td><td class="p-2 text-green-600">Paid</td></tr>
+          <tr><td class="p-2">Bob Brown</td><td class="p-2">$200</td><td class="p-2 text-red-600">Unpaid</td></tr>
+        </tbody>
+      </table>`;
+  } else {
+    content = `<p class="text-gray-600">This feature is under development.</p>`;
+  }
 
-      modalContent.innerHTML = content;
-      modal.classList.remove("hidden");
-    }
+  modalContent.innerHTML = content;
+  modal.classList.remove("hidden");
+}
+
 
     function closeModal() {
       const modal = document.getElementById("modalContainer");
