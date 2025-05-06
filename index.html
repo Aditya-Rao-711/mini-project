@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
-  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" />
+  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" /> 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -18,8 +18,65 @@
       font-family: Arial, sans-serif;
     }
 
-    .container {
-      margin-top: 10%;
+    header {
+      background-color: #005f73; /* Dark teal color for professionalism */
+      padding: 20px 40px; /* Original padding for header */
+      color: white;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    header .logout-btn {
+      background-color: #d32f2f; /* Red color for logout button */
+      color: white;
+      padding: 12px 20px; /* Original padding */
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #005f73; /* Dark teal color for professionalism */
+      color: white;
+      text-align: center;
+      padding: 20px 40px; /* Original padding for footer */
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #005f73;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .card {
@@ -51,92 +108,71 @@
     .form-input:focus {
       border-color: #005f73;
     }
-
-    /* Modal Container */
-    #modalContainer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1001;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #modalContainer.visible {
-      display: flex;
-    }
-
-    .modal-content {
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: gray;
-    }
-
-    /* Hero Section */
-    .hero {
-      padding: 3rem 0;
-      background-color: rgba(255, 255, 255, 0.8);
-      text-align: center;
-      margin-bottom: 2rem;
-      border-radius: 10px;
-    }
-
-    .role-select {
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      border: 1px solid #ddd;
-      width: 50%;
-    }
-
   </style>
 </head>
 
-<body>
+<body class="font-sans">
 
-  <!-- Hero Section -->
-  <div class="hero">
-    <h1 class="text-4xl font-semibold text-blue-600 mb-4">Hospital Management System</h1>
-    <p class="text-lg mb-4">Please select your role:</p>
-    <select id="roleSelect" class="role-select" onchange="updateDashboard()">
-      <option value="admin">Admin</option>
-      <option value="doctor">Doctor</option>
-      <option value="patient">Patient</option>
-      <option value="receptionist">Receptionist</option>
-    </select>
+  <!-- Header Section -->
+ <header class="bg-teal-800 text-white p-4 flex justify-between items-center">
+  <div class="logo flex items-center">
+    <!-- Replace with your logo path -->
+    <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" alt="Hospital Logo" class="h-20 w-auto"> <!-- Adjust height and width -->
   </div>
+  <button class="logout-btn bg-red-600 text-white px-4 py-2 rounded-md" onclick="logout()">Logout</button>
+</header>
+
+
+
 
   <!-- Main Container -->
-  <div id="dashboardContainer" class="container max-w-lg mx-auto rounded-lg bg-white/80 p-8 shadow-xl">
-    <h2 class="text-4xl font-bold text-center mb-8">Dashboard</h2>
+  <div class="container max-w-lg mx-auto mt-28 rounded-lg bg-white/80 p-8 shadow-xl">
+    <div class="bg-blue-700 text-white text-center p-6 rounded-lg">
+      <h1 class="text-4xl font-bold">Hospital Management System</h1>
+    </div>
 
-    <!-- Cards will be inserted dynamically based on the selected role -->
-    <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <!-- Role-based Cards will appear here -->
+    <!-- Welcome Hero Section -->
+    <div id="loginSection" class="mt-8">
+      <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
+      <p class="text-center mt-4 text-gray-700">Welcome to the hospital management system. Please log in to access the system.</p>
+
+      <div class="space-y-4 mt-6">
+        <label for="role" class="block text-lg">Select Role</label>
+        <select id="role" class="form-input w-full p-3 border rounded-lg">
+          <option value="">-- Choose Role --</option>
+          <option value="admin">Admin</option>
+          <option value="doctor">Doctor</option>
+          <option value="patient">Patient</option>
+          <option value="receptionist">Receptionist</option>
+        </select>
+
+        <button onclick="showDashboard()" class="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Login</button>
+      </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="mt-8 hidden">
+      <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-6 text-blue-700"></h2>
+      <div id="actionButtons" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
     </div>
   </div>
 
   <!-- Modal Container -->
-  <div id="modalContainer">
-    <div class="modal-content relative">
-      <button class="close-btn" onclick="closeModal()">&times;</button>
-      <div id="modalContent"></div>
+  <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg max-w-xl w-full relative">
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-2xl text-gray-500 hover:text-red-600">&times;</button>
+      <div id="modalContent" class="space-y-4"></div>
     </div>
   </div>
 
+  <!-- Footer Section -->
+  <footer>
+    <p>Hospital XYZ | Address: 123 Healthcare St, City, Country</p>
+    <p><a href="tel:+123456789">Emergency Contact: +123 456 789</a></p>
+    <p>&copy; 2025 Hospital Management System. All rights reserved.</p>
+  </footer>
+
   <script>
-    // Dashboard data for different roles
     const dashboards = {
       admin: {
         title: "Admin Dashboard",
@@ -172,80 +208,81 @@
       }
     };
 
-    // Function to update the dashboard based on the selected role
-    function updateDashboard() {
-      const role = document.getElementById('roleSelect').value;
-      const cardsContainer = document.getElementById('cardsContainer');
-      const selectedDashboard = dashboards[role];
-      
-      // Clear the current cards
-      cardsContainer.innerHTML = '';
+    function showDashboard() {
+      const role = document.getElementById('role').value;
+      const dashboard = document.getElementById('dashboard');
+      const title = document.getElementById('roleTitle');
+      const actionButtons = document.getElementById('actionButtons');
 
-      // Create and display the cards for the selected role
-      selectedDashboard.actions.forEach(action => {
-        const card = document.createElement('div');
-        card.classList.add('card', 'cursor-pointer');
-        card.onclick = () => openModal(role, action.actionKey);
-        card.innerHTML = `
-          <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
-          <div class="badge">Active</div>
-        `;
-        cardsContainer.appendChild(card);
-      });
+      if (!role) {
+        alert("Please select a role.");
+        return;
+      }
+
+      title.textContent = dashboards[role].title;
+
+      actionButtons.innerHTML = dashboards[role].actions.map(action => {
+        return `
+          <div onclick="openModal('${role}', '${action.actionKey}')" class="card cursor-pointer">
+            <div class="flex justify-center mb-2">
+              <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
+            <div class="badge">Active</div>
+          </div>`;
+      }).join("");
+
+      dashboard.classList.remove('hidden');
+      lucide.createIcons();
     }
 
-    // Function to open the modal with relevant content
     function openModal(role, actionKey) {
       const modal = document.getElementById('modalContainer');
       const modalContent = document.getElementById('modalContent');
       let content = "";
+      const validateForm = (form) => {
+        const inputs = form.querySelectorAll("input, textarea");
+        for (let input of inputs) {
+          if (!input.value.trim()) {
+            alert("Please fill all fields.");
+            return false;
+          }
+        }
+        return true;
+      };
 
-      // Dynamically load content based on role and action
-      if (role === "admin") {
-        if (actionKey === "manageDoctors") {
+      if (role === "doctor") {
+        if (actionKey === "writePrescription") {
           content = `
-            <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
-            <form class="space-y-4">
-              <input type="text" placeholder="Doctor Name" class="form-input w-full p-3 border rounded-lg" />
-              <input type="text" placeholder="Specialization" class="form-input w-full p-3 border rounded-lg" />
+            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <form class="space-y-4" onsubmit="return validateForm(this)">
+              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
             </form>`;
-        } else if (actionKey === "viewReports") {
+        } else if (actionKey === "viewAppointments") {
           content = `
-            <h3 class="text-xl font-semibold text-blue-600">Reports</h3>
-            <table class="min-w-full table-auto">
-              <thead>
-                <tr>
-                  <th class="py-2 px-4 border-b">Report ID</th>
-                  <th class="py-2 px-4 border-b">Title</th>
-                  <th class="py-2 px-4 border-b">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="py-2 px-4 border-b">1</td>
-                  <td class="py-2 px-4 border-b">Annual Health Report</td>
-                  <td class="py-2 px-4 border-b">2025-04-20</td>
-                </tr>
-                <!-- More rows as needed -->
-              </tbody>
-            </table>`;
+            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+            <ul>
+              <li>John Doe - 2025-05-10</li>
+              <li>Jane Smith - 2025-05-11</li>
+            </ul>`;
         }
       }
 
       modalContent.innerHTML = content;
-      modal.classList.add("visible");
+      modal.classList.remove("hidden");
     }
 
-    // Function to close the modal
     function closeModal() {
       const modal = document.getElementById("modalContainer");
-      modal.classList.remove("visible");
+      modal.classList.add("hidden");
       document.getElementById("modalContent").innerHTML = '';
     }
 
-    // Initialize dashboard for the default role (admin)
-    updateDashboard();
+    function logout() {
+      alert("Logged out");
+    }
   </script>
 
 </body>
