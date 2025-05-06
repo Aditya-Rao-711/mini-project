@@ -1,264 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
+  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" /> 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    /* Background image for the entire body */
     body {
-      background-image: url('https://thumbs.dreamstime.com/b/modern-medical-room-advanced-equipment-clean-hospital-tech-monitors-displaying-patient-vitals-no-people-337431630.jpg');
+      background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       margin: 0;
       font-family: Arial, sans-serif;
-      color: #333;
     }
 
-    /* Header Styles */
-    .header {
-      background-color: rgba(0, 0, 0, 0.6); /* Darken the header background */
-      padding: 20px 0;
-    }
-
-    .header .logo {
-      height: 60px; /* Adjust logo size */
-      width: auto;
-      display: block;
+    header {
+      background-color: #005f73; /* Dark teal color for professionalism */
+      padding: 20px 40px; /* Original padding for header */
+      color: white;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      max-width: 100%;
       margin: 0 auto;
     }
 
-    .header h1 {
-      color: white;
-      font-size: 2.5rem;
-      text-align: center;
-    }
-
-    /* Footer Styles */
-    footer {
-      background-color: rgba(0, 0, 0, 0.8); /* Darken the footer background */
-      padding: 20px 0;
-      text-align: center;
-      color: white;
-      width: 100%;
-      position: relative;
-    }
-
-    footer p {
-      margin: 0;
-    }
-
-    /* Container Style for Login Form */
-    .container {
-      background-color: rgba(255, 255, 255, 0.8); /* Light background for the login form */
-      max-width: 600px;
-      margin: 10% auto;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Hero Section */
-    .hero {
-      background-color: rgba(255, 255, 255, 0.7); /* Light background for the hero section */
-      padding: 40px 0;
-      text-align: center;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      position: relative;
-      top: -40px; /* Pull the hero section upwards */
-    }
-
-    .hero h2 {
-      font-size: 2.5rem;
+    header .logo {
+      font-size: 24px;
       font-weight: bold;
-      color: #1D4ED8; /* Professional blue color */
     }
 
-    .hero p {
-      font-size: 1.2rem;
-      margin-top: 20px;
-      color: #333;
-    }
-
-    /* Button Styling */
-    .btn {
-      background-color: #1D4ED8;
+    header .logout-btn {
+      background-color: #d32f2f; /* Red color for logout button */
       color: white;
-      padding: 12px;
-      border-radius: 8px;
+      padding: 12px 20px; /* Original padding */
+      border-radius: 5px;
+      cursor: pointer;
       text-align: center;
-      width: 100%;
-      margin-top: 20px;
     }
 
-    .btn:hover {
-      background-color: #2563EB;
-    }
-
-    /* Modal Styles */
-    #modalContainer {
-      display: none;
+    footer {
+      background-color: #005f73; /* Dark teal color for professionalism */
+      color: white;
+      text-align: center;
+      padding: 20px 40px; /* Original padding for footer */
       position: fixed;
-      top: 0;
-      left: 0;
+      bottom: 0;
       width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
+      max-width: 100%;
+      margin: 0 auto;
     }
 
-    #modalContent {
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #005f73;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .card {
       background-color: white;
-      padding: 30px;
+      padding: 20px;
       border-radius: 10px;
-      width: 80%;
-      max-width: 900px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
 
-    /* Hide modal */
-    #modalContainer.hidden {
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .badge {
+      padding: 5px 10px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 10px;
+      font-size: 12px;
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    .hidden {
       display: none;
     }
 
-    /* Cards Styles */
-    .card {
-      background-color: #f3f4f6;
-      padding: 20px;
-      margin: 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: #333;
+    .form-input:focus {
+      border-color: #005f73;
     }
   </style>
 </head>
-<body>
+
+<body class="font-sans">
 
   <!-- Header Section -->
-  <div class="header">
-    <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" class="logo" alt="Logo">
-    <h1>Hospital Management System</h1>
+ <header class="bg-teal-800 text-white p-4 flex justify-between items-center">
+  <div class="logo flex items-center">
+    <!-- Replace with your logo path -->
+    <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" alt="Hospital Logo" class="h-20 w-auto"> <!-- Adjust height and width -->
   </div>
+  <button class="logout-btn bg-red-600 text-white px-4 py-2 rounded-md" onclick="logout()">Logout</button>
+</header>
 
-  <!-- Hero Section -->
- 
 
-  <!-- Login Form -->
-  <div class="container">
-    <h2 class="text-2xl font-semibold text-center">Login to Your Account</h2>
 
-    <div class="mt-6">
-      <label for="role" class="block text-lg">Select Role</label>
-      <select id="role" class="form-input w-full p-3 border rounded-lg">
-        <option value="">-- Choose Role --</option>
-        <option value="admin">Admin</option>
-        <option value="doctor">Doctor</option>
-        <option value="patient">Patient</option>
-        <option value="receptionist">Receptionist</option>
-      </select>
 
-      <button onclick="showDashboard()" class="btn mt-4">Login</button>
+  <!-- Main Container -->
+  <div class="container max-w-lg mx-auto mt-28 rounded-lg bg-white/80 p-8 shadow-xl">
+    <div class="bg-blue-700 text-white text-center p-6 rounded-lg">
+      <h1 class="text-4xl font-bold">Hospital Management System</h1>
+    </div>
+
+    <!-- Welcome Hero Section -->
+    <div id="loginSection" class="mt-8">
+      <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
+      <p class="text-center mt-4 text-gray-700">Welcome to the hospital management system. Please log in to access the system.</p>
+
+      <div class="space-y-4 mt-6">
+        <label for="role" class="block text-lg">Select Role</label>
+        <select id="role" class="form-input w-full p-3 border rounded-lg">
+          <option value="">-- Choose Role --</option>
+          <option value="admin">Admin</option>
+          <option value="doctor">Doctor</option>
+          <option value="patient">Patient</option>
+          <option value="receptionist">Receptionist</option>
+        </select>
+
+        <button onclick="showDashboard()" class="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Login</button>
+      </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="mt-8 hidden">
+      <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-6 text-blue-700"></h2>
+      <div id="actionButtons" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
     </div>
   </div>
 
   <!-- Modal Container -->
-  <div id="modalContainer" class="hidden">
-    <div id="modalContent">
-      <!-- Modal content will go here -->
+  <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg max-w-xl w-full relative">
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-2xl text-gray-500 hover:text-red-600">&times;</button>
+      <div id="modalContent" class="space-y-4"></div>
     </div>
   </div>
 
   <!-- Footer Section -->
   <footer>
-    <p>&copy; 2025 Hospital Management System. All Rights Reserved.</p>
+    <p>Hospital XYZ | Address: 123 Healthcare St, City, Country</p>
+    <p><a href="tel:+123456789">Emergency Contact: +123 456 789</a></p>
+    <p>&copy; 2025 Hospital Management System. All rights reserved.</p>
   </footer>
 
   <script>
-    // Function to display the dashboard based on the role selected
+    const dashboards = {
+      admin: {
+        title: "Admin Dashboard",
+        actions: [
+          { name: "Manage Doctors", icon: "UserCog", actionKey: "manageDoctors" },
+          { name: "Manage Patients", icon: "UserCheck", actionKey: "managePatients" },
+          { name: "View Reports", icon: "FileText", actionKey: "viewReports" }
+        ]
+      },
+      doctor: {
+        title: "Doctor Dashboard",
+        actions: [
+          { name: "Write Prescription", icon: "ClipboardEdit", actionKey: "writePrescription" },
+          { name: "View Appointments", icon: "CalendarClock", actionKey: "viewAppointments" },
+          { name: "Patient Consultation", icon: "Stethoscope", actionKey: "patientConsultation" }
+        ]
+      },
+      patient: {
+        title: "Patient Dashboard",
+        actions: [
+          { name: "Book Appointment", icon: "CalendarPlus", actionKey: "bookAppointment" },
+          { name: "View Medical History", icon: "BookOpen", actionKey: "viewMedicalHistory" },
+          { name: "Request Consultation", icon: "MessageCircle", actionKey: "requestConsultation" }
+        ]
+      },
+      receptionist: {
+        title: "Receptionist Dashboard",
+        actions: [
+          { name: "Register Patient", icon: "UserPlus", actionKey: "registerPatient" },
+          { name: "Schedule Appointment", icon: "CalendarRange", actionKey: "scheduleAppointment" },
+          { name: "Manage Billing", icon: "CreditCard", actionKey: "manageBilling" }
+        ]
+      }
+    };
+
     function showDashboard() {
       const role = document.getElementById('role').value;
-      const modalContainer = document.getElementById('modalContainer');
-      const modalContent = document.getElementById('modalContent');
+      const dashboard = document.getElementById('dashboard');
+      const title = document.getElementById('roleTitle');
+      const actionButtons = document.getElementById('actionButtons');
 
       if (!role) {
         alert("Please select a role.");
         return;
       }
 
-      // Define the content for each role
-      let content = '';
-      if (role === 'admin') {
-        content = `
-          <div class="card">
-            <h3>Manage Doctors</h3>
-            <p>Admin can add, edit, and delete doctor profiles.</p>
-          </div>
-          <div class="card">
-            <h3>Manage Patients</h3>
-            <p>Admin can view and manage patient records.</p>
-          </div>
-          <div class="card">
-            <h3>View Reports</h3>
-            <p>Admin can view various reports related to hospital performance.</p>
-          </div>
-        `;
-      } else if (role === 'doctor') {
-        content = `
-          <div class="card">
-            <h3>View Patient Records</h3>
-            <p>Doctor can view patient medical records.</p>
-          </div>
-          <div class="card">
-            <h3>Update Patient Records</h3>
-            <p>Doctor can update patient health status and medical details.</p>
-          </div>
-        `;
-      } else if (role === 'patient') {
-        content = `
-          <div class="card">
-            <h3>View Medical History</h3>
-            <p>Patient can view their medical history.</p>
-          </div>
-          <div class="card">
-            <h3>Schedule Appointments</h3>
-            <p>Patient can schedule and view appointments.</p>
-          </div>
-        `;
-      } else if (role === 'receptionist') {
-        content = `
-          <div class="card">
-            <h3>Manage Appointments</h3>
-            <p>Receptionist can schedule, view, and manage appointments.</p>
-          </div>
-          <div class="card">
-            <h3>Patient Registration</h3>
-            <p>Receptionist can register new patients in the system.</p>
-          </div>
-        `;
+      title.textContent = dashboards[role].title;
+
+      actionButtons.innerHTML = dashboards[role].actions.map(action => {
+        return `
+          <div onclick="openModal('${role}', '${action.actionKey}')" class="card cursor-pointer">
+            <div class="flex justify-center mb-2">
+              <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
+            <div class="badge">Active</div>
+          </div>`;
+      }).join("");
+
+      dashboard.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function openModal(role, actionKey) {
+      const modal = document.getElementById('modalContainer');
+      const modalContent = document.getElementById('modalContent');
+      let content = "";
+      const validateForm = (form) => {
+        const inputs = form.querySelectorAll("input, textarea");
+        for (let input of inputs) {
+          if (!input.value.trim()) {
+            alert("Please fill all fields.");
+            return false;
+          }
+        }
+        return true;
+      };
+
+      if (role === "doctor") {
+        if (actionKey === "writePrescription") {
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <form class="space-y-4" onsubmit="return validateForm(this)">
+              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+            </form>`;
+        } else if (actionKey === "viewAppointments") {
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+            <ul>
+              <li>John Doe - 2025-05-10</li>
+              <li>Jane Smith - 2025-05-11</li>
+            </ul>`;
+        }
       }
 
-      // Set the content in the modal
       modalContent.innerHTML = content;
+      modal.classList.remove("hidden");
+    }
 
-      // Show the modal
-      modalContainer.classList.remove('hidden');
+    function closeModal() {
+      const modal = document.getElementById("modalContainer");
+      modal.classList.add("hidden");
+      document.getElementById("modalContent").innerHTML = '';
+    }
+
+    function logout() {
+      alert("Logged out");
     }
   </script>
 
 </body>
+
 </html>
