@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -11,124 +11,253 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+      margin: 0;
+      font-family: Arial, sans-serif;
     }
-    .modal {
-      display: none;
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .modal.active {
-      display: block;
+
+    .header {
+      background-color: rgba(0, 82, 255, 0.9);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .button {
+      background-color: #007BFF;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+
+    .form-input {
+      padding: 15px;
+      width: 100%;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .form-container {
+      margin-top: 30px;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h3 {
+      color: #0056b3;
+    }
+
+    .table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    .table th, .table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .table th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    .table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .table tr:hover {
+      background-color: #ddd;
+    }
+
+    .form-message {
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .form-message.error {
+      background-color: #dc3545;
     }
   </style>
 </head>
-<body class="min-h-screen bg-gray-100 bg-opacity-80">
-  <div class="container mx-auto p-6 flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-4xl font-bold text-white bg-blue-700 py-4 px-8 rounded-lg shadow-lg mb-10">Hospital Management System</h1>
+<body class="font-sans">
 
-    <!-- Role Dropdown and Login Button -->
-    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-      <h2 class="text-2xl font-semibold text-center text-blue-700 mb-6">Login</h2>
-      <select id="roleSelect" class="w-full border p-3 rounded mb-4">
-        <option value="" disabled selected>Select Role</option>
-        <option value="patient">Patient</option>
-        <option value="receptionist">Receptionist</option>
-        <option value="admin">Admin</option>
-        <option value="doctor">Doctor</option>
-      </select>
-      <button onclick="login()" class="bg-blue-600 text-white py-2 px-4 rounded w-full hover:bg-blue-700 transition">Login</button>
+  <!-- Main Container -->
+  <div class="container max-w-lg mx-auto mt-10 rounded-lg">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="text-4xl font-bold">Hospital Management System</h1>
     </div>
 
-    <!-- Modal Displaying Role Forms -->
-    <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 modal">
-      <div class="bg-white rounded-xl p-6 w-full max-w-2xl overflow-y-auto max-h-[90vh] relative">
-        <button onclick="closeModal()" class="absolute top-4 right-4 text-red-600 font-bold text-lg">&times;</button>
-        <div id="modalContent" class="space-y-6">
-          <!-- Dynamic Content Goes Here -->
-        </div>
+    <!-- Login Section -->
+    <div id="loginSection" class="mt-8">
+      <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
+
+      <!-- Role Selection -->
+      <div class="space-y-4 mt-6">
+        <label for="role" class="block text-lg">Select Role</label>
+        <select id="role" class="form-input">
+          <option value="">-- Choose Role --</option>
+          <option value="admin">Admin</option>
+          <option value="doctor">Doctor</option>
+          <option value="patient">Patient</option>
+          <option value="receptionist">Receptionist</option>
+        </select>
+
+        <button onclick="showDashboard()" class="button">Login</button>
       </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="mt-6 hidden">
+      <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-4"></h2>
+
+      <!-- Dashboard Content -->
+      <div id="roleTasksContainer" class="space-y-4">
+        <ul id="roleTasks" class="list-disc pl-6 text-lg text-gray-700"></ul>
+      </div>
+
+      <!-- Example Action Buttons -->
+      <div id="actionButtons" class="space-y-4 mt-8"></div>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg max-w-xl w-full relative">
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-2xl text-gray-500 hover:text-red-600">&times;</button>
+      <div id="modalContent" class="space-y-4"></div>
     </div>
   </div>
 
   <script>
-  function login() {
-    const roleDropdown = document.getElementById("roleSelect");
-    const role = roleDropdown.value.trim();
-
-    if (!role) {
-      alert("Please select a role.");
-      return;
-    }
-
-    openModal(role);
-  }
-
-  function openModal(role) {
-    const content = {
-      patient: `
-        <h2 class="text-2xl font-semibold text-blue-700">Patient Portal</h2>
-        <form class="space-y-4">
-          <input type="text" placeholder="Full Name" class="form-input w-full border p-2 rounded" />
-          <input type="email" placeholder="Email" class="form-input w-full border p-2 rounded" />
-          <input type="tel" placeholder="Phone" class="form-input w-full border p-2 rounded" />
-          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Register</button>
-        </form>
-        <form class="space-y-4 mt-6">
-          <h3 class="text-lg font-semibold">Book Appointment</h3>
-          <input type="date" class="form-input w-full border p-2 rounded" />
-          <input type="time" class="form-input w-full border p-2 rounded" />
-          <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Book</button>
-        </form>
-      `,
-      receptionist: `
-        <h2 class="text-2xl font-semibold text-blue-700">Receptionist Portal</h2>
-        <form class="space-y-4">
-          <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
-          <input type="text" placeholder="Admission Details" class="form-input w-full border p-2 rounded" />
-          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Admit Patient</button>
-        </form>
-        <form class="space-y-4 mt-6">
-          <h3 class="text-lg font-semibold">Schedule Appointment</h3>
-          <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
-          <input type="date" class="form-input w-full border p-2 rounded" />
-          <input type="time" class="form-input w-full border p-2 rounded" />
-          <button class="bg-green-600 text-white py-2 px-4 rounded w-full">Schedule</button>
-        </form>
-      `,
-      admin: `
-        <h2 class="text-2xl font-semibold text-blue-700">Admin Portal</h2>
-        <form class="space-y-4">
-          <input type="text" placeholder="Doctor Name" class="form-input w-full border p-2 rounded" />
-          <input type="email" placeholder="Doctor Email" class="form-input w-full border p-2 rounded" />
-          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Add Doctor</button>
-        </form>
-      `,
-      doctor: `
-        <h2 class="text-2xl font-semibold text-blue-700">Doctor Portal</h2>
-        <form class="space-y-4">
-          <input type="text" placeholder="Patient Name" class="form-input w-full border p-2 rounded" />
-          <textarea placeholder="Prescription" class="form-input w-full border p-2 rounded"></textarea>
-          <button class="bg-blue-600 text-white py-2 px-4 rounded w-full">Submit Prescription</button>
-        </form>
-      `
+    const dashboards = {
+      admin: {
+        title: "Admin Dashboard",
+        tasks: ["Manage Doctors", "Manage Patients", "Assign Roles", "View Reports", "Approve Requests"],
+        actions: ["Manage Doctors", "Manage Patients", "View Reports"]
+      },
+      doctor: {
+        title: "Doctor Dashboard",
+        tasks: ["View Patients", "Update Medical Records", "Write Prescriptions", "Schedule Appointments"],
+        actions: ["Write Prescription", "View Appointments", "Patient Consultation"]
+      },
+      patient: {
+        title: "Patient Dashboard",
+        tasks: ["Book Appointment", "View Medical History", "Download Prescriptions", "Request Consultation"],
+        actions: ["Book Appointment", "View Medical History", "Request Consultation"]
+      },
+      receptionist: {
+        title: "Receptionist Dashboard",
+        tasks: ["Register New Patients", "Schedule Appointments", "Manage Billing", "Assist Patients"],
+        actions: ["Register Patient", "Schedule Appointment", "Manage Billing"]
+      }
     };
 
-    const modal = document.getElementById('modalContainer');
-    const modalContent = document.getElementById('modalContent');
+    function showDashboard() {
+      const role = document.getElementById('role').value;
+      const dashboard = document.getElementById('dashboard');
+      const title = document.getElementById('roleTitle');
+      const tasks = document.getElementById('roleTasks');
+      const actionButtons = document.getElementById('actionButtons');
 
-    if (content[role]) {
-      modalContent.innerHTML = content[role];
-      modal.classList.add('active');
-    } else {
-      modalContent.innerHTML = `<p class="text-red-600">Error loading content for selected role.</p>`;
-      modal.classList.add('active');
-      console.error("Invalid role:", role);
+      if (!role) {
+        alert("Please select a role.");
+        return;
+      }
+
+      title.textContent = dashboards[role].title;
+      tasks.innerHTML = dashboards[role].tasks.map(task => `<li class="text-lg">${task}</li>`).join("");
+      actionButtons.innerHTML = dashboards[role].actions.map(action => {
+        return `<button class="button" onclick="openModal('${role}')">${action}</button>`;
+      }).join("");
+
+      dashboard.classList.remove('hidden');
     }
-  }
 
-  function closeModal() {
-    document.getElementById('modalContainer').classList.remove('active');
-    document.getElementById('modalContent').innerHTML = '';
-  }
-</script>
+    function openModal(role) {
+      const modal = document.getElementById('modalContainer');
+      const modalContent = document.getElementById('modalContent');
+      let content = "";
+
+      switch (role) {
+        case "patient":
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Patient Registration</h3>
+            <form class="space-y-4">
+              <input type="text" placeholder="Name" class="form-input" required />
+              <input type="email" placeholder="Email" class="form-input" required />
+              <input type="tel" placeholder="Phone" class="form-input" required />
+              <button class="button">Submit</button>
+            </form>`;
+          break;
+
+        case "doctor":
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <form class="space-y-4">
+              <input type="text" placeholder="Patient Name" class="form-input" required />
+              <textarea placeholder="Prescription" class="form-input" required></textarea>
+              <button class="button">Save</button>
+            </form>`;
+          break;
+
+        case "admin":
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
+            <table class="table">
+              <thead><tr><th>Name</th><th>Specialty</th></tr></thead>
+              <tbody><tr><td>Dr. Smith</td><td>Cardiology</td></tr></tbody>
+            </table>`;
+          break;
+
+        case "receptionist":
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Register Patient</h3>
+            <form class="space-y-4">
+              <input type="text" placeholder="Patient Name" class="form-input" required />
+              <input type="text" placeholder="Admission Details" class="form-input" required />
+              <button class="button">Admit</button>
+            </form>`;
+          break;
+
+        default:
+          content = `<p class="text-red-500">Unknown role selected.</p>`;
+      }
+
+      modalContent.innerHTML = content;
+      modal.classList.remove("hidden");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modalContainer");
+      modal.classList.add("hidden");
+      document.getElementById("modalContent").innerHTML = '';
+    }
+  </script>
 
 </body>
 </html>
