@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
+  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
-      min-height: 100vh;
       background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
       background-size: cover;
       background-position: center;
@@ -16,16 +17,23 @@
       margin: 0;
       font-family: Arial, sans-serif;
     }
+
+    .container {
+      margin-top: 10%;
+    }
+
     .card {
       background-color: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
+
     .card:hover {
       transform: translateY(-5px);
     }
+
     .badge {
       padding: 5px 10px;
       background-color: #28a745;
@@ -35,153 +43,192 @@
       display: inline-block;
       margin-top: 5px;
     }
+
+    .hidden {
+      display: none;
+    }
+
+    .form-input:focus {
+      border-color: #005f73;
+    }
+
+    /* Modal Container */
     #modalContainer {
+      display: none;
       position: fixed;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: none;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
       justify-content: center;
       align-items: center;
-      z-index: 2000;
     }
+
     #modalContainer.visible {
       display: flex;
     }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: gray;
+    }
   </style>
 </head>
-<body class="font-sans">
 
-<!-- Login Section -->
-<div class="container max-w-lg mx-auto mt-20 rounded-lg bg-white/80 p-8 shadow-xl">
-  <div class="bg-blue-700 text-white text-center p-6 rounded-lg">
-    <h1 class="text-4xl font-bold">Hospital Management System</h1>
-  </div>
-  <div id="loginSection" class="mt-8">
-    <h2 class="text-3xl font-bold text-center text-blue-600">Login to Your Account</h2>
-    <div class="space-y-4 mt-6">
-      <label for="role" class="block text-lg">Select Role</label>
-      <select id="role" class="form-input w-full p-3 border rounded-lg">
-        <option value="">-- Choose Role --</option>
-        <option value="admin">Admin</option>
-        <option value="doctor">Doctor</option>
-        <option value="patient">Patient</option>
-        <option value="receptionist">Receptionist</option>
-      </select>
-      <button onclick="showDashboard()" class="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Login</button>
+<body>
+
+  <!-- Main Container -->
+  <div class="container max-w-lg mx-auto rounded-lg bg-white/80 p-8 shadow-xl">
+    <h2 class="text-4xl font-bold text-center mb-8">Dashboard</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Admin Dashboard Cards -->
+      <div class="card cursor-pointer" onclick="openModal('admin', 'manageDoctors')">
+        <h3 class="text-lg font-semibold text-blue-600">Manage Doctors</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('admin', 'managePatients')">
+        <h3 class="text-lg font-semibold text-blue-600">Manage Patients</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('admin', 'viewReports')">
+        <h3 class="text-lg font-semibold text-blue-600">View Reports</h3>
+        <div class="badge">Active</div>
+      </div>
+
+      <!-- Doctor Dashboard Cards -->
+      <div class="card cursor-pointer" onclick="openModal('doctor', 'writePrescription')">
+        <h3 class="text-lg font-semibold text-blue-600">Write Prescription</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('doctor', 'viewAppointments')">
+        <h3 class="text-lg font-semibold text-blue-600">View Appointments</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('doctor', 'patientConsultation')">
+        <h3 class="text-lg font-semibold text-blue-600">Patient Consultation</h3>
+        <div class="badge">Active</div>
+      </div>
+
+      <!-- Patient Dashboard Cards -->
+      <div class="card cursor-pointer" onclick="openModal('patient', 'bookAppointment')">
+        <h3 class="text-lg font-semibold text-blue-600">Book Appointment</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('patient', 'viewMedicalHistory')">
+        <h3 class="text-lg font-semibold text-blue-600">View Medical History</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('patient', 'requestConsultation')">
+        <h3 class="text-lg font-semibold text-blue-600">Request Consultation</h3>
+        <div class="badge">Active</div>
+      </div>
+
+      <!-- Receptionist Dashboard Cards -->
+      <div class="card cursor-pointer" onclick="openModal('receptionist', 'registerPatient')">
+        <h3 class="text-lg font-semibold text-blue-600">Register Patient</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('receptionist', 'scheduleAppointment')">
+        <h3 class="text-lg font-semibold text-blue-600">Schedule Appointment</h3>
+        <div class="badge">Active</div>
+      </div>
+      <div class="card cursor-pointer" onclick="openModal('receptionist', 'manageBilling')">
+        <h3 class="text-lg font-semibold text-blue-600">Manage Billing</h3>
+        <div class="badge">Active</div>
+      </div>
     </div>
   </div>
 
-  <!-- Dashboard Section -->
-  <div id="dashboard" class="mt-8 hidden">
-    <h2 id="roleTitle" class="text-2xl font-semibold text-center mb-6 text-blue-700"></h2>
-    <div id="actionButtons" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
+  <!-- Modal Container -->
+  <div id="modalContainer">
+    <div class="modal-content relative">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <div id="modalContent"></div>
+    </div>
   </div>
-</div>
 
-<!-- Modal Container -->
-<div id="modalContainer">
-  <div class="bg-white p-6 rounded-xl shadow-lg max-w-xl w-full relative">
-    <button onclick="closeModal()" class="absolute top-3 right-3 text-2xl text-gray-500 hover:text-red-600">&times;</button>
-    <div id="modalContent" class="space-y-4"></div>
-  </div>
-</div>
+  <script>
+    const dashboards = {
+      admin: {
+        title: "Admin Dashboard",
+        actions: [
+          { name: "Manage Doctors", icon: "UserCog", actionKey: "manageDoctors" },
+          { name: "Manage Patients", icon: "UserCheck", actionKey: "managePatients" },
+          { name: "View Reports", icon: "FileText", actionKey: "viewReports" }
+        ]
+      },
+      doctor: {
+        title: "Doctor Dashboard",
+        actions: [
+          { name: "Write Prescription", icon: "ClipboardEdit", actionKey: "writePrescription" },
+          { name: "View Appointments", icon: "CalendarClock", actionKey: "viewAppointments" },
+          { name: "Patient Consultation", icon: "Stethoscope", actionKey: "patientConsultation" }
+        ]
+      },
+      patient: {
+        title: "Patient Dashboard",
+        actions: [
+          { name: "Book Appointment", icon: "CalendarPlus", actionKey: "bookAppointment" },
+          { name: "View Medical History", icon: "BookOpen", actionKey: "viewMedicalHistory" },
+          { name: "Request Consultation", icon: "MessageCircle", actionKey: "requestConsultation" }
+        ]
+      },
+      receptionist: {
+        title: "Receptionist Dashboard",
+        actions: [
+          { name: "Register Patient", icon: "UserPlus", actionKey: "registerPatient" },
+          { name: "Schedule Appointment", icon: "CalendarRange", actionKey: "scheduleAppointment" },
+          { name: "Manage Billing", icon: "CreditCard", actionKey: "manageBilling" }
+        ]
+      }
+    };
 
-<!-- Final Script -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    lucide.createIcons();
-  });
+    function openModal(role, actionKey) {
+      const modal = document.getElementById('modalContainer');
+      const modalContent = document.getElementById('modalContent');
+      let content = "";
 
-  const dashboards = {
-    admin: {
-      title: "Admin Dashboard",
-      actions: [
-        { name: "Manage Doctors", icon: "UserCog", actionKey: "manageDoctors" },
-        { name: "Manage Patients", icon: "UserCheck", actionKey: "managePatients" },
-        { name: "View Reports", icon: "FileText", actionKey: "viewReports" }
-      ]
-    },
-    doctor: {
-      title: "Doctor Dashboard",
-      actions: [
-        { name: "Write Prescription", icon: "ClipboardEdit", actionKey: "writePrescription" },
-        { name: "View Appointments", icon: "CalendarClock", actionKey: "viewAppointments" },
-        { name: "Patient Consultation", icon: "Stethoscope", actionKey: "patientConsultation" }
-      ]
-    },
-    patient: {
-      title: "Patient Dashboard",
-      actions: [
-        { name: "Book Appointment", icon: "CalendarPlus", actionKey: "bookAppointment" },
-        { name: "View Medical History", icon: "BookOpen", actionKey: "viewMedicalHistory" },
-        { name: "Request Consultation", icon: "MessageCircle", actionKey: "requestConsultation" }
-      ]
-    },
-    receptionist: {
-      title: "Receptionist Dashboard",
-      actions: [
-        { name: "Register Patient", icon: "UserPlus", actionKey: "registerPatient" },
-        { name: "Schedule Appointment", icon: "CalendarRange", actionKey: "scheduleAppointment" },
-        { name: "Manage Billing", icon: "CreditCard", actionKey: "manageBilling" }
-      ]
+      if (role === "doctor") {
+        if (actionKey === "writePrescription") {
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <form class="space-y-4">
+              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" />
+              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg"></textarea>
+              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+            </form>`;
+        } else if (actionKey === "viewAppointments") {
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+            <ul>
+              <li>John Doe - 2025-05-10</li>
+              <li>Jane Smith - 2025-05-11</li>
+            </ul>`;
+        }
+      }
+
+      modalContent.innerHTML = content;
+      modal.classList.add("visible");
     }
-  };
 
-  function showDashboard() {
-    const role = document.getElementById('role').value;
-    const dashboard = document.getElementById('dashboard');
-    const title = document.getElementById('roleTitle');
-    const actionButtons = document.getElementById('actionButtons');
-
-    if (!role || !dashboards[role]) {
-      alert("Please select a valid role.");
-      return;
+    function closeModal() {
+      const modal = document.getElementById("modalContainer");
+      modal.classList.remove("visible");
+      document.getElementById("modalContent").innerHTML = '';
     }
-
-    title.textContent = dashboards[role].title;
-    actionButtons.innerHTML = dashboards[role].actions.map(action => `
-      <div onclick="openModal('${role}', '${action.actionKey}')" class="card cursor-pointer">
-        <div class="flex justify-center mb-2">
-          <i data-lucide="${action.icon}" class="w-10 h-10 text-blue-500"></i>
-        </div>
-        <h3 class="text-lg font-semibold text-blue-600">${action.name}</h3>
-        <div class="badge">Active</div>
-      </div>
-    `).join("");
-
-    dashboard.classList.remove("hidden");
-    lucide.createIcons();
-  }
-
-  function openModal(role, actionKey) {
-    const modal = document.getElementById("modalContainer");
-    const modalContent = document.getElementById("modalContent");
-    let content = '';
-
-    const sampleTable = (headers, rows) => `
-      <table class="min-w-full text-sm text-left border mt-4">
-        <thead class="bg-blue-600 text-white">
-          <tr>${headers.map(h => `<th class="p-2">${h}</th>`).join('')}</tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          ${rows.map(row => `<tr>${row.map(col => `<td class="p-2">${col}</td>`).join('')}</tr>`).join('')}
-        </tbody>
-      </table>
-    `;
-
-    // [Insert the long switch block from the previous response here to handle each actionKey]
-    // Due to space, please refer to the detailed switch block already provided
-
-    modalContent.innerHTML = content;
-    modal.classList.add("visible");
-    lucide.createIcons();
-  }
-
-  function closeModal() {
-    document.getElementById("modalContainer").classList.remove("visible");
-    document.getElementById("modalContent").innerHTML = '';
-  }
-</script>
+  </script>
 
 </body>
+
 </html>
