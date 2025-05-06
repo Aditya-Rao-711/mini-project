@@ -152,15 +152,40 @@
         <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
       </table>`;
   } else if (role === "admin" && actionName === "Manage Patients") {
-    content = `
-      <h3 class="text-xl font-semibold text-blue-600">Manage Patients</h3>
-      <table class="w-full border mt-4">
-        <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Status</th></tr></thead>
-        <tbody>
-          <tr><td class="p-2">Alice Johnson</td><td class="p-2">Admitted</td></tr>
-          <tr><td class="p-2">Bob Lee</td><td class="p-2">Discharged</td></tr>
-        </tbody>
-      </table>`;
+  content = `
+    <h3 class="text-xl font-semibold text-blue-600">Manage Patients</h3>
+    <table class="w-full border mt-4">
+      <thead>
+        <tr class="bg-blue-100">
+          <th class="p-2">Patient Name</th>
+          <th class="p-2">Admission Date</th>
+          <th class="p-2">Status</th>
+          <th class="p-2">Treatment Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="p-2">Alice Johnson</td>
+          <td class="p-2">2025-04-20</td>
+          <td class="p-2 text-green-600">Admitted</td>
+          <td class="p-2">Cardiology Consultation</td>
+        </tr>
+        <tr>
+          <td class="p-2">Bob Lee</td>
+          <td class="p-2">2025-04-22</td>
+          <td class="p-2 text-yellow-600">Under Observation</td>
+          <td class="p-2">Routine Check-up</td>
+        </tr>
+        <tr>
+          <td class="p-2">Catherine Green</td>
+          <td class="p-2">2025-04-25</td>
+          <td class="p-2 text-red-600">Discharged</td>
+          <td class="p-2">Surgical Recovery</td>
+        </tr>
+      </tbody>
+    </table>`;
+}
+
   } else if (role === "admin" && actionName === "View Reports") {
     content = `
       <h3 class="text-xl font-semibold text-blue-600">Hospital Reports</h3>
