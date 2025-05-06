@@ -101,10 +101,8 @@
         return;
       }
 
-      // Update the title based on the selected role
       title.textContent = dashboards[role].title;
 
-      // Create action buttons based on the selected role
       actionButtons.innerHTML = dashboards[role].actions.map(action => {
         return `
           <div onclick="openModal('${role}', '${action.name}')" class="cursor-pointer bg-white rounded-xl shadow-md p-6 text-center hover:bg-blue-50 transition-all border border-blue-100 group">
@@ -115,10 +113,7 @@
           </div>`;
       }).join("");
 
-      // Show the dashboard by removing the hidden class
       dashboard.classList.remove('hidden');
-
-      // Call lucide.createIcons() to render icons properly
       lucide.createIcons();
     }
 
@@ -127,24 +122,33 @@
       const modalContent = document.getElementById('modalContent');
       let content = "";
 
-      // Form content for each action (just an example for each)
-      if (role === "admin" && actionName === "Manage Doctors") {
+      // Provide the correct modal content for Doctor actions
+      if (role === "doctor" && actionName === "Write Prescription") {
         content = `
-          <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
-          <table class="w-full border mt-4">
-            <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Specialty</th></tr></thead>
-            <tbody><tr><td class="p-2">Dr. Smith</td><td class="p-2">Cardiology</td></tr></tbody>
-          </table>`;
-      } else if (role === "admin" && actionName === "Manage Patients") {
+          <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+          <form class="space-y-4">
+            <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+            <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save Prescription</button>
+          </form>`;
+      } else if (role === "doctor" && actionName === "View Appointments") {
         content = `
-          <h3 class="text-xl font-semibold text-blue-600">Manage Patients</h3>
+          <h3 class="text-xl font-semibold text-blue-600">View Appointments</h3>
           <table class="w-full border mt-4">
-            <thead><tr class="bg-blue-100"><th class="p-2">Name</th><th class="p-2">Status</th></tr></thead>
+            <thead><tr class="bg-blue-100"><th class="p-2">Patient</th><th class="p-2">Date</th><th class="p-2">Time</th></tr></thead>
             <tbody>
-              <tr><td class="p-2">Alice Johnson</td><td class="p-2">Admitted</td></tr>
-              <tr><td class="p-2">Bob Lee</td><td class="p-2">Discharged</td></tr>
+              <tr><td class="p-2">Alice Johnson</td><td class="p-2">2025-05-07</td><td class="p-2">10:00 AM</td></tr>
+              <tr><td class="p-2">Bob Lee</td><td class="p-2">2025-05-08</td><td class="p-2">02:00 PM</td></tr>
             </tbody>
           </table>`;
+      } else if (role === "doctor" && actionName === "Patient Consultation") {
+        content = `
+          <h3 class="text-xl font-semibold text-blue-600">Patient Consultation</h3>
+          <form class="space-y-4">
+            <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+            <textarea placeholder="Consultation Notes" class="form-input w-full p-3 border rounded-lg" required></textarea>
+            <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save Consultation</button>
+          </form>`;
       } else {
         content = `<p class="text-red-500">Unknown action selected.</p>`;
       }
