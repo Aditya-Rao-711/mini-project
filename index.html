@@ -5,41 +5,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hospital Management System</title>
-  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" /> 
+  <link rel="icon" type="image/png" href="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
-      background-image: url('https://static.vecteezy.com/system/resources/thumbnails/053/732/852/small/high-tech-surgical-environment-combining-innovation-and-cutting-edge-medical-care-free-photo.jpg');
+      background-image: url('https://www.w3schools.com/w3images/hospital.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
       margin: 0;
       font-family: Arial, sans-serif;
     }
-   #modalContainer {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000; /* Ensure the modal is above the header */
-  margin-top: 80px; /* Account for the fixed header height */
-  opacity: 0; /* Initially hidden */
-  visibility: hidden; /* Ensure it is invisible until needed */
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
-}
-
-#modalContainer.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
 
     header {
-      background-color: #005f73; /* Dark teal color for professionalism */
-      padding: 20px 40px; /* Original padding for header */
+      background-color: rgba(0, 95, 115, 0.7); /* Transparent dark teal */
+      padding: 20px 40px;
       color: white;
       font-weight: bold;
       display: flex;
@@ -59,19 +40,19 @@
     }
 
     header .logout-btn {
-      background-color: #d32f2f; /* Red color for logout button */
+      background-color: #d32f2f;
       color: white;
-      padding: 12px 20px; /* Original padding */
+      padding: 12px 20px;
       border-radius: 5px;
       cursor: pointer;
       text-align: center;
     }
 
     footer {
-      background-color: #005f73; /* Dark teal color for professionalism */
+      background-color: rgba(0, 95, 115, 0.7); /* Transparent dark teal */
       color: white;
       text-align: center;
-      padding: 20px 40px; /* Original padding for footer */
+      padding: 20px 40px;
       position: fixed;
       bottom: 0;
       width: 100%;
@@ -127,22 +108,38 @@
     .form-input:focus {
       border-color: #005f73;
     }
+
+    #modalContainer {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      margin-top: 80px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    #modalContainer.visible {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
 </head>
 
 <body class="font-sans">
 
   <!-- Header Section -->
- <header class="bg-teal-800 text-white p-4 flex justify-between items-center">
-  <div class="logo flex items-center">
-    <!-- Replace with your logo path -->
-    <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" alt="Hospital Logo" class="h-20 w-auto"> <!-- Adjust height and width -->
-  </div>
-  <button class="logout-btn bg-red-600 text-white px-4 py-2 rounded-md" onclick="logout()">Logout</button>
-</header>
-
-
-
+  <header class="bg-teal-800 text-white p-4 flex justify-between items-center">
+    <div class="logo flex items-center">
+      <!-- Replace with your logo path -->
+      <img src="https://marketplace.canva.com/EAE8fLYOzrA/1/0/1600w/canva-health-care-bO8TgMWVszg.jpg" alt="Hospital Logo" class="h-20 w-auto"> <!-- Adjust height and width -->
+    </div>
+    <button class="logout-btn bg-red-600 text-white px-4 py-2 rounded-md" onclick="logout()">Logout</button>
+  </header>
 
   <!-- Main Container -->
   <div class="container max-w-lg mx-auto mt-28 rounded-lg bg-white/80 p-8 shadow-xl">
@@ -256,61 +253,48 @@
     }
 
     function openModal(role, actionKey) {
-  const modal = document.getElementById('modalContainer');
-  const modalContent = document.getElementById('modalContent');
-  let content = "";
+      const modal = document.getElementById('modalContainer');
+      const modalContent = document.getElementById('modalContent');
+      let content = "";
 
-  // Define form validation
-  const validateForm = (form) => {
-    const inputs = form.querySelectorAll("input, textarea");
-    for (let input of inputs) {
-      if (!input.value.trim()) {
-        alert("Please fill all fields.");
-        return false;
+      const validateForm = (form) => {
+        const inputs = form.querySelectorAll("input, textarea");
+        for (let input of inputs) {
+          if (!input.value.trim()) {
+            alert("Please fill all fields.");
+            return false;
+          }
+        }
+        return true;
+      };
+
+      if (role === "doctor") {
+        if (actionKey === "writePrescription") {
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
+            <form class="space-y-4" onsubmit="return validateForm(this)">
+              <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
+              <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
+              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
+            </form>`;
+        } else if (actionKey === "viewAppointments") {
+          content = `
+            <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
+            <ul>
+              <li>John Doe - 2025-05-10</li>
+              <li>Jane Smith - 2025-05-11</li>
+            </ul>`;
+        }
       }
+
+      modalContent.innerHTML = content;
+      modal.classList.add("visible");
+      lucide.createIcons();
     }
-    return true;
-  };
-
-  // Check the role and action to provide the correct modal content
-  if (role === "doctor") {
-    if (actionKey === "writePrescription") {
-      content = `
-        <h3 class="text-xl font-semibold text-blue-600">Write Prescription</h3>
-        <form class="space-y-4" onsubmit="return validateForm(this)">
-          <input type="text" placeholder="Patient Name" class="form-input w-full p-3 border rounded-lg" required />
-          <textarea placeholder="Prescription" class="form-input w-full p-3 border rounded-lg" required></textarea>
-          <button type="submit" class="w-full p-3 bg-green-600 text-white rounded-lg">Save</button>
-        </form>`;
-    } else if (actionKey === "viewAppointments") {
-      content = `
-        <h3 class="text-xl font-semibold text-blue-600">Appointments</h3>
-        <ul>
-          <li>John Doe - 2025-05-10</li>
-          <li>Jane Smith - 2025-05-11</li>
-        </ul>`;
-    }
-  } else if (role === "admin") {
-    // Example for admin role - you can expand with other actions
-    if (actionKey === "manageDoctors") {
-      content = `
-        <h3 class="text-xl font-semibold text-blue-600">Manage Doctors</h3>
-        <p>Here you can manage the doctors in the system.</p>`;
-    }
-  }
-
-  // Update modal content and show modal
-  modalContent.innerHTML = content;
-  modal.classList.remove("hidden"); // Make the modal visible
-
-  // Re-initialize Lucide icons after content insertion
-  lucide.createIcons();
-}
-
 
     function closeModal() {
       const modal = document.getElementById("modalContainer");
-      modal.classList.add("hidden");
+      modal.classList.remove("visible");
       document.getElementById("modalContent").innerHTML = '';
     }
 
