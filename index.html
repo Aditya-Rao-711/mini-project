@@ -11,7 +11,6 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      font-family: Arial, sans-serif;
     }
     .modal {
       display: none;
@@ -22,39 +21,43 @@
   </style>
 </head>
 <body class="min-h-screen bg-gray-100 bg-opacity-80">
-  <div class="container mx-auto p-6">
-    <div class="text-center mb-10">
-      <h1 class="text-4xl font-bold text-white bg-blue-700 py-4 rounded-lg shadow-lg">Hospital Management System</h1>
+  <div class="container mx-auto p-6 flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-4xl font-bold text-white bg-blue-700 py-4 px-8 rounded-lg shadow-lg mb-10">Hospital Management System</h1>
+
+    <!-- Role Dropdown and Login Button -->
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+      <h2 class="text-2xl font-semibold text-center text-blue-700 mb-6">Login</h2>
+      <select id="roleSelect" class="w-full border p-3 rounded mb-4">
+        <option value="" disabled selected>Select Role</option>
+        <option value="patient">Patient</option>
+        <option value="receptionist">Receptionist</option>
+        <option value="admin">Admin</option>
+        <option value="doctor">Doctor</option>
+      </select>
+      <button onclick="login()" class="bg-blue-600 text-white py-2 px-4 rounded w-full hover:bg-blue-700 transition">Login</button>
     </div>
 
-    <!-- Role Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div onclick="openModal('patient')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
-        <h2 class="text-xl font-semibold text-center text-blue-700">Patient</h2>
-      </div>
-      <div onclick="openModal('receptionist')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
-        <h2 class="text-xl font-semibold text-center text-blue-700">Receptionist</h2>
-      </div>
-      <div onclick="openModal('admin')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
-        <h2 class="text-xl font-semibold text-center text-blue-700">Admin</h2>
-      </div>
-      <div onclick="openModal('doctor')" class="cursor-pointer p-6 bg-white rounded-2xl shadow-lg hover:bg-blue-100 transition">
-        <h2 class="text-xl font-semibold text-center text-blue-700">Doctor</h2>
-      </div>
-    </div>
-
-    <!-- Modals -->
+    <!-- Modal Displaying Role Forms -->
     <div id="modalContainer" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 modal">
       <div class="bg-white rounded-xl p-6 w-full max-w-2xl overflow-y-auto max-h-[90vh] relative">
         <button onclick="closeModal()" class="absolute top-4 right-4 text-red-600 font-bold text-lg">&times;</button>
         <div id="modalContent" class="space-y-6">
-          <!-- Dynamic Content Injected Here -->
+          <!-- Dynamic Content Goes Here -->
         </div>
       </div>
     </div>
   </div>
 
   <script>
+    function login() {
+      const role = document.getElementById("roleSelect").value;
+      if (!role) {
+        alert("Please select a role.");
+        return;
+      }
+      openModal(role);
+    }
+
     function openModal(role) {
       const content = {
         patient: `
