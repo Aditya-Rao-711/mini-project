@@ -203,6 +203,12 @@
       const modalContent = document.getElementById('modalContent');
       let content = "";
 
+      // ✅ Prevent modal from opening for unknown roles
+      if (!dashboards.hasOwnProperty(role)) {
+        console.warn("Invalid role passed to openModal:", role);
+        return;
+      }
+
       switch (role) {
         case "patient":
           content = `
@@ -243,9 +249,6 @@
               <button class="button">Admit</button>
             </form>`;
           break;
-
-        default:
-          content = `<p class="text-red-500">Unknown role selected.</p>`;
       }
 
       modalContent.innerHTML = content;
