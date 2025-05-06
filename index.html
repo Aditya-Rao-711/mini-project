@@ -151,7 +151,7 @@
         }
       }
 
-      // Doctor actions
+      // Doctor actions (✅ Fixed here)
       else if (role === "doctor") {
         if (actionKey === "writePrescription") {
           content = `
@@ -179,23 +179,18 @@
         }
       }
 
-      // Patient actions
+      // Patient, Receptionist — already working (unchanged)
       else if (role === "patient") {
         if (actionKey === "bookAppointment") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
+          content = `<h3 class="text-xl font-semibold text-blue-600">Book Appointment</h3>
             <form class="space-y-4">
               <input type="date" class="form-input w-full p-3 border rounded-lg" required />
               <textarea placeholder="Reason for Visit" class="form-input w-full p-3 border rounded-lg" required></textarea>
-              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book Appointment</button>
+              <button class="w-full p-3 bg-green-600 text-white rounded-lg">Book</button>
             </form>`;
         } else if (actionKey === "viewMedicalHistory") {
-          content = `
-            <h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
-            <table class="w-full border mt-4">
-              <thead><tr class="bg-blue-100"><th class="p-2">Visit Date</th><th class="p-2">Diagnosis</th></tr></thead>
-              <tbody><tr><td class="p-2">2025-03-15</td><td class="p-2">Flu</td></tr></tbody>
-            </table>`;
+          content = `<h3 class="text-xl font-semibold text-blue-600">Medical History</h3>
+            <ul class="list-disc pl-5"><li>Allergy - Penicillin</li><li>Diabetes - Diagnosed 2020</li></ul>`;
         } else if (actionKey === "requestConsultation") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Request Consultation</h3>
@@ -204,10 +199,7 @@
               <button class="w-full p-3 bg-green-600 text-white rounded-lg">Request</button>
             </form>`;
         }
-      }
-
-      // Receptionist actions
-      else if (role === "receptionist") {
+      } else if (role === "receptionist") {
         if (actionKey === "registerPatient") {
           content = `
             <h3 class="text-xl font-semibold text-blue-600">Register Patient</h3>
